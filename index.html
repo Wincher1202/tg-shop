@@ -20,7 +20,6 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
-            padding-right: 72px; /* Оступ справа под боковые кнопки */
             padding-bottom: 90px;
         }
         .header {
@@ -138,11 +137,10 @@
             z-index: 5;
         }
 
-        /* Изменили пропорции на 16:9, чтобы картинка целиком помещалась */
+        /* Рамка подгоняется под размер фото без фиксированных пропорций */
         .image-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
@@ -153,10 +151,14 @@
             justify-content: center;
             cursor: pointer;
         }
-        .image-container img, .image-container svg {
+        .image-container img {
             width: 100%;
-            height: 100%;
-            object-fit: contain; /* Картинка теперь не обрезается */
+            height: auto;
+            display: block;
+        }
+        .image-container svg {
+            width: 100%;
+            height: 150px;
         }
 
         .p-title {
@@ -180,26 +182,18 @@
             margin-bottom: 8px;
         }
 
-        .card-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .action-btn {
-            flex: 1;
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
+        /* Кнопка в кошик на всю ширину */
+        .action-btn.primary {
+            width: 100%;
+            background: linear-gradient(135deg, #00f0ff, #0077ff);
+            color: #fff;
+            border: none;
             padding: 10px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
-        }
-        .action-btn.primary {
-            background: linear-gradient(135deg, #00f0ff, #0077ff);
-            color: #fff;
-            border: none;
         }
 
         .back-btn {
@@ -475,10 +469,7 @@
                         <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
                         <div class="p-title" onclick="openDetail('${p.id}')">${title}</div>
                         <div class="price-badge">${p.price.toLocaleString()} ₴</div>
-                        <div class="card-actions">
-                            <button class="action-btn" onclick="openDetail('${p.id}')">Опис</button>
-                            <button class="action-btn primary" onclick="quickAddToCart('${p.id}')">В кошик</button>
-                        </div>
+                        <button class="action-btn primary" onclick="quickAddToCart('${p.id}')">В кошик</button>
                     </div>
                 `;
             });
