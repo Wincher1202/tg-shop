@@ -99,10 +99,11 @@
             z-index: 5;
         }
 
+        /* ФОРМАТ 4:3 ДЛЯ КАРТИНОК */
         .image-container {
             position: relative;
             width: 100%;
-            height: 200px;
+            aspect-ratio: 4 / 3; /* Строгий формат 4 на 3 */
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
@@ -331,7 +332,6 @@
         let cart = [];
         let favorites = [];
 
-        // База товаров (мышки с твоими фотками из GitHub, клава и уши со встроенными красивыми иконками)
         const products = {
             mouse: {
                 id: 'mouse',
@@ -339,6 +339,7 @@
                 titleENG: "Mouse MCHOSE A7 V2 Pro",
                 price: 2449,
                 isCustomImg: true,
+                catalogImg: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0.jpg",
                 images: {
                     black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
                     white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
@@ -353,7 +354,7 @@
                 titleENG: "Keyboard MCHOSE GX87",
                 price: 3899,
                 isCustomImg: false,
-                svgIcon: `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="20" width="180" height="80" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="20" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="40" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="60" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="80" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="100" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="120" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="140" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="165" y="30" width="15" height="15" rx="3" fill="#ff007f" fill-opacity="0.5"/><rect x="20" y="52" width="160" height="40" rx="4" fill="#0b0f19"/></svg>`,
+                svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="35" width="170" height="80" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="25" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="43" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="61" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="79" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="97" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="115" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="133" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="157" y="45" width="18" height="14" rx="3" fill="#ff007f" fill-opacity="0.5"/><rect x="25" y="65" width="150" height="40" rx="4" fill="#0b0f19"/></svg>`,
                 specsUA: [["Формат", "TKL 87%"], ["Свічі", "Mechanical Custom"], ["Підключення", "3 режиму"]],
                 specsENG: [["Layout", "TKL 87%"], ["Switches", "Mechanical Custom"], ["Connection", "Tri-mode"]]
             },
@@ -363,7 +364,7 @@
                 titleENG: "Headset MCHOSE G9 Pro",
                 price: 2999,
                 isCustomImg: false,
-                svgIcon: `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 70C50 40 70 20 100 20C130 20 150 40 150 70" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/><rect x="35" y="55" width="25" height="40" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="140" y="55" width="25" height="40" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><path d="M55 85L30 100" stroke="#ff007f" stroke-width="3" stroke-linecap="round"/></svg>`,
+                svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55 85C55 50 75 30 100 30C125 30 145 50 145 85" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/><rect x="35" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="140" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><path d="M55 95L30 115" stroke="#ff007f" stroke-width="3" stroke-linecap="round"/></svg>`,
                 specsUA: [["Динаміки", "50мм"], ["Звук", "7.1 Surround"], ["Автономність", "45 годин"]],
                 specsENG: [["Drivers", "50mm"], ["Audio", "7.1 Surround"], ["Battery", "45 hours"]]
             }
@@ -376,7 +377,7 @@
             Object.values(products).forEach(p => {
                 let title = currentLang === 'ua' ? p.titleUA : p.titleENG;
                 let isFav = favorites.includes(p.id);
-                let mediaHtml = p.isCustomImg ? `<img src="${p.images.black}" alt="${title}">` : p.svgIcon;
+                let mediaHtml = p.isCustomImg ? `<img src="${p.catalogImg}" alt="${title}">` : p.svgIcon;
 
                 container.innerHTML += `
                     <div class="product-card">
