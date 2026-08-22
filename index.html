@@ -255,7 +255,6 @@
             }).join('');
             document.getElementById('cart-total').innerText = `Итого: UAH ${total.toLocaleString()}`;
             
-            // Включаем нативную системную кнопку Telegram снизу!
             tg.MainButton.text = `ОФОРМИТЬ ЗАКАЗ (UAH ${total.toLocaleString()})`;
             tg.MainButton.show();
         }
@@ -274,7 +273,6 @@
             document.getElementById('favorites-tab').classList.add('hidden');
             document.getElementById('cart-tab').classList.add('hidden');
             
-            // Скрываем нативную кнопку, если мы не в корзине
             if (tabName !== 'cart') {
                 tg.MainButton.hide();
             }
@@ -290,7 +288,6 @@
             }
         }
 
-        // Привязываем отправку данных нативной кнопке Telegram
         Telegram.WebApp.onEvent('mainButtonClicked', function(){
             if (cart.length === 0) return;
             let orderData = JSON.stringify(cart);
