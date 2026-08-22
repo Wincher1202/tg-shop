@@ -20,7 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
-            padding-right: 52px; /* Запас справа, чтобы карточки не перекрывались кнопками */
+            padding-right: 48px; /* Запас справа под правую панель */
             padding-bottom: 90px;
         }
         .header {
@@ -66,43 +66,45 @@
             border-radius: 50%;
         }
 
-        /* Независимые плавающие кнопки по правому краю экрана */
-        .side-btn {
+        /* Полноценная белая правая панель от низа до верха первой карточки */
+        .right-sidebar-panel {
             position: fixed;
-            right: 4px;
+            right: 0;
+            top: 75px; /* Начинается ровно под шапкой (на уровне карточки товара) */
+            bottom: 0;
             width: 38px;
-            background: rgba(18, 25, 43, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--accent-color);
-            font-size: 15px;
+            background: rgba(255, 255, 255, 0.95); /* Белая панель */
+            border-top-left-radius: 12px;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly; /* Равномерно распределяем маленькие кнопки */
+            padding: 10px 0;
+            z-index: 99;
+        }
+
+        /* Маленькие кнопки (уменьшены в ~3 раза, иконки контрастные темные) */
+        .side-btn {
+            width: 26px;
+            height: 26px;
+            background: #f0f0f0;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            color: #0b0f19;
+            font-size: 11px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 100;
             transition: all 0.2s ease;
-        }
-        /* Разделяем их по вертикали и делаем разной высоты */
-        .btn-call { 
-            top: 32%; 
-            height: 48px; 
-        }
-        .btn-rules { 
-            top: 48%; 
-            height: 38px; 
-        }
-        .btn-star { 
-            top: 62%; 
-            height: 56px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
 
         .side-btn:hover {
-            background: rgba(0, 240, 255, 0.2);
+            background: #ffffff;
             border-color: var(--accent-color);
-            transform: scale(1.08);
+            transform: scale(1.1);
         }
 
         .screen { display: none; }
@@ -302,10 +304,12 @@
 </head>
 <body>
 
-    <!-- Независимые плавающие кнопки справа -->
-    <div class="side-btn btn-call" title="Зв'язок">📞</div>
-    <div class="side-btn btn-rules" title="Правила">📜</div>
-    <div class="side-btn btn-star" title="Відгуки">⭐</div>
+    <!-- Полноценная белая правая панель с маленькими кнопками -->
+    <div class="right-sidebar-panel">
+        <div class="side-btn" title="Зв'язок">📞</div>
+        <div class="side-btn" title="Правила">📜</div>
+        <div class="side-btn" title="Відгуки">⭐</div>
+    </div>
 
     <div class="header">
         <div class="brand-logo">MILIPSTORE</div>
