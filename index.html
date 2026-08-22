@@ -65,6 +65,38 @@
             border-radius: 50%;
         }
 
+        /* ПЛАВАЮЩИЕ КНОПКИ СПРАВА ПО ЦЕНТРУ */
+        .floating-sidebar {
+            position: fixed;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+        .side-btn {
+            width: 38px;
+            height: 38px;
+            background: rgba(18, 25, 43, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--accent-color);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s;
+        }
+        .side-btn:hover {
+            background: rgba(0, 240, 255, 0.2);
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
         .screen { display: none; }
         .screen.active { display: block; }
 
@@ -99,62 +131,25 @@
             z-index: 5;
         }
 
-        /* КОНТЕЙНЕР 4:3 С ФИКСИРОВАННЫМИ КНОПКАМИ СПРАВА */
-        .media-layout {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-            align-items: stretch;
-        }
-
+        /* ФОРМАТ ФОТО 4:3 НА ВСЮ ШИРИНУ КАРТОЧКИ */
         .image-container {
             position: relative;
-            flex: 1;
-            aspect-ratio: 4 / 3; /* Строгий формат 4:3 */
+            width: 100%;
+            aspect-ratio: 4 / 3;
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
         }
-
-        /* Картинка заполняет блок без черных рамок по бокам */
         .image-container img, .image-container svg {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
-        }
-
-        /* Блок с иконками справа от фото */
-        .side-buttons {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 42px;
-        }
-
-        .side-btn {
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--accent-color);
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            margin-bottom: 4px;
-            cursor: not-allowed;
-            transition: background 0.2s;
-        }
-        .side-btn:last-child {
-            margin-bottom: 0;
-        }
-        .side-btn:hover {
-            background: rgba(0, 240, 255, 0.15);
+            object-fit: cover;
         }
 
         .p-title {
@@ -305,6 +300,13 @@
 </head>
 <body>
 
+    <!-- ПЛАВАЮЩИЕ КНОПКИ СПРАВА ПО ЦЕНТРУ -->
+    <div class="floating-sidebar">
+        <div class="side-btn" title="Зв'язок">📞</div>
+        <div class="side-btn" title="Правила">📜</div>
+        <div class="side-btn" title="Відгуки">⭐</div>
+    </div>
+
     <div class="header">
         <div class="brand-logo">MILIPSTORE</div>
         <div class="header-actions">
@@ -325,15 +327,7 @@
         <div class="detail-container">
             <div class="price-badge" id="det-price"></div>
             
-            <!-- Блок картинки 4:3 с кнопками справа -->
-            <div class="media-layout">
-                <div class="image-container" id="det-img-container"></div>
-                <div class="side-buttons">
-                    <div class="side-btn" title="Зв'язок">📞</div>
-                    <div class="side-btn" title="Правила">📜</div>
-                    <div class="side-btn" title="Відгуки">⭐</div>
-                </div>
-            </div>
+            <div class="image-container" id="det-img-container"></div>
 
             <div class="color-picker" id="color-picker-box">
                 <div class="color-dot dot-black active" onclick="changeColor('Black', 'black', this)"></div>
@@ -470,14 +464,7 @@
                 container.innerHTML += `
                     <div class="product-card">
                         <div class="fav-icon" onclick="toggleFavorite('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
-                        <div class="media-layout">
-                            <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
-                            <div class="side-buttons">
-                                <div class="side-btn" title="Зв'язок">📞</div>
-                                <div class="side-btn" title="Правила">📜</div>
-                                <div class="side-btn" title="Відгуки">⭐</div>
-                            </div>
-                        </div>
+                        <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
                         <div class="p-title" onclick="openDetail('${p.id}')">${title}</div>
                         <div class="price-badge">${p.price.toLocaleString()} ₴</div>
                         <div class="card-actions">
