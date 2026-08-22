@@ -20,6 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
+            padding-right: 48px; /* Оставляем место справа, чтобы карточки не залезали под кнопки */
             padding-bottom: 90px;
         }
         .header {
@@ -65,37 +66,41 @@
             border-radius: 50%;
         }
 
-        /* Правый остров с кнопками связи */
+        /* Правый остров с кнопками вынесен правее и кнопки разной высоты */
         .floating-sidebar {
             position: fixed;
-            right: 8px;
+            right: 2px;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            background: rgba(11, 15, 25, 0.9);
+            gap: 12px; /* Расстояние между кнопками */
+            background: rgba(11, 15, 25, 0.95);
             border: 1px solid var(--border-color);
-            padding: 8px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+            padding: 6px 4px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(8px);
             z-index: 100;
         }
         .side-btn {
-            width: 36px;
-            height: 36px;
+            width: 34px;
             background: rgba(18, 25, 43, 0.95);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--accent-color);
-            font-size: 15px;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
         }
+        /* Делаем кнопки разной высоты */
+        .btn-call { height: 44px; }
+        .btn-rules { height: 32px; }
+        .btn-star { height: 50px; }
+
         .side-btn:hover {
             background: rgba(0, 240, 255, 0.2);
             border-color: var(--accent-color);
@@ -119,7 +124,6 @@
             position: relative;
         }
 
-        /* Лайк в верхнем правом углу карточки */
         .fav-icon {
             position: absolute;
             top: 14px;
@@ -137,7 +141,6 @@
             z-index: 5;
         }
 
-        /* Рамка подгоняется под размер фото без фиксированных пропорций */
         .image-container {
             position: relative;
             width: 100%;
@@ -182,7 +185,6 @@
             margin-bottom: 8px;
         }
 
-        /* Кнопка в кошик на всю ширину */
         .action-btn.primary {
             width: 100%;
             background: linear-gradient(135deg, #00f0ff, #0077ff);
@@ -302,11 +304,11 @@
 </head>
 <body>
 
-    <!-- Правый блок с кнопками -->
+    <!-- Правый блок с кнопками разной высоты -->
     <div class="floating-sidebar">
-        <div class="side-btn" title="Зв'язок">📞</div>
-        <div class="side-btn" title="Правила">📜</div>
-        <div class="side-btn" title="Відгуки">⭐</div>
+        <div class="side-btn btn-call" title="Зв'язок">📞</div>
+        <div class="side-btn btn-rules" title="Правила">📜</div>
+        <div class="side-btn btn-star" title="Відгуки">⭐</div>
     </div>
 
     <div class="header">
