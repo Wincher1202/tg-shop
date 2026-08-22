@@ -20,6 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
+            padding-right: 60px; /* ОТСТУП СПРАВА НА ВСЮ СТРАНИЦУ ДЛЯ ПАНЕЛИ */
             padding-bottom: 90px;
         }
         .header {
@@ -65,31 +66,31 @@
             border-radius: 50%;
         }
 
-        /* ОТДЕЛЬНЫЙ ПРАВЫЙ ОСТРОВ ДЛЯ КНОПОК */
+        /* ПАНЕЛЬ СПРАВА (ОТДЕЛЬНЫЙ ОСТРОВ НА РАССТОЯНИИ) */
         .floating-sidebar {
             position: fixed;
-            right: 8px;
+            right: 10px; /* Отодвинуто от правого края экрана */
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background: rgba(11, 15, 25, 0.85);
+            background: rgba(11, 15, 25, 0.9);
             border: 1px solid var(--border-color);
             padding: 8px;
             border-radius: 14px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             z-index: 100;
         }
         .side-btn {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             background: rgba(18, 25, 43, 0.95);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: var(--accent-color);
-            font-size: 16px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -115,29 +116,29 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 14px;
-            padding-right: 54px; /* ОСТАВЛЯЕМ МЕСТО СПРАВА ПОД ОСТРОВ, ЧТОБЫ ТОВАРЫ НЕ ЗАЛЕЗАЛИ */
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
             position: relative;
         }
 
+        /* ЛАЙК ТЕПЕРЬ ВНУТРИ КАРТОЧКИ И НЕ ПЕРЕКРЫВАЕТСЯ */
         .fav-icon {
             position: absolute;
-            top: 14px;
-            right: 14px;
+            top: 10px;
+            right: 10px;
             background: rgba(0,0,0,0.6);
             border: 1px solid var(--border-color);
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             z-index: 5;
         }
 
-        /* ФОРМАТ ФОТО 4:3 НА ВСЮ ШИРИНУ КОНТЕЙНЕРА */
+        /* УМЕНЬШЕННЫЙ СИЛУЭТ/ФОТО ТОВАРА С ОТСТУПАМИ */
         .image-container {
             position: relative;
             width: 100%;
@@ -151,11 +152,12 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            padding: 8px; /* Дополнительные отступы, чтобы модель казалась чуть компактнее */
         }
         .image-container img, .image-container svg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain; /* Картинка сжимается и не прилипает к краям */
         }
 
         .p-title {
@@ -306,7 +308,7 @@
 </head>
 <body>
 
-    <!-- ОТДЕЛЬНЫЙ ПРАВЫЙ ОСТРОВ С КНОПКАМИ -->
+    <!-- ПРАВИЙ ОСТРОВ НА РАССТОЯНИИ -->
     <div class="floating-sidebar">
         <div class="side-btn" title="Зв'язок">📞</div>
         <div class="side-btn" title="Правила">📜</div>
