@@ -99,11 +99,11 @@
             z-index: 5;
         }
 
-        /* ФОРМАТ 4:3 ДЛЯ КАРТИНОК */
+        /* ЕДИНЫЙ СТРОГИЙ ФОРМАТ РАМОК 4:3 */
         .image-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 4 / 3; /* Строгий формат 4 на 3 */
+            aspect-ratio: 4 / 3;
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
@@ -228,12 +228,12 @@
         .spec-item {
             display: flex;
             justify-content: space-between;
-            padding: 3px 0;
+            padding: 4px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .spec-item:last-child { border-bottom: none; }
         .spec-name { color: var(--hint-color); }
-        .spec-val { font-weight: 600; color: #fff; }
+        .spec-val { font-weight: 600; color: #fff; text-align: right; }
 
         .checkout-btn {
             background: linear-gradient(135deg, #00f0ff, #0077ff);
@@ -293,10 +293,17 @@
                 <div class="color-dot dot-white" onclick="changeColor('White', 'white', this)"></div>
                 <div class="color-dot dot-pink" onclick="changeColor('Pink', 'pink', this)"></div>
             </div>
+            
             <div class="section-box">
-                <div class="section-title">Характеристики</div>
+                <div class="section-title">📦 Комплектація</div>
+                <div id="bundle-list"></div>
+            </div>
+
+            <div class="section-box">
+                <div class="section-title">✨ Характеристики</div>
                 <div id="spec-list"></div>
             </div>
+
             <button class="checkout-btn" onclick="addCurrentToCart()">Додати в кошик 🛒</button>
         </div>
     </div>
@@ -335,8 +342,8 @@
         const products = {
             mouse: {
                 id: 'mouse',
-                titleUA: "Мишка MCHOSE A7 V2 Pro",
-                titleENG: "Mouse MCHOSE A7 V2 Pro",
+                titleUA: "Ігрова мишка MCHOSE A7 V2 Pro",
+                titleENG: "Gaming Mouse MCHOSE A7 V2 Pro",
                 price: 2449,
                 isCustomImg: true,
                 catalogImg: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0.jpg",
@@ -345,8 +352,38 @@
                     white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
                     pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
                 },
-                specsUA: [["Сенсор", "PAW3395"], ["Вага", "59г"], ["Частота", "8000 Гц"]],
-                specsENG: [["Sensor", "PAW3395"], ["Weight", "59g"], ["Rate", "8000 Hz"]]
+                bundleUA: [
+                    "Мишка MCHOSE A7 V2 PRO",
+                    "Кабель для зарядки",
+                    "Бездротовий приймач 2,4 ГГц",
+                    "Інструкція користувача",
+                    "Гріпси"
+                ],
+                bundleENG: [
+                    "Mouse MCHOSE A7 V2 PRO",
+                    "Charging cable",
+                    "2.4 GHz wireless receiver",
+                    "User manual",
+                    "Grips"
+                ],
+                specsUA: [
+                    ["Підключення", "2.4G / Bluetooth / Type-C"],
+                    ["Сенсор", "PAW3395"],
+                    ["DPI", "від 50 до 26 000"],
+                    ["Частота опитування", "8000 Гц"],
+                    ["Вага", "59 гр"],
+                    ["Акумулятор", "500 mAh"],
+                    ["Гарантія", "1 місяць"]
+                ],
+                specsENG: [
+                    ["Connection", "2.4G / Bluetooth / Type-C"],
+                    ["Sensor", "PAW3395"],
+                    ["DPI", "50 to 26,000"],
+                    ["Polling Rate", "8000 Hz"],
+                    ["Weight", "59 g"],
+                    ["Battery", "500 mAh"],
+                    ["Warranty", "1 month"]
+                ]
             },
             keyboard: {
                 id: 'keyboard',
@@ -355,8 +392,10 @@
                 price: 3899,
                 isCustomImg: false,
                 svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="35" width="170" height="80" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="25" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="43" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="61" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="79" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="97" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="115" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="133" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="157" y="45" width="18" height="14" rx="3" fill="#ff007f" fill-opacity="0.5"/><rect x="25" y="65" width="150" height="40" rx="4" fill="#0b0f19"/></svg>`,
-                specsUA: [["Формат", "TKL 87%"], ["Свічі", "Mechanical Custom"], ["Підключення", "3 режиму"]],
-                specsENG: [["Layout", "TKL 87%"], ["Switches", "Mechanical Custom"], ["Connection", "Tri-mode"]]
+                bundleUA: ["Клавіатура MCHOSE GX87", "Кабель Type-C", "Пулер для світчів", "Інструкція"],
+                bundleENG: ["Keyboard MCHOSE GX87", "Type-C cable", "Switch puller", "Manual"],
+                specsUA: [["Формат", "TKL 87%"], ["Свічі", "Mechanical Custom"], ["Підключення", "3 режиму"], ["Гарантія", "1 місяць"]],
+                specsENG: [["Layout", "TKL 87%"], ["Switches", "Mechanical Custom"], ["Connection", "Tri-mode"], ["Warranty", "1 month"]]
             },
             headset: {
                 id: 'headset',
@@ -365,8 +404,10 @@
                 price: 2999,
                 isCustomImg: false,
                 svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55 85C55 50 75 30 100 30C125 30 145 50 145 85" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/><rect x="35" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="140" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><path d="M55 95L30 115" stroke="#ff007f" stroke-width="3" stroke-linecap="round"/></svg>`,
-                specsUA: [["Динаміки", "50мм"], ["Звук", "7.1 Surround"], ["Автономність", "45 годин"]],
-                specsENG: [["Drivers", "50mm"], ["Audio", "7.1 Surround"], ["Battery", "45 hours"]]
+                bundleUA: ["Навушники MCHOSE G9 Pro", "Мікрофон", "Кабель підключення", "Інструкція"],
+                bundleENG: ["Headset MCHOSE G9 Pro", "Microphone", "Audio cable", "Manual"],
+                specsUA: [["Динаміки", "50мм"], ["Звук", "7.1 Surround"], ["Автономність", "45 годин"], ["Гарантія", "1 місяць"]],
+                specsENG: [["Drivers", "50mm"], ["Audio", "7.1 Surround"], ["Battery", "45 hours"], ["Warranty", "1 month"]]
             }
         };
 
@@ -418,6 +459,15 @@
             let colorPicker = document.getElementById('color-picker-box');
             colorPicker.style.display = p.isCustomImg ? 'flex' : 'none';
 
+            // Комплектация
+            let bundleHtml = '';
+            let bundleArr = currentLang === 'ua' ? p.bundleUA : p.bundleENG;
+            bundleArr.forEach(item => {
+                bundleHtml += `<div class="spec-item"><span class="spec-val" style="text-align: left; width: 100%;">• ${item}</span></div>`;
+            });
+            document.getElementById('bundle-list').innerHTML = bundleHtml;
+
+            // Характеристики
             let specsHtml = '';
             let specsArr = currentLang === 'ua' ? p.specsUA : p.specsENG;
             specsArr.forEach(s => {
