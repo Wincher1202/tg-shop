@@ -99,25 +99,62 @@
             z-index: 5;
         }
 
-        /* ЕДИНЫЙ СТРОГИЙ ФОРМАТ РАМОК 4:3 */
+        /* КОНТЕЙНЕР 4:3 С ФИКСИРОВАННЫМИ КНОПКАМИ СПРАВА */
+        .media-layout {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: stretch;
+        }
+
         .image-container {
             position: relative;
-            width: 100%;
-            aspect-ratio: 4 / 3;
+            flex: 1;
+            aspect-ratio: 4 / 3; /* Строгий формат 4:3 */
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
         }
+
+        /* Картинка заполняет блок без черных рамок по бокам */
         .image-container img, .image-container svg {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover; 
+        }
+
+        /* Блок с иконками справа от фото */
+        .side-buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 42px;
+        }
+
+        .side-btn {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--accent-color);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            margin-bottom: 4px;
+            cursor: not-allowed;
+            transition: background 0.2s;
+        }
+        .side-btn:last-child {
+            margin-bottom: 0;
+        }
+        .side-btn:hover {
+            background: rgba(0, 240, 255, 0.15);
         }
 
         .p-title {
@@ -287,7 +324,17 @@
         <button class="back-btn" onclick="openScreen('catalog')">← Назад</button>
         <div class="detail-container">
             <div class="price-badge" id="det-price"></div>
-            <div class="image-container" id="det-img-container"></div>
+            
+            <!-- Блок картинки 4:3 с кнопками справа -->
+            <div class="media-layout">
+                <div class="image-container" id="det-img-container"></div>
+                <div class="side-buttons">
+                    <div class="side-btn" title="Зв'язок">📞</div>
+                    <div class="side-btn" title="Правила">📜</div>
+                    <div class="side-btn" title="Відгуки">⭐</div>
+                </div>
+            </div>
+
             <div class="color-picker" id="color-picker-box">
                 <div class="color-dot dot-black active" onclick="changeColor('Black', 'black', this)"></div>
                 <div class="color-dot dot-white" onclick="changeColor('White', 'white', this)"></div>
@@ -423,7 +470,14 @@
                 container.innerHTML += `
                     <div class="product-card">
                         <div class="fav-icon" onclick="toggleFavorite('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
-                        <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
+                        <div class="media-layout">
+                            <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
+                            <div class="side-buttons">
+                                <div class="side-btn" title="Зв'язок">📞</div>
+                                <div class="side-btn" title="Правила">📜</div>
+                                <div class="side-btn" title="Відгуки">⭐</div>
+                            </div>
+                        </div>
                         <div class="p-title" onclick="openDetail('${p.id}')">${title}</div>
                         <div class="price-badge">${p.price.toLocaleString()} ₴</div>
                         <div class="card-actions">
@@ -459,7 +513,6 @@
             let colorPicker = document.getElementById('color-picker-box');
             colorPicker.style.display = p.isCustomImg ? 'flex' : 'none';
 
-            // Комплектация
             let bundleHtml = '';
             let bundleArr = currentLang === 'ua' ? p.bundleUA : p.bundleENG;
             bundleArr.forEach(item => {
@@ -467,7 +520,6 @@
             });
             document.getElementById('bundle-list').innerHTML = bundleHtml;
 
-            // Характеристики
             let specsHtml = '';
             let specsArr = currentLang === 'ua' ? p.specsUA : p.specsENG;
             specsArr.forEach(s => {
