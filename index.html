@@ -20,7 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
-            padding-right: 48px; /* Запас справа под правую панель */
+            padding-right: 32px; /* Минимальный отступ справа под узкую панель */
             padding-bottom: 90px;
         }
         .header {
@@ -39,18 +39,25 @@
             color: var(--accent-color);
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
+        
+        /* Верхняя панель для кнопок справа (лайки, корзина, язык) */
         .header-actions {
             display: flex;
             gap: 6px;
             align-items: center;
+            background: rgba(18, 25, 43, 0.9);
+            border: 1px solid var(--border-color);
+            padding: 4px 6px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
         .icon-btn {
             background: rgba(0, 240, 255, 0.1);
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             position: relative;
@@ -61,50 +68,49 @@
             right: -5px;
             background: #ff007f;
             color: #fff;
-            font-size: 10px;
-            padding: 2px 5px;
+            font-size: 9px;
+            padding: 2px 4px;
             border-radius: 50%;
         }
 
-        /* Полноценная белая правая панель от низа до верха первой карточки */
+        /* Очень узкая белая правая панель для боковых кнопок */
         .right-sidebar-panel {
             position: fixed;
             right: 0;
-            top: 75px; /* Начинается ровно под шапкой (на уровне карточки товара) */
+            top: 75px;
             bottom: 0;
-            width: 38px;
-            background: rgba(255, 255, 255, 0.95); /* Белая панель */
-            border-top-left-radius: 12px;
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);
+            width: 24px; /* Очень тонкая полоска */
+            background: rgba(255, 255, 255, 0.95);
+            border-top-left-radius: 8px;
+            box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly; /* Равномерно распределяем маленькие кнопки */
+            justify-content: space-evenly;
             padding: 10px 0;
             z-index: 99;
         }
 
-        /* Маленькие кнопки (уменьшены в ~3 раза, иконки контрастные темные) */
+        /* Аккуратные маленькие кнопки */
         .side-btn {
-            width: 26px;
-            height: 26px;
+            width: 18px;
+            height: 18px;
             background: #f0f0f0;
             border: 1px solid #d0d0d0;
-            border-radius: 6px;
+            border-radius: 4px;
             color: #0b0f19;
-            font-size: 11px;
+            font-size: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
 
         .side-btn:hover {
             background: #ffffff;
             border-color: var(--accent-color);
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         .screen { display: none; }
@@ -304,7 +310,7 @@
 </head>
 <body>
 
-    <!-- Полноценная белая правая панель с маленькими кнопками -->
+    <!-- Очень узкая белая правая панель -->
     <div class="right-sidebar-panel">
         <div class="side-btn" title="Зв'язок">📞</div>
         <div class="side-btn" title="Правила">📜</div>
