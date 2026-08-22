@@ -202,12 +202,13 @@
         <button class="lang-switch" onclick="toggleLanguage()">UA / ENG</button>
     </div>
 
-    <!-- ЭКРАН 1: КАТАЛОГ (Снаружи фото, название и цена) -->
+    <!-- ЭКРАН 1: КАТАЛОГ -->
     <div id="catalog-screen" class="screen active">
         <div class="catalog-grid">
             <div class="product-card" onclick="openProduct('mouse')">
                 <div class="image-container">
-                    <img id="cat-img" alt="MCHOSE A7 V2 Pro">
+                    <!-- Главная фотка из GitHub -->
+                    <img src="https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0.jpg" alt="MCHOSE A7 V2 Pro">
                 </div>
                 <div class="p-title" data-i18n="mouse_title">Мишка MCHOSE A7 V2 Pro</div>
                 <div class="price-badge">2 449 ₴</div>
@@ -223,7 +224,8 @@
             <div class="price-badge" style="margin-bottom: 14px;">2 449 ₴</div>
 
             <div class="image-container">
-                <img id="detail-img" alt="MCHOSE A7 V2 Pro">
+                <!-- Детальное фото (по умолчанию черная мышка из GitHub) -->
+                <img id="detail-img" src="https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg" alt="MCHOSE A7 V2 Pro">
             </div>
 
             <!-- Выбор цвета -->
@@ -268,18 +270,12 @@
         let currentLang = 'ua';
         let selectedColor = 'Black';
 
-        // Ваши реальные изображения, упакованные внутрь кода
-        const images = {
-            promo: "data_images_promo_base64_placeholder", // Вставлены ниже через скрипт
-            black: "",
-            white: "",
-            pink: ""
+        // Прямые ссылки на твои картинки из GitHub с учетом их названий
+        const mouseImages = {
+            black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
+            white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
+            pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
         };
-
-        // Заполняем картинки из ваших файлов автоматически без запросов к серверу
-        // (Используем изображения прямо из сессии чата)
-        document.getElementById('cat-img').src = "photo_2026-08-22_23-48-30_3.jpg";
-        document.getElementById('detail-img').src = "photo_2026-08-22_23-48-13_2.jpg";
 
         const translations = {
             ua: {
@@ -325,6 +321,7 @@
 
         function openProduct(id) {
             document.getElementById('catalog-screen').classList.remove('active');
+            document.getElementById('detail-screen').classList.active = true; // фикс
             document.getElementById('detail-screen').classList.add('active');
             window.scrollTo(0, 0);
             if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
@@ -340,10 +337,8 @@
         function changeColor(colorName, colorKey, element) {
             selectedColor = colorName;
             
-            // Переключаем картинки в зависимости от выбранного цвета
-            if(colorKey === 'black') document.getElementById('detail-img').src = "photo_2026-08-22_23-48-13_2.jpg";
-            if(colorKey === 'white') document.getElementById('detail-img').src = "photo_2026-08-22_23-48-08_2.jpg";
-            if(colorKey === 'pink') document.getElementById('detail-img').src = "photo_2026-08-22_23-48-16_2.jpg";
+            // Меняем картинку при клике на цвет
+            document.getElementById('detail-img').src = mouseImages[colorKey];
 
             let dots = element.parentElement.querySelectorAll('.color-dot');
             dots.forEach(dot => dot.classList.remove('active'));
