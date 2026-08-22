@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE // MCHOSE A7 V2 PRO</title>
+    <title>MILIPSTORE // CATALOG</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -12,7 +12,7 @@
             --hint-color: #8a99ad;
             --accent-color: #00f0ff;
             --card-bg: rgba(18, 25, 43, 0.95);
-            --border-color: rgba(0, 240, 255, 0.4);
+            --border-color: rgba(0, 240, 255, 0.3);
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
@@ -26,10 +26,10 @@
             text-align: center;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         .brand-logo {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -37,22 +37,29 @@
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
         
-        .product-container {
+        /* Сетка каталога */
+        .catalog-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .product-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 14px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
         
         .image-container {
             position: relative;
             width: 100%;
-            height: 240px;
+            height: 220px;
             background: #131b2e;
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 12px;
             display: flex;
             align-items: center;
@@ -64,75 +71,57 @@
             object-fit: cover;
         }
 
-        /* Выбор цвета - исправленные стили, чтобы кружки были видны */
+        /* Выбор цвета для мышки */
         .color-picker {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 14px;
+            gap: 16px;
+            margin-bottom: 12px;
             background: rgba(0, 0, 0, 0.3);
-            padding: 8px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 6px;
         }
         .color-dot {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             cursor: pointer;
-            border: 3px solid #fff;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            border: 2px solid #fff;
             transition: transform 0.2s;
         }
-        .color-dot:active { transform: scale(0.9); }
         .color-dot.active {
             border-color: var(--accent-color);
-            box-shadow: 0 0 12px var(--accent-color);
-            transform: scale(1.1);
+            box-shadow: 0 0 10px var(--accent-color);
+            transform: scale(1.15);
         }
         .dot-white { background: #ffffff; }
         .dot-black { background: #222222; }
         .dot-pink  { background: #ff007f; }
 
-        /* Цена */
-        .price-badge {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 240, 255, 0.3));
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            text-align: center;
-            padding: 10px;
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--accent-color);
-            margin-bottom: 14px;
-            text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-        }
-
-        /* Блоки характеристик */
-        .section-box {
-            background: rgba(11, 15, 25, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-            font-size: 13px;
-        }
-        .section-title {
-            font-size: 11px;
+        /* Название и цена */
+        .p-title {
+            font-size: 15px;
             font-weight: 700;
             text-transform: uppercase;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+        .p-desc {
+            font-size: 12px;
+            color: var(--hint-color);
+            margin-bottom: 10px;
+        }
+        .price-badge {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 240, 255, 0.2));
+            border: 1px solid var(--accent-color);
+            border-radius: 6px;
+            text-align: center;
+            padding: 8px;
+            font-size: 16px;
+            font-weight: 800;
             color: var(--accent-color);
-            margin-bottom: 6px;
-            letter-spacing: 1px;
+            margin-bottom: 12px;
         }
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 3px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .spec-item:last-child { border-bottom: none; }
-        .spec-name { color: var(--hint-color); }
-        .spec-val { font-weight: 600; color: #fff; }
 
         /* Кнопка заказа */
         .checkout-btn {
@@ -140,25 +129,15 @@
             color: #fff;
             border: none;
             width: 100%;
-            padding: 13px;
-            font-size: 14px;
+            padding: 12px;
+            font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
-            margin-top: 6px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
         }
         .checkout-btn:active { transform: scale(0.98); }
-
-        .footer-links {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 14px;
-            font-size: 11px;
-            color: var(--hint-color);
-            text-transform: uppercase;
-        }
     </style>
 </head>
 <body>
@@ -167,74 +146,87 @@
         <div class="brand-logo">MILIPSTORE // CATALOG</div>
     </div>
 
-    <div class="product-container">
-        <!-- Главное фото -->
-        <div class="image-container">
-            <!-- СОВЕТ: Закинь картинки в папку с проектом и назови их white.jpg, black.jpg, pink.jpg -->
-            <img id="product-img" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" alt="MCHOSE A7 V2 Pro">
-        </div>
-
-        <!-- Выбор цвета -->
-        <div class="color-picker">
-            <div class="color-dot dot-white active" title="White" onclick="changeColor('White', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', this)"></div>
-            <div class="color-dot dot-black" title="Black" onclick="changeColor('Black', 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500', this)"></div>
-            <div class="color-dot dot-pink" title="Pink" onclick="changeColor('Pink', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', this)"></div>
-        </div>
-
-        <div class="price-badge">ЦІНА: 2 449 ₴</div>
-
-        <!-- Характеристики -->
-        <div class="section-box">
-            <div class="section-title">Характеристики</div>
-            <div class="spec-item"><span class="spec-name">Підключення:</span><span class="spec-val">2.4G / BT / Type-C</span></div>
-            <div class="spec-item"><span class="spec-name">Сенсор:</span><span class="spec-val">PAW3395</span></div>
-            <div class="spec-item"><span class="spec-name">DPI:</span><span class="spec-val">від 50 до 26 000</span></div>
-            <div class="spec-item"><span class="spec-name">Частота опитування:</span><span class="spec-val">8000 Гц</span></div>
-            <div class="spec-item"><span class="spec-name">Вага:</span><span class="spec-val">59 гр</span></div>
-            <div class="spec-item"><span class="spec-name">Акумулятор:</span><span class="spec-val">500 mAh</span></div>
-        </div>
-
-        <!-- Комплектация -->
-        <div class="section-box">
-            <div class="section-title">Комплектація</div>
-            <div style="font-size: 12px; color: var(--hint-color); line-height: 1.4;">
-                • Мишка MCHOSE A7 V2 PRO<br>
-                • Кабель для зарядки<br>
-                • Бездротовий приймач 2,4 ГГц<br>
-                • Інструкція користувача<br>
-                • Гріпси
-            </div>
-        </div>
-
-        <button class="checkout-btn" onclick="checkout()">ЗАМОВИТИ</button>
+    <div class="catalog-grid" id="catalog">
         
-        <div class="footer-links">
-            <span>Гарантія 1 місяць</span>
-            <span>Відгуки</span>
+        <!-- ТОВАР 1: Мышка с выбором цветов -->
+        <div class="product-card">
+            <div class="image-container">
+                <img id="mouse-img" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500" alt="MCHOSE A7 V2 Pro">
+            </div>
+            
+            <!-- Интерактивный выбор цвета мышки -->
+            <div class="color-picker" id="mouse-colors">
+                <div class="color-dot dot-white active" title="White" onclick="changeMouseColor('White', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=500', this)"></div>
+                <div class="color-dot dot-black" title="Black" onclick="changeMouseColor('Black', 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500', this)"></div>
+                <div class="color-dot dot-pink" title="Rose Red" onclick="changeMouseColor('Rose Red', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', this)"></div>
+            </div>
+
+            <div class="p-title">Мишка MCHOSE A7 V2 Pro</div>
+            <div class="p-desc">PAW3395 • 59г • 8000 Гц • Бездротова</div>
+            <div class="price-badge">2 449 ₴</div>
+            <button class="checkout-btn" onclick="orderMouse()">Замовити мишку</button>
         </div>
+
+        <!-- ТОВАР 2: Клавиатура 1 -->
+        <div class="product-card">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500" alt="Mechanical Keyboard 1">
+            </div>
+            <div class="p-title">Клавіатура Aula F75</div>
+            <div class="p-desc">Hot-swap • RGB підсвічування • Mechanical</div>
+            <div class="price-badge">3 199 ₴</div>
+            <button class="checkout-btn" onclick="orderItem('Клавіатура Aula F75', 3199)">Замовити клавіатуру</button>
+        </div>
+
+        <!-- ТОВАР 3: Клавиатура 2 -->
+        <div class="product-card">
+            <div class="image-container">
+                <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500" alt="Mechanical Keyboard 2">
+            </div>
+            <div class="p-title">Клавіатура Ajazz AK820 Pro</div>
+            <div class="p-desc">TFT дисплей • Три режими • Gasket Mount</div>
+            <div class="price-badge">2 899 ₴</div>
+            <button class="checkout-btn" onclick="orderItem('Клавіатура Ajazz AK820 Pro', 2899)">Замовити клавіатуру</button>
+        </div>
+
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        let selectedColor = 'White';
+        let selectedMouseColor = 'White';
 
-        function changeColor(colorName, imgSrc, element) {
-            document.getElementById('product-img').src = imgSrc;
-            selectedColor = colorName;
+        // Функция смены цвета мышки в каталоге
+        function changeMouseColor(colorName, imgSrc, element) {
+            document.getElementById('mouse-img').src = imgSrc;
+            selectedMouseColor = colorName;
             
-            document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
+            // Переключаем активный кружок
+            let dots = element.parentElement.querySelectorAll('.color-dot');
+            dots.forEach(dot => dot.classList.remove('active'));
             element.classList.add('active');
 
             if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
-        function checkout() {
+        // Заказ мышки с учетом выбранного цвета
+        function orderMouse() {
             let orderData = JSON.stringify({
                 product: "MCHOSE A7 V2 PRO",
-                color: selectedColor,
+                color: selectedMouseColor,
                 price: 2449
+            });
+
+            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+            tg.sendData(orderData);
+        }
+
+        // Заказ остальных товаров (клавиатур)
+        function orderItem(productName, price) {
+            let orderData = JSON.stringify({
+                product: productName,
+                price: price
             });
 
             if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
