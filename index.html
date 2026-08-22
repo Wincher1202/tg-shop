@@ -38,15 +38,31 @@
             color: var(--accent-color);
             text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
         }
-        .lang-switch {
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .icon-btn {
             background: rgba(0, 240, 255, 0.1);
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
+            position: relative;
+        }
+        .badge-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff007f;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
         }
 
         .screen { display: none; }
@@ -63,16 +79,31 @@
             border-radius: 12px;
             padding: 14px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            transition: transform 0.1s;
+            position: relative;
         }
-        .product-card:active { transform: scale(0.98); }
+
+        .fav-icon {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 5;
+        }
 
         .image-container {
             position: relative;
             width: 100%;
-            height: 220px;
-            background: #0b0f19; /* Полный формат без обрезки с фоном */
+            height: 200px;
+            background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -80,11 +111,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
-        .image-container img {
+        .image-container img, .image-container svg {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Картинка полностью видна, без обрезания */
+            object-fit: contain;
         }
 
         .p-title {
@@ -93,6 +125,7 @@
             text-transform: uppercase;
             margin-bottom: 8px;
             color: #fff;
+            cursor: pointer;
         }
         .price-badge {
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 240, 255, 0.2));
@@ -103,6 +136,29 @@
             font-size: 16px;
             font-weight: 800;
             color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            flex: 1;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .action-btn.primary {
+            background: linear-gradient(135deg, #00f0ff, #0077ff);
+            color: #fff;
+            border: none;
         }
 
         .back-btn {
@@ -118,7 +174,7 @@
             font-weight: 700;
         }
 
-        .detail-container {
+        .detail-container, .cart-container {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -192,84 +248,75 @@
             box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
             margin-top: 6px;
         }
-        .checkout-btn:active { transform: scale(0.98); }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 15, 25, 0.8);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .cart-item-info { font-size: 13px; }
+        .cart-item-title { font-weight: 700; color: #fff; }
+        .cart-item-price { color: var(--accent-color); font-weight: 600; font-size: 12px; }
+        .remove-btn { background: none; border: none; color: #ff007f; cursor: pointer; font-size: 16px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="brand-logo" id="logo-text">MILIPSTORE // CATALOG</div>
-        <button class="lang-switch" onclick="toggleLanguage()">UA / ENG</button>
+        <div class="brand-logo">MILIPSTORE</div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="openScreen('favorites')">❤️ <span id="fav-count" class="badge-count">0</span></button>
+            <button class="icon-btn" onclick="openScreen('cart')">🛒 <span id="cart-count" class="badge-count">0</span></button>
+            <button class="icon-btn" onclick="toggleLanguage()">UA/EN</button>
+        </div>
     </div>
 
     <!-- ЭКРАН 1: КАТАЛОГ -->
     <div id="catalog-screen" class="screen active">
-        <div class="catalog-grid" id="products-list">
-            <!-- Товар 1: Мышка -->
-            <div class="product-card" onclick="openProduct('mouse')">
-                <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0.jpg" alt="MCHOSE A7 V2 Pro">
-                </div>
-                <div class="p-title" data-i18n="p1_title">Мишка MCHOSE A7 V2 Pro</div>
-                <div class="price-badge">2 449 ₴</div>
-            </div>
-
-            <!-- Товар 2: Клавиатура -->
-            <div class="product-card" onclick="openProduct('keyboard')">
-                <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg" alt="MCHOSE GX87">
-                </div>
-                <div class="p-title" data-i18n="p2_title">Клавіатура MCHOSE GX87</div>
-                <div class="price-badge">3 899 ₴</div>
-            </div>
-
-            <!-- Товар 3: Наушники -->
-            <div class="product-card" onclick="openProduct('headset')">
-                <div class="image-container">
-                    <img src="https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg" alt="MCHOSE G9 Pro">
-                </div>
-                <div class="p-title" data-i18n="p3_title">Навушники MCHOSE G9 Pro</div>
-                <div class="price-badge">2 999 ₴</div>
-            </div>
-        </div>
+        <div class="catalog-grid" id="catalog-list"></div>
     </div>
 
     <!-- ЭКРАН 2: ДЕТАЛИ ТОВАРА -->
     <div id="detail-screen" class="screen">
-        <button class="back-btn" onclick="closeProduct()" data-i18n="back">← Назад</button>
-        
+        <button class="back-btn" onclick="openScreen('catalog')">← Назад</button>
         <div class="detail-container">
-            <div class="price-badge" id="det-price" style="margin-bottom: 14px;">2 449 ₴</div>
-
-            <div class="image-container">
-                <img id="detail-img" alt="Product Image">
+            <div class="price-badge" id="det-price"></div>
+            <div class="image-container" id="det-img-container"></div>
+            <div class="color-picker" id="color-picker-box">
+                <div class="color-dot dot-black active" onclick="changeColor('Black', 'black', this)"></div>
+                <div class="color-dot dot-white" onclick="changeColor('White', 'white', this)"></div>
+                <div class="color-dot dot-pink" onclick="changeColor('Pink', 'pink', this)"></div>
             </div>
-
-            <!-- Выбор цвета -->
-            <div class="color-picker">
-                <div class="color-dot dot-black active" title="Black" onclick="changeColor('Black', 'black', this)"></div>
-                <div class="color-dot dot-white" title="White" onclick="changeColor('White', 'white', this)"></div>
-                <div class="color-dot dot-pink" title="Pink" onclick="changeColor('Pink', 'pink', this)"></div>
-            </div>
-
-            <!-- Характеристики -->
-            <div class="section-box" style="margin-top: 14px;">
-                <div class="section-title" data-i18n="specs_title">Характеристики</div>
-                <div id="spec-list">
-                    <!-- Заполняется динамически -->
-                </div>
-            </div>
-
-            <!-- Комплектация -->
             <div class="section-box">
-                <div class="section-title" data-i18n="bundle_title">Комплектація</div>
-                <div style="font-size: 12px; color: var(--hint-color); line-height: 1.5;" id="bundle-text">
-                    <!-- Заполняется динамически -->
-                </div>
+                <div class="section-title">Характеристики</div>
+                <div id="spec-list"></div>
             </div>
+            <button class="checkout-btn" onclick="addCurrentToCart()">Додати в кошик 🛒</button>
+        </div>
+    </div>
 
-            <!-- Кнопка заказа в один клик -->
-            <button class="checkout-btn" onclick="checkout()" data-i18n="order_btn">ЗАМОВИТИ В ОДИН КЛІК</button>
+    <!-- ЭКРАН 3: КОШИК -->
+    <div id="cart-screen" class="screen">
+        <button class="back-btn" onclick="openScreen('catalog')">← Каталог</button>
+        <div class="cart-container">
+            <div class="section-title" style="margin-bottom: 12px;">Ваш кошик</div>
+            <div id="cart-items-box"></div>
+            <div class="price-badge" id="cart-total" style="margin: 14px 0;">Разом: 0 ₴</div>
+            <button class="checkout-btn" onclick="checkoutCart()">ОПЛАТИТИ ЗАМОВЛЕННЯ 💳</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 4: ИЗБРАННОЕ -->
+    <div id="favorites-screen" class="screen">
+        <button class="back-btn" onclick="openScreen('catalog')">← Каталог</button>
+        <div class="cart-container">
+            <div class="section-title" style="margin-bottom: 12px;">Обрані товари</div>
+            <div id="fav-items-box"></div>
         </div>
     </div>
 
@@ -278,189 +325,228 @@
         tg.expand();
 
         let currentLang = 'ua';
-        let currentProduct = 'mouse';
+        let activeProductId = null;
         let selectedColor = 'Black';
+        
+        let cart = [];
+        let favorites = [];
 
-        // База товаров с характеристиками и ссылками на фото из GitHub
-        const productsData = {
+        // База товаров (мышки с твоими фотками из GitHub, клава и уши со встроенными красивыми иконками)
+        const products = {
             mouse: {
+                id: 'mouse',
                 titleUA: "Мишка MCHOSE A7 V2 Pro",
                 titleENG: "Mouse MCHOSE A7 V2 Pro",
                 price: 2449,
+                isCustomImg: true,
                 images: {
                     black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
                     white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
                     pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
                 },
-                specsUA: [
-                    ["Підключення:", "2.4G / BT / Type-C"],
-                    ["Сенсор:", "PAW3395"],
-                    ["DPI:", "від 50 до 26 000"],
-                    ["Частота опитування:", "8000 Гц"],
-                    ["Вага:", "59 гр"],
-                    ["Акумулятор:", "500 mAh"]
-                ],
-                specsENG: [
-                    ["Connection:", "2.4G / BT / Type-C"],
-                    ["Sensor:", "PAW3395"],
-                    ["DPI:", "50 - 26,000"],
-                    ["Polling Rate:", "8000 Hz"],
-                    ["Weight:", "59 g"],
-                    ["Battery:", "500 mAh"]
-                ],
-                bundleUA: "• Мишка MCHOSE A7 V2 PRO<br>• Кабель для зарядки<br>• Бездротовий приймач 2,4 ГГц<br>• Інструкція користувача<br>• Гріпси",
-                bundleENG: "• MCHOSE A7 V2 PRO Mouse<br>• Charging Cable<br>• 2.4GHz Wireless Receiver<br>• User Manual<br>• Grips"
+                specsUA: [["Сенсор", "PAW3395"], ["Вага", "59г"], ["Частота", "8000 Гц"]],
+                specsENG: [["Sensor", "PAW3395"], ["Weight", "59g"], ["Rate", "8000 Hz"]]
             },
             keyboard: {
+                id: 'keyboard',
                 titleUA: "Клавіатура MCHOSE GX87",
                 titleENG: "Keyboard MCHOSE GX87",
                 price: 3899,
-                images: {
-                    black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
-                },
-                specsUA: [
-                    ["Формат:", "TKL (87 клавіш)"],
-                    ["Перемикачі:", "Mechanical Custom Switches"],
-                    ["Підключення:", "Трьожрежимне (Bluetooth / 2.4G / Type-C)"],
-                    ["Підсвічування:", "RGB LED"],
-                    ["Акумулятор:", "4000 mAh"]
-                ],
-                specsENG: [
-                    ["Layout:", "TKL (87 keys)"],
-                    ["Switches:", "Mechanical Custom Switches"],
-                    ["Connectivity:", "Tri-mode (Bluetooth / 2.4G / Type-C)"],
-                    ["Backlight:", "RGB LED"],
-                    ["Battery:", "4000 mAh"]
-                ],
-                bundleUA: "• Клавіатура MCHOSE GX87<br>• Знімний Type-C кабель<br>• Пулер для свічів та кейкапів<br>• Додаткові свічі<br>• Інструкція",
-                bundleENG: "• MCHOSE GX87 Keyboard<br>• Detachable Type-C Cable<br>• Switch & Keycap Puller<br>• Extra Switches<br>• Manual"
+                isCustomImg: false,
+                svgIcon: `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="20" width="180" height="80" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="20" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="40" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="60" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="80" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="100" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="120" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="140" y="30" width="15" height="15" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="165" y="30" width="15" height="15" rx="3" fill="#ff007f" fill-opacity="0.5"/><rect x="20" y="52" width="160" height="40" rx="4" fill="#0b0f19"/></svg>`,
+                specsUA: [["Формат", "TKL 87%"], ["Свічі", "Mechanical Custom"], ["Підключення", "3 режиму"]],
+                specsENG: [["Layout", "TKL 87%"], ["Switches", "Mechanical Custom"], ["Connection", "Tri-mode"]]
             },
             headset: {
+                id: 'headset',
                 titleUA: "Навушники MCHOSE G9 Pro",
                 titleENG: "Headset MCHOSE G9 Pro",
                 price: 2999,
-                images: {
-                    black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
-                },
-                specsUA: [
-                    ["Тип:", "Бездротові ігрові навушники"],
-                    ["Динаміки:", "50 мм з неодимовими магнітами"],
-                    ["Звук:", "Об'ємний 7.1 Virtual Surround"],
-                    ["Автономність:", "До 45 годин роботи"],
-                    ["Мікрофон:", "З шумозаглушенням"]
-                ],
-                specsENG: [
-                    ["Type:", "Wireless Gaming Headset"],
-                    ["Drivers:", "50 mm Neodymium"],
-                    ["Audio:", "7.1 Virtual Surround"],
-                    ["Battery Life:", "Up to 45 hours"],
-                    ["Mic:", "Noise-cancelling"]
-                ],
-                bundleUA: "• Гарнітура MCHOSE G9 Pro<br>• USB-радіопередавач 2.4GHz<br>• Кабель аудіо/зарядки Type-C<br>• Знімний мікрофон<br>• Чохол",
-                bundleENG: "• MCHOSE G9 Pro Headset<br>• 2.4GHz USB Transmitter<br>• Type-C Audio/Charge Cable<br>• Detachable Mic<br>• Pouch"
+                isCustomImg: false,
+                svgIcon: `<svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 70C50 40 70 20 100 20C130 20 150 40 150 70" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/><rect x="35" y="55" width="25" height="40" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="140" y="55" width="25" height="40" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><path d="M55 85L30 100" stroke="#ff007f" stroke-width="3" stroke-linecap="round"/></svg>`,
+                specsUA: [["Динаміки", "50мм"], ["Звук", "7.1 Surround"], ["Автономність", "45 годин"]],
+                specsENG: [["Drivers", "50mm"], ["Audio", "7.1 Surround"], ["Battery", "45 hours"]]
             }
         };
 
-        const translations = {
-            ua: {
-                back: "← Назад",
-                specs_title: "Характеристики",
-                bundle_title: "Комплектація",
-                order_btn: "ЗАМОВИТИ В ОДИН КЛІК",
-                p1_title: "Мишка MCHOSE A7 V2 Pro",
-                p2_title: "Клавіатура MCHOSE GX87",
-                p3_title: "Навушники MCHOSE G9 Pro"
-            },
-            eng: {
-                back: "← Back",
-                specs_title: "Specifications",
-                bundle_title: "What's in the box",
-                order_btn: "ORDER IN 1 CLICK",
-                p1_title: "Mouse MCHOSE A7 V2 Pro",
-                p2_title: "Keyboard MCHOSE GX87",
-                p3_title: "Headset MCHOSE G9 Pro"
-            }
-        };
+        function renderCatalog() {
+            let container = document.getElementById('catalog-list');
+            container.innerHTML = '';
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'ua' ? 'eng' : 'ua';
-            let t = translations[currentLang];
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                let key = el.getAttribute('data-i18n');
-                if (t[key]) el.innerHTML = t[key];
+            Object.values(products).forEach(p => {
+                let title = currentLang === 'ua' ? p.titleUA : p.titleENG;
+                let isFav = favorites.includes(p.id);
+                let mediaHtml = p.isCustomImg ? `<img src="${p.images.black}" alt="${title}">` : p.svgIcon;
+
+                container.innerHTML += `
+                    <div class="product-card">
+                        <div class="fav-icon" onclick="toggleFavorite('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
+                        <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
+                        <div class="p-title" onclick="openDetail('${p.id}')">${title}</div>
+                        <div class="price-badge">${p.price.toLocaleString()} ₴</div>
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="openDetail('${p.id}')">Опис</button>
+                            <button class="action-btn primary" onclick="quickAddToCart('${p.id}')">В кошик</button>
+                        </div>
+                    </div>
+                `;
             });
-
-            updateProductView();
-            if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+            updateCounters();
         }
 
-        function openProduct(productId) {
-            currentProduct = productId;
-            updateProductView();
-
-            document.getElementById('catalog-screen').classList.remove('active');
-            document.getElementById('detail-screen').classList.add('active');
+        function openScreen(screenName) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenName + '-screen').classList.add('active');
             window.scrollTo(0, 0);
+
+            if (screenName === 'cart') renderCart();
+            if (screenName === 'favorites') renderFavorites();
+            if (screenName === 'catalog') renderCatalog();
             if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
-        function updateProductView() {
-            let prod = productsData[currentProduct];
+        function openDetail(id) {
+            activeProductId = id;
+            let p = products[id];
             
-            // Текст и цены
-            document.getElementById('det-price').innerHTML = prod.price.toLocaleString() + ' ₴';
-            document.getElementById('detail-img').src = prod.images[selectedColor.toLowerCase()];
+            document.getElementById('det-price').innerHTML = p.price.toLocaleString() + ' ₴';
             
-            // Характеристики
-            let specsListHtml = '';
-            let specsArray = currentLang === 'ua' ? prod.specsUA : prod.specsENG;
-            specsArray.forEach(spec => {
-                specsListHtml += `<div class="spec-item"><span class="spec-name">${spec[0]}</span><span class="spec-val">${spec[1]}</span></div>`;
+            let imgBox = document.getElementById('det-img-container');
+            imgBox.innerHTML = p.isCustomImg ? `<img id="detail-img" src="${p.images.black}">` : p.svgIcon;
+            
+            let colorPicker = document.getElementById('color-picker-box');
+            colorPicker.style.display = p.isCustomImg ? 'flex' : 'none';
+
+            let specsHtml = '';
+            let specsArr = currentLang === 'ua' ? p.specsUA : p.specsENG;
+            specsArr.forEach(s => {
+                specsHtml += `<div class="spec-item"><span class="spec-name">${s[0]}</span><span class="spec-val">${s[1]}</span></div>`;
             });
-            document.getElementById('spec-list').innerHTML = specsListHtml;
+            document.getElementById('spec-list').innerHTML = specsHtml;
 
-            // Комплектация
-            document.getElementById('bundle-text').innerHTML = currentLang === 'ua' ? prod.bundleUA : prod.bundleENG;
-        }
-
-        function closeProduct() {
-            document.getElementById('detail-screen').classList.remove('active');
-            document.getElementById('catalog-screen').classList.add('active');
-            window.scrollTo(0, 0);
-            if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+            openScreen('detail');
         }
 
         function changeColor(colorName, colorKey, element) {
             selectedColor = colorName;
-            let prod = productsData[currentProduct];
-            
-            document.getElementById('detail-img').src = prod.images[colorKey];
-
-            let dots = element.parentElement.querySelectorAll('.color-dot');
-            dots.forEach(dot => dot.classList.remove('active'));
+            let p = products[activeProductId];
+            if (p && p.isCustomImg) {
+                document.getElementById('detail-img').src = p.images[colorKey];
+            }
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
             element.classList.add('active');
-
             if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
-        function checkout() {
-            let prod = productsData[currentProduct];
-            let title = currentLang === 'ua' ? prod.titleUA : prod.titleENG;
+        function toggleFavorite(id) {
+            let index = favorites.indexOf(id);
+            if (index > -1) favorites.splice(index, 1);
+            else favorites.push(id);
+            renderCatalog();
+        }
 
-            let orderData = JSON.stringify([{
+        function quickAddToCart(id) {
+            let p = products[id];
+            cart.push({
+                id: p.id,
+                title: currentLang === 'ua' ? p.titleUA : p.titleENG,
+                price: p.price,
+                color: 'Standart'
+            });
+            updateCounters();
+            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+        }
+
+        function addCurrentToCart() {
+            let p = products[activeProductId];
+            cart.push({
+                id: p.id,
+                title: (currentLang === 'ua' ? p.titleUA : p.titleENG) + (p.isCustomImg ? ` (${selectedColor})` : ''),
+                price: p.price,
+                color: selectedColor
+            });
+            updateCounters();
+            openScreen('cart');
+            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+        }
+
+        function renderCart() {
+            let box = document.getElementById('cart-items-box');
+            let totalBox = document.getElementById('cart-total');
+            box.innerHTML = '';
+            
+            if (cart.length === 0) {
+                box.innerHTML = '<div style="color:var(--hint-color); text-align:center; padding: 20px;">Кошик порожній</div>';
+                totalBox.innerHTML = 'Разом: 0 ₴';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                box.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">${item.price.toLocaleString()} ₴</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">✕</button>
+                    </div>
+                `;
+            });
+            totalBox.innerHTML = `Разом: ${total.toLocaleString()} ₴`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCounters();
+        }
+
+        function renderFavorites() {
+            let box = document.getElementById('fav-items-box');
+            box.innerHTML = '';
+            if (favorites.length === 0) {
+                box.innerHTML = '<div style="color:var(--hint-color); text-align:center; padding: 20px;">Немає улюблених товарів</div>';
+                return;
+            }
+            favorites.forEach(id => {
+                let p = products[id];
+                let title = currentLang === 'ua' ? p.titleUA : p.titleENG;
+                box.innerHTML += `
+                    <div class="cart-item" style="cursor:pointer;" onclick="openDetail('${p.id}')">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${title}</div>
+                            <div class="cart-item-price">${p.price.toLocaleString()} ₴</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function updateCounters() {
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('fav-count').innerText = favorites.length;
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ua' ? 'eng' : 'ua';
+            renderCatalog();
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) return;
+            let orderData = cart.map(item => ({
                 designer: "MILIPSTORE",
-                title: `${title} (${selectedColor})`,
-                price: prod.price
-            }]);
+                title: item.title,
+                price: item.price
+            }));
 
             if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-            tg.sendData(orderData);
+            tg.sendData(JSON.stringify(orderData));
         }
+
+        renderCatalog();
     </script>
 </body>
 </html>
