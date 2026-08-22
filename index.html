@@ -20,7 +20,7 @@
             color: var(--text-color);
             margin: 0;
             padding: 12px;
-            padding-right: 72px; /* ОСТУП СПРАВА, ЧТОБЫ РАМКА ТОВАРОВ НЕ ДОХОДИЛА ДО КНОПОК */
+            padding-right: 72px; /* Оступ справа под боковые кнопки */
             padding-bottom: 90px;
         }
         .header {
@@ -41,7 +41,7 @@
         }
         .header-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
         }
         .icon-btn {
@@ -66,7 +66,7 @@
             border-radius: 50%;
         }
 
-        /* ПРАВЫЙ ОСТРОВ С КНОПКАМИ СТРОГО СПРАВА В САМОМ КОНЦЕ */
+        /* Правый остров с кнопками связи */
         .floating-sidebar {
             position: fixed;
             right: 8px;
@@ -120,7 +120,7 @@
             position: relative;
         }
 
-        /* ЛАЙК В ВЕРХНЕМ ПРАВОМ УГЛУ КАРТОЧКИ */
+        /* Лайк в верхнем правом углу карточки */
         .fav-icon {
             position: absolute;
             top: 14px;
@@ -138,11 +138,11 @@
             z-index: 5;
         }
 
-        /* ФОТО НА 100% ШИРИНУ БЛОКА КАРТОЧКИ */
+        /* Изменили пропорции на 16:9, чтобы картинка целиком помещалась */
         .image-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 16 / 9;
             background: #0b0f19;
             border-radius: 8px;
             overflow: hidden;
@@ -156,7 +156,7 @@
         .image-container img, .image-container svg {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Картинка теперь не обрезается */
         }
 
         .p-title {
@@ -166,7 +166,7 @@
             margin-bottom: 8px;
             color: #fff;
             cursor: pointer;
-            padding-right: 36px; /* Защита текста от наползания на иконку лайка */
+            padding-right: 36px;
         }
         .price-badge {
             background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 240, 255, 0.2));
@@ -308,7 +308,7 @@
 </head>
 <body>
 
-    <!-- ПРАВИЙ ОСТРОВ С КНОПКАМИ В САМОМ ПРАВОМ КРАЮ -->
+    <!-- Правый блок с кнопками -->
     <div class="floating-sidebar">
         <div class="side-btn" title="Зв'язок">📞</div>
         <div class="side-btn" title="Правила">📜</div>
