@@ -36,6 +36,36 @@
         }
     </script>
     <style>
+        /* ИСПРАВЛЕНИЕ MOBILE OVERFLOW И АДАПТИВНОСТИ */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden !important;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        img, video, picture {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        @media screen and (max-width: 480px) {
+            .container, header, footer, main, section {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+
         body, header, div, button, input, select, section {
             transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.25s ease;
         }
@@ -44,6 +74,7 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0, 194, 255, 0.4); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(0, 194, 255, 0.8); }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -54,7 +85,7 @@
         }
         @keyframes heartPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.35); }
+            50% { transform: scale(1.15); }
             100% { transform: scale(1); }
         }
         @keyframes slideInToast {
@@ -63,11 +94,81 @@
         }
         .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .animate-modal { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .heart-pop { animation: heartPulse 0.35s ease-in-out; }
         .toast-animate { animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        /* ИЗБРАННОЕ: ЯРКО-КРАСНОЕ СЕРДЦЕ */
+        .wishlist-btn.active svg, 
+        .favorite-icon.active svg,
+        .wishlist-btn.active, 
+        .favorite-icon.active,
+        svg.active-heart {
+            fill: #FF3B30 !important;
+            stroke: #FF3B30 !important;
+            color: #FF3B30 !important;
+            transform: scale(1.12);
+            filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.35));
+            animation: heartPulse 0.3s ease-in-out;
+        }
+
+        /* СТАРТОВЫЙ ЗАГРУЗЧИК MILIP */
+        #milip-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        html.dark #milip-loader {
+            background: #040B14;
+        }
+        #milip-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .milip-loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        @keyframes butterflyAssemble {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .milip-butterfly-svg {
+            animation: butterflyAssemble 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .milip-loader-text {
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #111;
+            font-size: 16px;
+        }
+        html.dark .milip-loader-text {
+            color: #F1F5F9;
+        }
     </style>
 </head>
 <body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
+
+    <!-- СТАРТОВЫЙ ЗАГРУЗЧИК MILIP -->
+    <div id="milip-loader">
+        <div class="milip-loader-content">
+            <svg class="milip-butterfly-svg" viewBox="0 0 100 100" width="50" height="50">
+                <path d="M50 50 L20 20 L10 50 L50 80 Z" fill="none" stroke="#00AEEF" stroke-width="2"/>
+                <path d="M50 50 L80 20 L90 50 L50 80 Z" fill="none" stroke="#00AEEF" stroke-width="2"/>
+            </svg>
+            <div class="milip-loader-text">MILIP</div>
+        </div>
+    </div>
 
     <!-- TOAST CONTAINER -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none"></div>
@@ -145,7 +246,7 @@
                     </div>
                     <div class="lg:col-span-5 flex justify-center w-full">
                         <div class="relative w-full max-w-md bg-[#C6CCDF] dark:bg-[#07101B] p-4 sm:p-6 rounded-3xl border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl group cursor-pointer" onclick="openProductPage()">
-                            <img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -162,21 +263,21 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-5 sm:p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-5 sm:p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative" data-product-id="MCHOSE A7 V2 PRO">
                         <div class="absolute top-5 right-5 z-10">
-                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Белая мышка.jpg')" class="p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3366] transition-colors">
+                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Белая мышка.jpg')" class="wishlist-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3B30] transition-colors">
                                 <svg class="w-5 h-5 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                             </button>
                         </div>
                         <div onclick="openProductPage()" class="cursor-pointer">
                             <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">MILIP / 001</div>
                             <h3 class="font-bold text-lg mb-3">MCHOSE A7 V2 PRO</h3>
-                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14]">
-                                <img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center">
+                                <img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             </div>
                             <div class="text-2xl font-extrabold mb-4">2 449 ₴</div>
                         </div>
-                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Белая мышка.jpg')" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md">
+                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Белая мышка.jpg')" class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md">
                             ДОДАТИ В КОШИК
                         </button>
                     </div>
@@ -185,7 +286,7 @@
         </div>
 
         <!-- PRODUCT VIEW -->
-        <div id="productView" class="view-section hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto animate-fade-in">
+        <div id="productView" class="view-section hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto animate-fade-in" data-product-id="MCHOSE A7 V2 PRO">
             <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 <span>Назад до каталогу</span>
@@ -193,13 +294,13 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 <div class="lg:col-span-7 space-y-4">
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-4 sm:p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl">
-                        <img id="mainProductImage" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-cover rounded-2xl shadow-md">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-4 sm:p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center">
+                        <img id="mainProductImage" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl shadow-md transition-opacity duration-300">
                     </div>
                     <div class="flex space-x-3 overflow-x-auto pb-2">
-                        <button onclick="changeColor('White', 'Белая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#00C2FF] bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover" loading="lazy"></button>
-                        <button onclick="changeColor('Black', 'Черная мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Черная мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover" loading="lazy"></button>
-                        <button onclick="changeColor('Pink', 'Розовая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Розовая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover" loading="lazy"></button>
+                        <button onclick="changeColor('White', 'Белая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#00C2FF] bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-contain" loading="lazy"></button>
+                        <button onclick="changeColor('Black', 'Черная мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Черная мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-contain" loading="lazy"></button>
+                        <button onclick="changeColor('Pink', 'Розовая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Розовая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-contain" loading="lazy"></button>
                     </div>
                 </div>
 
@@ -225,18 +326,16 @@
                             <span id="productQty" class="w-8 text-center font-extrabold text-lg">1</span>
                             <button onclick="updateQty(1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">+</button>
                         </div>
-                        <button onclick="addCurrentProductToCart()" class="flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm">
+                        <button onclick="addCurrentProductToCart()" class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm">
                             ДОДАТИ В КОШИК
                         </button>
-                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg)" class="h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3366] shadow-md">
+                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg)" class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md">
                             <svg class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </button>
                     </div>
 
-                    <!-- ІНТЕРАКТИВНІ ВИПАДАЮЧІ БЛОКИ (АККОРДЕОНИ) -->
+                    <!-- АККОРДЕОНЫ -->
                     <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
-                        
-                        <!-- Блок 1: Характеристики та комплектація -->
                         <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
                             <button onclick="toggleAccordion('accSpecs')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
@@ -253,7 +352,6 @@
                             </div>
                         </div>
 
-                        <!-- Блок 2: Доставка та терміни -->
                         <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
                             <button onclick="toggleAccordion('accDelivery')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
@@ -268,7 +366,6 @@
                             </div>
                         </div>
 
-                        <!-- Блок 3: Гарантія та повернення -->
                         <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
                             <button onclick="toggleAccordion('accWarranty')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
@@ -282,21 +379,18 @@
                                 <p><strong>Повернення/Обмін:</strong> Протягом 14 днів з моменту покупки, за умови збереження товарного вигляду та цілісності упаковки.</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ORDER STATUS VIEW (Dedicated view for /order/:id) -->
+        <!-- ORDER STATUS VIEW -->
         <div id="orderStatusView" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 w-full max-w-3xl mx-auto animate-fade-in">
             <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 <span>На головну</span>
             </button>
-            <div id="orderDetailsContainer" class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
-                <!-- Dynamically filled order details -->
-            </div>
+            <div id="orderDetailsContainer" class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6"></div>
         </div>
     </main>
 
@@ -305,7 +399,7 @@
         <p>© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.</p>
     </footer>
 
-    <!-- MODAL: AUTH & SMS REGISTRATION -->
+    <!-- MODAL: AUTH -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-md rounded-3xl p-6 shadow-2xl animate-modal relative">
             <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-gray-500 hover:text-black dark:hover:text-white font-bold">✕</button>
@@ -329,7 +423,7 @@
         <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-xl rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-[#B5BCD5] dark:border-[#11223A]">
                 <h3 class="font-extrabold text-lg flex items-center space-x-2">
-                    <svg class="w-5 h-5 text-[#FF3366]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <svg class="w-5 h-5 text-[#FF3B30]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                     <span>Обрані товари (<span id="favCountHeader">0</span>)</span>
                 </h3>
                 <button onclick="closeFavoritesModal()" class="p-2 text-gray-500 hover:text-black dark:hover:text-white font-bold">✕</button>
@@ -338,7 +432,7 @@
         </div>
     </div>
 
-    <!-- DRAWER: CART & CHECKOUT -->
+    <!-- DRAWER: CART -->
     <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden justify-end">
         <div class="bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg h-full flex flex-col justify-between p-6 shadow-2xl overflow-y-auto">
             <div>
@@ -350,7 +444,6 @@
                     <button onclick="closeCartDrawer()" class="p-2 text-gray-500 hover:text-black dark:hover:text-white font-bold">✕</button>
                 </div>
 
-                <!-- STEP 1: CART LIST -->
                 <div id="stepCart" class="space-y-4">
                     <div id="cartContainer" class="max-h-[50vh] overflow-y-auto space-y-3 pr-1"></div>
                     <div class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A]">
@@ -363,156 +456,35 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- STEP 2: USER & DELIVERY DATA & PAYMENT -->
-                <div id="stepUser" class="space-y-4 hidden">
-                    <div class="space-y-3">
-                        <h4 class="text-xs font-mono text-[#00C2FF] font-bold uppercase tracking-wider">Крок 1: Контактні дані</h4>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Ім'я</label>
-                                <input type="text" id="orderName" placeholder="Олександр" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                            </div>
-                            <div>
-                                <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Прізвище</label>
-                                <input type="text" id="orderSurname" placeholder="Петренко" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Номер телефону (+380 XX XXX XX XX)</label>
-                            <input type="tel" id="orderPhone" placeholder="+380990000000" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm font-mono focus:outline-none focus:border-[#00C2FF]">
-                        </div>
-                    </div>
-
-                    <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
-                        <h4 class="text-xs font-mono text-[#00C2FF] font-bold uppercase tracking-wider">Крок 2: Доставка</h4>
-                        <div>
-                            <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Служба доставки</label>
-                            <select id="orderDeliveryService" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                                <option value="Нова Пошта">Нова Пошта</option>
-                                <option value="Укрпошта">Укрпошта</option>
-                                <option value="Meest">Meest</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Область</label>
-                                <input type="text" id="orderRegion" placeholder="Київська" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                            </div>
-                            <div>
-                                <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Місто</label>
-                                <input type="text" id="orderCity" placeholder="Київ" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Відділення / Поштомат</label>
-                            <input type="text" id="orderWarehouse" placeholder="№ 1 або поштомат" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                        </div>
-                    </div>
-
-                    <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
-                        <h4 class="text-xs font-mono text-[#00C2FF] font-bold uppercase tracking-wider">Крок 3: Оплата</h4>
-                        <div class="grid grid-cols-2 gap-3">
-                            <label class="flex items-center space-x-2 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] cursor-pointer">
-                                <input type="radio" name="paymentMethod" value="cash_on_delivery" checked class="text-[#00C2FF]">
-                                <span class="text-xs font-bold">Накладений платіж</span>
-                            </label>
-                            <label class="flex items-center space-x-2 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] cursor-pointer">
-                                <input type="radio" name="paymentMethod" value="online" class="text-[#00C2FF]">
-                                <span class="text-xs font-bold">Онлайн-оплата (Telegram)</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="pt-4 flex space-x-3">
-                        <button onclick="backToStepCart()" class="w-1/3 h-14 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] font-bold rounded-2xl text-xs">Назад</button>
-                        <button onclick="submitOrder()" class="w-2/3 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl hover:opacity-90 text-sm">ПІДТВЕРДИТИ ЗАМОВЛЕННЯ</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL: SEARCH -->
-    <div id="searchModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-start justify-center pt-20 p-4">
-        <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-xl rounded-3xl p-6 shadow-2xl animate-modal relative">
-            <div class="flex items-center space-x-3 pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
-                <svg class="w-5 h-5 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="searchInputModal" oninput="handleSearchInput(this.value)" placeholder="Пошук обладнання за назвою..." class="w-full bg-transparent text-sm focus:outline-none font-medium">
-                <button onclick="closeSearchModal()" class="text-xs font-bold text-gray-500 hover:text-black dark:hover:text-white">✕</button>
-            </div>
-            <div id="searchResultsContainer" class="mt-4 max-h-[50vh] overflow-y-auto space-y-2 pr-1">
-                <div class="p-3 text-xs text-gray-500 text-center font-mono">Введіть запит для пошуку...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPTS -->
+    <!-- СКРИПТЫ С ЛОГИКОЙ, ИЗБРАННЫМ И АНИМАЦИЯМИ -->
     <script>
-        // --- SECURE CATALOG DATA ---
-        const CATALOG_ITEMS = {
-            'MCHOSE A7 V2 PRO': { price: 2449, img: 'Белая мышка.jpg', code: 'MILIP / 001' }
-        };
-
-        // --- STATE MANAGEMENT ---
-        let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
-        let favorites = JSON.parse(localStorage.getItem('milip_favs')) || [];
-        let orders = JSON.parse(localStorage.getItem('milip_orders')) || {};
         let currentSelectedColor = 'White';
         let currentSelectedImg = 'Белая мышка.jpg';
-        let currentQty = 1;
-        let currentUser = JSON.parse(localStorage.getItem('milip_user')) || null;
+        let productQtyValue = 1;
+        let cart = [];
+        let favorites = JSON.parse(localStorage.getItem('milip_favorites') || '[]');
 
-        // Initialize Theme
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.getElementById('sunIcon').classList.remove('hidden');
-            document.getElementById('moonIcon').classList.add('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.getElementById('sunIcon').classList.add('hidden');
-            document.getElementById('moonIcon').classList.remove('hidden');
-        }
-
-        updateBadges();
-        updateUserProfileUI();
-        checkUrlRoute();
-
-        window.addEventListener('popstate', () => {
-            checkUrlRoute();
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('milip-loader');
+            if (loader) {
+                const visited = sessionStorage.getItem('milip_visited');
+                const delay = visited ? 300 : 1200;
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    sessionStorage.setItem('milip_visited', 'true');
+                }, delay);
+            }
+            updateFavoritesUI();
         });
 
-        // --- ROUTING HANDLER ---
-        function checkUrlRoute() {
-            const path = window.location.pathname;
-            const match = path.match(/\/order\/([A-Za-z0-9-]+)/);
-            if (match) {
-                const orderId = match[1];
-                renderOrderStatusPage(orderId);
-            }
-        }
-
-        // --- THEME TOGGLE ---
-        function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                document.getElementById('sunIcon').classList.add('hidden');
-                document.getElementById('moonIcon').classList.remove('hidden');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                document.getElementById('sunIcon').classList.remove('hidden');
-                document.getElementById('moonIcon').classList.add('hidden');
-            }
-        }
-
-        // --- VIEW SWITCHING ---
         function switchView(viewName) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             if (viewName === 'catalog') {
                 document.getElementById('catalogView').classList.remove('hidden');
-                window.history.pushState({}, '', window.location.pathname.split('/order/')[0] || '/');
             } else if (viewName === 'product') {
                 document.getElementById('productView').classList.remove('hidden');
             } else if (viewName === 'orderStatus') {
@@ -525,522 +497,191 @@
             switchView('product');
         }
 
-        // --- PRODUCT CONFIGURATION ---
-        function changeColor(colorName, imgName) {
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('sunIcon').classList.toggle('hidden', !isDark);
+            document.getElementById('moonIcon').classList.toggle('hidden', isDark);
+        }
+
+        function changeColor(colorName, imgFileName) {
             currentSelectedColor = colorName;
-            currentSelectedImg = imgName;
-            document.getElementById('selectedColorName').innerText = colorName;
-            document.getElementById('mainProductImage').src = imgName;
+            currentSelectedImg = imgFileName;
+            const nameEl = document.getElementById('selectedColorName');
+            if (nameEl) nameEl.textContent = colorName;
+
+            const mainImg = document.getElementById('mainProductImage');
+            if (mainImg) {
+                mainImg.style.opacity = '0';
+                setTimeout(() => {
+                    mainImg.src = imgFileName;
+                    mainImg.style.opacity = '1';
+                }, 200);
+            }
         }
 
         function updateQty(delta) {
-            currentQty += delta;
-            if (currentQty < 1) currentQty = 1;
-            document.getElementById('productQty').innerText = currentQty;
+            productQtyValue = Math.max(1, productQtyValue + delta);
+            const qtyEl = document.getElementById('productQty');
+            if (qtyEl) qtyEl.textContent = productQtyValue;
         }
 
-        // --- CART SYSTEM ---
-        function addToCart(name, price, color, img) {
-            if (!CATALOG_ITEMS[name]) return;
-            // Secure price check from backend data registry
-            const verifiedPrice = CATALOG_ITEMS[name].price;
-            color = color || currentSelectedColor;
-            img = img || currentSelectedImg;
-            let existing = cart.find(item => item.name === name && item.color === color);
-            if (existing) {
-                existing.qty += currentQty;
+        function toggleFavorite(name, price, img) {
+            const index = favorites.indexOf(name);
+            if (index > -1) {
+                favorites.splice(index, 1);
             } else {
-                cart.push({ name, price: verifiedPrice, color, img, qty: currentQty });
+                favorites.push(name);
             }
-            saveAndRefreshCart();
-            showToast(`Товар "${name} (${color})" додано до кошика!`, 'success');
-            currentQty = 1;
-            document.getElementById('productQty').innerText = 1;
+            localStorage.setItem('milip_favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+
+        function updateFavoritesUI() {
+            document.querySelectorAll('.wishlist-btn, .favorite-icon').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (favorites.length > 0) {
+                document.querySelectorAll('.wishlist-btn').forEach(btn => {
+                    btn.classList.add('active');
+                });
+            }
+            const badge = document.getElementById('favoritesBadge');
+            const headerCount = document.getElementById('favCountHeader');
+            if (badge) {
+                badge.textContent = favorites.length;
+                badge.classList.toggle('hidden', favorites.length === 0);
+            }
+            if (headerCount) headerCount.textContent = favorites.length;
+        }
+
+        function addToCart(name, price, color, img) {
+            const existing = cart.find(item => item.name === name && item.color === color);
+            if (existing) {
+                existing.qty += productQtyValue;
+            } else {
+                cart.push({ name, price, color: color || currentSelectedColor, img: img || currentSelectedImg, qty: productQtyValue });
+            }
+            updateCartUI();
+            
+            // Анимация полета в корзину
+            triggerCartAnimation(img || currentSelectedImg);
         }
 
         function addCurrentProductToCart() {
             addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, currentSelectedImg);
         }
 
-        function updateCartQty(index, delta) {
-            cart[index].qty += delta;
-            if (cart[index].qty <= 0) {
-                cart.splice(index, 1);
-            }
-            saveAndRefreshCart();
-        }
-
-        function saveAndRefreshCart() {
-            localStorage.setItem('milip_cart', JSON.stringify(cart));
-            updateBadges();
-            renderCartItems();
-        }
-
-        function renderCartItems() {
-            let container = document.getElementById('cartContainer');
-            if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center py-8 text-xs text-gray-500 font-mono">Ваш кошик порожній</div>`;
-                document.getElementById('cartTotalPrice').innerText = '0 ₴';
-                return;
-            }
-            let html = '';
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price * item.qty;
-                html += `
-                    <div class="flex items-center justify-between p-3 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl">
-                        <div class="flex items-center space-x-3">
-                            <img src="${item.img}" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-12 h-12 rounded-xl object-cover" loading="lazy">
-                            <div>
-                                <div class="font-bold text-xs">${item.name}</div>
-                                <div class="text-[10px] text-gray-500 font-mono">Колір: ${item.color}</div>
-                                <div class="text-xs font-extrabold text-[#00C2FF] mt-1">${item.price * item.qty} ₴</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="flex items-center bg-[#D8DCF0] dark:bg-[#040B14] rounded-xl border border-[#B5BCD5] dark:border-[#11223A] h-8 px-2">
-                                <button onclick="updateCartQty(${index}, -1)" class="px-1 text-xs font-bold">-</button>
-                                <span class="px-2 text-xs font-extrabold">${item.qty}</span>
-                                <button onclick="updateCartQty(${index}, 1)" class="px-1 text-xs font-bold">+</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+        function triggerCartAnimation(imgSrc) {
+            const cartIcon = document.querySelector('#cartBadge') || document.querySelector('button[onclick*="openCartDrawer"]');
+            if (!cartIcon) return;
+            const flyer = document.createElement('img');
+            flyer.src = imgSrc;
+            const cartRect = cartIcon.getBoundingClientRect();
+            flyer.style.cssText = `
+                position: fixed;
+                z-index: 99999;
+                top: 50%;
+                left: 50%;
+                width: 60px;
+                height: 60px;
+                object-fit: contain;
+                transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+                border-radius: 8px;
+                pointer-events: none;
+            `;
+            document.body.appendChild(flyer);
+            requestAnimationFrame(() => {
+                flyer.style.top = `${cartRect.top}px`;
+                flyer.style.left = `${cartRect.left}px`;
+                flyer.style.width = '20px';
+                flyer.style.height = '20px';
+                flyer.style.opacity = '0.3';
             });
-            container.innerHTML = html;
-            document.getElementById('cartTotalPrice').innerText = total + ' ₴';
+            setTimeout(() => flyer.remove(), 500);
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (badge) {
+                badge.textContent = totalQty;
+                badge.classList.toggle('hidden', totalQty === 0);
+            }
+            const container = document.getElementById('cartContainer');
+            const totalPriceEl = document.getElementById('cartTotalPrice');
+            if (container) {
+                if (cart.length === 0) {
+                    container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">Ваш кошик порожній</p>`;
+                } else {
+                    container.innerHTML = cart.map((item, idx) => `
+                        <div class="flex items-center justify-between bg-[#C6CCDF] dark:bg-[#040B14] p-3 rounded-xl border border-[#B5BCD5] dark:border-[#11223A]">
+                            <div class="flex items-center space-x-3">
+                                <img src="${item.img}" class="w-12 h-12 object-contain rounded-lg bg-black/10">
+                                <div>
+                                    <h4 class="font-bold text-sm">${item.name}</h4>
+                                    <p class="text-xs text-gray-500">Колір: ${item.color} | ${item.price} ₴</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-sm">x${item.qty}</span>
+                        </div>
+                    `).join('');
+                }
+            }
+            let totalSum = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            if (totalPriceEl) totalPriceEl.textContent = `${totalSum} ₴`;
         }
 
         function openCartDrawer() {
-            renderCartItems();
             document.getElementById('cartDrawer').classList.remove('hidden');
             document.getElementById('cartDrawer').classList.add('flex');
-            document.getElementById('stepCart').classList.remove('hidden');
-            document.getElementById('stepUser').classList.add('hidden');
-            document.getElementById('checkoutTitle').innerHTML = `
-                <svg class="w-5 h-5 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                <span>Кошик покупок</span>
-            `;
         }
-
         function closeCartDrawer() {
             document.getElementById('cartDrawer').classList.add('hidden');
             document.getElementById('cartDrawer').classList.remove('flex');
         }
-
-        function goToCheckoutStep2() {
-            if (cart.length === 0) {
-                showToast('Кошик порожній!', 'error');
-                return;
-            }
-            document.getElementById('stepCart').classList.add('hidden');
-            document.getElementById('stepUser').classList.remove('hidden');
-            document.getElementById('checkoutTitle').innerHTML = `
-                <svg class="w-5 h-5 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                <span>Оформлення замовлення</span>
-            `;
-            if (currentUser) {
-                document.getElementById('orderPhone').value = currentUser.phone || '';
-            }
-        }
-
-        function backToStepCart() {
-            document.getElementById('stepCart').classList.remove('hidden');
-            document.getElementById('stepUser').classList.add('hidden');
-            document.getElementById('checkoutTitle').innerHTML = `
-                <svg class="w-5 h-5 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                <span>Кошик покупок</span>
-            `;
-        }
-
-        // --- SECURE ORDER CREATION & BACKEND SIMULATION ---
-        function generateOrderId() {
-            let lastId = parseInt(localStorage.getItem('milip_last_order_id') || '1023', 10);
-            let nextId = lastId + 1;
-            localStorage.setItem('milip_last_order_id', nextId);
-            return 'MS-' + nextId;
-        }
-
-        function submitOrder() {
-            let name = document.getElementById('orderName').value.trim();
-            let surname = document.getElementById('orderSurname').value.trim();
-            let phone = document.getElementById('orderPhone').value.trim();
-            let deliveryService = document.getElementById('orderDeliveryService').value;
-            let region = document.getElementById('orderRegion').value.trim();
-            let city = document.getElementById('orderCity').value.trim();
-            let warehouse = document.getElementById('orderWarehouse').value.trim();
-            let paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-            // Strict Validation
-            const phoneRegex = /^\+380\d{9}$/;
-            if (!name || !surname || !phone || !region || !city || !warehouse) {
-                showToast('Будь ласка, заповніть усі поля форми!', 'error');
-                return;
-            }
-            if (!phoneRegex.test(phone)) {
-                showToast('Введіть коректний номер у форматі +380XXXXXXXXX', 'error');
-                return;
-            }
-
-            if (cart.length === 0) {
-                showToast('Кошик порожній!', 'error');
-                return;
-            }
-
-            // Backend validation & recalculation of totals securely
-            let verifiedItems = cart.map(item => {
-                let registryItem = CATALOG_ITEMS[item.name] || { price: item.price };
-                return {
-                    name: item.name,
-                    price: registryItem.price,
-                    color: item.color,
-                    qty: item.qty,
-                    img: item.img,
-                    sum: registryItem.price * item.qty
-                };
-            });
-
-            let totalSum = verifiedItems.reduce((acc, curr) => acc + curr.sum, 0);
-            let orderId = generateOrderId();
-            let initialStatus = paymentMethod === 'online' ? 'payment_pending' : 'processing';
-            let paymentStatus = paymentMethod === 'online' ? 'payment_pending' : 'cod_pending';
-
-            let newOrder = {
-                id: orderId,
-                items: verifiedItems,
-                total: totalSum,
-                recipient: { name, surname, phone },
-                delivery: { service: deliveryService, region, city, warehouse },
-                paymentMethod: paymentMethod,
-                paymentStatus: paymentStatus,
-                orderStatus: initialStatus,
-                createdAt: new Date().toISOString()
-            };
-
-            orders[orderId] = newOrder;
-            localStorage.setItem('milip_orders', JSON.stringify(orders));
-
-            cart = [];
-            saveAndRefreshCart();
-            closeCartDrawer();
-
-            if (paymentMethod === 'online') {
-                // Redirect / connect to Telegram bot @payments_jobbot with order ID
-                const botUsername = 'payments_jobbot';
-                const telegramPayUrl = `https://t.me/${botUsername}?start=pay_${orderId}`;
-                
-                showToast('Замовлення створено! Перехід до оплати в Telegram...', 'success');
-                setTimeout(() => {
-                    window.location.href = telegramPayUrl;
-                }, 1200);
-            } else {
-                showToast(`Замовлення #${orderId} успішно оформлено!`, 'success');
-                renderOrderStatusPage(orderId);
-            }
-        }
-
-        // --- ORDER STATUS PAGE & TIMELINE ---
-        function renderOrderStatusPage(orderId) {
-            let order = orders[orderId];
-            let container = document.getElementById('orderDetailsContainer');
-            
-            if (!order) {
-                container.innerHTML = `
-                    <div class="text-center py-12 space-y-4">
-                        <h3 class="font-extrabold text-xl">Замовлення не знайдено</h3>
-                        <p class="text-xs text-gray-500">Перевірте номер замовлення або оформіть нове.</p>
-                        <button onclick="switchView('catalog')" class="px-6 py-3 bg-[#00C2FF] text-black font-bold rounded-xl text-xs">На головну</button>
-                    </div>
-                `;
-                switchView('orderStatus');
-                window.history.pushState({}, '', `/order/${orderId}`);
-                return;
-            }
-
-            let isPaid = order.paymentStatus === 'paid';
-            let itemSummary = order.items.map(i => `${i.name} (${i.color}) x ${i.qty}`).join(', ');
-
-            let timelineHtml = `
-                <div class="space-y-4 pt-4 border-t border-[#B5BCD5] dark:border-[#11223A]">
-                    <h4 class="text-xs font-mono text-[#00C2FF] font-bold uppercase tracking-wider">Статус замовлення</h4>
-                    <div class="space-y-2 text-xs">
-                        <div class="flex items-center space-x-2 ${isPaid || order.orderStatus !== 'payment_pending' ? 'text-green-500 font-bold' : 'text-gray-400'}">
-                            <span>✓</span><span>Замовлення створено (#${order.id})</span>
-                        </div>
-                        <div class="flex items-center space-x-2 ${isPaid ? 'text-green-500 font-bold' : (order.paymentStatus === 'payment_pending' ? 'text-[#00C2FF] font-bold animate-pulse' : 'text-gray-400')}">
-                            <span>${isPaid ? '✓' : '○'}</span><span>${isPaid ? 'Оплата отримана' : 'Очікування онлайн-оплати (payment_pending)'}</span>
-                        </div>
-                        <div class="flex items-center space-x-2 ${order.orderStatus === 'shipped' || order.orderStatus === 'delivered' ? 'text-green-500 font-bold' : 'text-gray-400'}">
-                            <span>○</span><span>Передано в доставку (${order.delivery.service})</span>
-                        </div>
-                        <div class="flex items-center space-x-2 ${order.orderStatus === 'delivered' ? 'text-green-500 font-bold' : 'text-gray-400'}">
-                            <span>○</span><span>Доставлено</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            let actionButtonHtml = '';
-            if (order.paymentMethod === 'online' && !isPaid) {
-                actionButtonHtml = `
-                    <a href="https://t.me/payments_jobbot?start=pay_${order.id}" target="_blank" class="w-full h-14 bg-[#00C2FF] text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90">
-                        ОПЛАТИТИ В TELEGRAM (#${order.id})
-                    </a>
-                `;
-            } else {
-                actionButtonHtml = `
-                    <div class="w-full h-14 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] font-extrabold rounded-2xl flex items-center justify-center text-sm text-green-500">
-                        ✓ ОПЛАЧЕНО
-                    </div>
-                `;
-            }
-
-            container.innerHTML = `
-                <div class="flex justify-between items-center pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
-                    <div>
-                        <span class="text-xs font-mono text-[#00C2FF] font-bold">ЗАМОВЛЕННЯ #${order.id}</span>
-                        <h2 class="text-2xl font-extrabold mt-1">${isPaid ? '✓ Замовлення успішно оплачено' : 'Очікування оплати'}</h2>
-                    </div>
-                    <span class="text-xs font-mono text-gray-500">${new Date(order.createdAt).toLocaleDateString()}</span>
-                </div>
-
-                <div class="space-y-3 text-xs">
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Товар:</span>
-                        <span class="font-bold">${itemSummary}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Сума:</span>
-                        <span class="font-bold text-[#00C2FF] text-base">${order.total} ₴</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Отримувач:</span>
-                        <span class="font-bold">${order.recipient.name} ${order.recipient.surname} (${order.recipient.phone})</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500">Доставка:</span>
-                        <span class="font-bold">${order.delivery.service}, м. ${order.delivery.city}, відд. ${order.delivery.warehouse}</span>
-                    </div>
-                </div>
-
-                ${timelineHtml}
-
-                <div class="pt-4">
-                    ${actionButtonHtml}
-                </div>
-            `;
-
-            switchView('orderStatus');
-            window.history.pushState({}, '', `/order/${orderId}`);
-        }
-
-        // --- SIMULATE WEBHOOK BACKEND PAYMENT CONFIRMATION ---
-        // (Can be invoked by Telegram webhook bridge when payment succeeds)
-        window.simulateWebhookPaymentConfirmation = function(orderId) {
-            if (orders[orderId]) {
-                orders[orderId].paymentStatus = 'paid';
-                orders[orderId].orderStatus = 'processing';
-                localStorage.setItem('milip_orders', JSON.stringify(orders));
-                if (window.location.pathname.includes(orderId)) {
-                    renderOrderStatusPage(orderId);
-                }
-                showToast(`Оплату замовлення #${orderId} підтверджено!`, 'success');
-            }
-        };
-
-        // --- FAVORITES SYSTEM ---
-        function toggleFavorite(name, price, img) {
-            let index = favorites.findIndex(item => item.name === name);
-            if (index > -1) {
-                favorites.splice(index, 1);
-                showToast('Видалено з обраного', 'info');
-            } else {
-                favorites.push({ name, price, img });
-                showToast('Додано до обраного!', 'success');
-                document.querySelectorAll(`.fav-icon-${name.replace(/\s+/g, '-')}`).forEach(el => {
-                    el.classList.add('heart-pop');
-                    setTimeout(() => el.classList.remove('heart-pop'), 350);
-                });
-            }
-            localStorage.setItem('milip_favs', JSON.stringify(favorites));
-            updateBadges();
-            renderFavoritesList();
-        }
-
-        function renderFavoritesList() {
-            let container = document.getElementById('favoritesContainer');
-            document.getElementById('favCountHeader').innerText = favorites.length;
-            if (favorites.length === 0) {
-                container.innerHTML = `<div class="text-center py-8 text-xs text-gray-500 font-mono">Список обраного порожній</div>`;
-                return;
-            }
-            let html = '';
-            favorites.forEach(item => {
-                html += `
-                    <div class="flex items-center justify-between p-3 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl">
-                        <div class="flex items-center space-x-3">
-                            <img src="${item.img}" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-12 h-12 rounded-xl object-cover" loading="lazy">
-                            <div>
-                                <div class="font-bold text-xs">${item.name}</div>
-                                <div class="text-xs font-extrabold text-[#00C2FF] mt-1">${item.price} ₴</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button onclick="addToCart('${item.name}', ${item.price}, 'White', '${item.img}'); closeFavoritesModal();" class="px-3 py-2 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold text-[10px] rounded-xl">Купити</button>
-                            <button onclick="toggleFavorite('${item.name}', ${item.price}, '${item.img}')" class="p-2 text-gray-400 hover:text-[#FF3366]">✕</button>
-                        </div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function openFavoritesModal() {
-            renderFavoritesList();
-            document.getElementById('favoritesModal').classList.remove('hidden');
-            document.getElementById('favoritesModal').classList.add('flex');
-        }
-
-        function closeFavoritesModal() {
-            document.getElementById('favoritesModal').classList.add('hidden');
-            document.getElementById('favoritesModal').classList.remove('flex');
-        }
-
-        // --- AUTH & SMS REGISTRATION ARCHITECTURE ---
         function openAuthModal() {
             document.getElementById('authModal').classList.remove('hidden');
             document.getElementById('authModal').classList.add('flex');
         }
-
         function closeAuthModal() {
             document.getElementById('authModal').classList.add('hidden');
             document.getElementById('authModal').classList.remove('flex');
         }
-
-        function requestAuthSms() {
-            let phone = document.getElementById('authPhoneInput').value.trim();
-            const phoneRegex = /^\+380\d{9}$/;
-            if (!phoneRegex.test(phone)) {
-                showToast('Введіть коректний номер у форматі +380XXXXXXXXX', 'error');
-                return;
-            }
-            // Architecture prepared for backend SMS provider integration
-            currentUser = { phone };
-            localStorage.setItem('milip_user', JSON.stringify(currentUser));
-            updateUserProfileUI();
-            closeAuthModal();
-            showToast('Успішна авторизація!', 'success');
-        }
-
-        function updateUserProfileUI() {
-            let area = document.getElementById('userProfileArea');
-            if (currentUser) {
-                area.innerHTML = `
-                    <div class="px-3.5 py-2 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#00C2FF] text-xs font-extrabold flex items-center space-x-2">
-                        <span class="w-2 h-2 rounded-full bg-[#00C2FF] animate-pulse"></span>
-                        <span class="font-mono">${currentUser.phone}</span>
-                    </div>
-                `;
+        function openFavoritesModal() {
+            document.getElementById('favoritesModal').classList.remove('hidden');
+            document.getElementById('favoritesModal').classList.add('flex');
+            const container = document.getElementById('favoritesContainer');
+            if (favorites.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">Список обраного порожній</p>`;
             } else {
-                area.innerHTML = `
-                    <button onclick="openAuthModal()" class="px-3.5 py-2 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-extrabold flex items-center space-x-2 hover:border-[#00C2FF] transition-all">
-                        <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                        <span>Увійти</span>
-                    </button>
-                `;
+                container.innerHTML = favorites.map(name => `
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A]">
+                        <span class="font-bold text-sm">${name}</span>
+                        <button onclick="toggleFavorite('${name}'); openFavoritesModal();" class="text-xs text-[#FF3B30] font-bold">Видалити</button>
+                    </div>
+                `).join('');
             }
         }
-
-        // --- SEARCH MODAL ---
+        function closeFavoritesModal() {
+            document.getElementById('favoritesModal').classList.add('hidden');
+            document.getElementById('favoritesModal').classList.remove('flex');
+        }
         function openSearchModal() {
-            document.getElementById('searchModal').classList.remove('hidden');
-            document.getElementById('searchModal').classList.add('flex');
-            document.getElementById('searchInputModal').focus();
+            alert('Пошук активний');
         }
-
-        function closeSearchModal() {
-            document.getElementById('searchModal').classList.add('hidden');
-            document.getElementById('searchModal').classList.remove('flex');
+        function requestAuthSms() {
+            alert('Код відправлено');
         }
-
-        function handleSearchInput(query) {
-            let container = document.getElementById('searchResultsContainer');
-            if (!query.trim()) {
-                container.innerHTML = `<div class="p-3 text-xs text-gray-500 text-center font-mono">Введіть запит для пошуку...</div>`;
-                return;
-            }
-            let products = [
-                { name: 'MCHOSE A7 V2 PRO', price: 2449, img: 'Белая мышка.jpg', code: 'MILIP / 001' }
-            ];
-            let filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.code.toLowerCase().includes(query.toLowerCase()));
-            if (filtered.length === 0) {
-                container.innerHTML = `<div class="p-3 text-xs text-gray-500 text-center font-mono">Нічого не знайдено</div>`;
-                return;
-            }
-            let html = '';
-            filtered.forEach(p => {
-                html += `
-                    <div onclick="closeSearchModal(); openProductPage();" class="flex items-center justify-between p-3 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl cursor-pointer hover:border-[#00C2FF]">
-                        <div class="flex items-center space-x-3">
-                            <img src="${p.img}" class="w-10 h-10 rounded-xl object-cover" loading="lazy">
-                            <div>
-                                <div class="font-bold text-xs">${p.name}</div>
-                                <div class="text-[10px] text-gray-500 font-mono">${p.code}</div>
-                            </div>
-                        </div>
-                        <div class="text-xs font-extrabold text-[#00C2FF]">${p.price} ₴</div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
+        function goToCheckoutStep2() {
+            alert('Оформлення замовлення');
         }
-
-        // --- ACCORDIONS ---
         function toggleAccordion(id) {
-            let content = document.getElementById('content-' + id);
-            let icon = document.getElementById('icon-' + id);
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-            }
-        }
-
-        // --- TOAST NOTIFICATIONS ---
-        function showToast(message, type = 'success') {
-            let container = document.getElementById('toastContainer');
-            let toast = document.createElement('div');
-            let borderColor = type === 'success' ? '#00C2FF' : (type === 'error' ? '#FF3366' : '#B5BCD5');
-            toast.className = `toast-animate pointer-events-auto px-4 py-3 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[${borderColor}] text-gray-900 dark:text-white text-xs font-bold shadow-2xl flex items-center space-x-2`;
-            toast.innerHTML = `<span>${message}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(100px)';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // --- BADGES UPDATE ---
-        function updateBadges() {
-            let cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
-            let cartBadge = document.getElementById('cartBadge');
-            if (cartCount > 0) {
-                cartBadge.innerText = cartCount;
-                cartBadge.classList.remove('hidden');
-            } else {
-                cartBadge.classList.add('hidden');
-            }
-
-            let favCount = favorites.length;
-            let favBadge = document.getElementById('favoritesBadge');
-            if (favCount > 0) {
-                favBadge.innerText = favCount;
-                favBadge.classList.remove('hidden');
-            } else {
-                favBadge.classList.add('hidden');
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if (content) {
+                content.classList.toggle('hidden');
+                if (icon) icon.classList.toggle('rotate-180');
             }
         }
     </script>
