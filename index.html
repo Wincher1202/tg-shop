@@ -1,113 +1,92 @@
 <!DOCTYPE html>
-<html lang="uk" class="scroll-smooth" id="htmlRoot">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MILIPSTORE — MCHOSE A7 V2 PRO</title>
-    <meta name="description" content="MILIPSTORE — ігрова периферія та MCHOSE A7 V2 PRO.">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        milip: {
-                            turquoise: '#00C2FF',
-                            turquoiseGlow: '#00E5FF',
-                            lightBg: '#D8DCF0',
-                            cardLight: '#C6CCDF',
-                            nightBg: '#040B14',
-                            cardNight: '#07101B',
-                            borderNight: '#11223A',
-                            borderLight: '#B5BCD5'
-                        }
-                    },
-                    fontFamily: {
-                        sans: [
-                            'Inter',
-                            '-apple-system',
-                            'BlinkMacSystemFont',
-                            'Segoe UI',
-                            'Roboto',
-                            'sans-serif'
-                        ]
-                    }
-                }
-            }
-        };
-    </script>
+    <title>MILIPSTORE</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         html,
         body {
             width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden !important;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            min-height: 100%;
         }
 
-        *,
-        *::before,
-        *::after {
-            box-sizing: inherit;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef1f4;
+            color: #111827;
+            overflow-x: hidden;
         }
 
-        img,
-        video,
-        picture,
-        svg {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
+        /* =====================================================
+           INTRO
+        ===================================================== */
 
-        body,
-        header,
-        div,
-        button,
-        input,
-        select,
-        section {
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef1f4;
+            overflow: hidden;
             transition:
-                background-color .35s cubic-bezier(.16, 1, .3, 1),
-                color .35s ease,
-                border-color .35s ease,
-                box-shadow .35s ease,
-                transform .25s ease;
+                opacity .7s ease,
+                visibility .7s ease;
         }
 
-        * {
-            -webkit-tap-highlight-color: transparent;
+        #intro.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
 
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+        .intro-content {
+            position: relative;
+            width: min(900px, 90vw);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        ::-webkit-scrollbar-track {
-            background: transparent;
+        /* Главная надпись */
+
+        .intro-title {
+            position: relative;
+            z-index: 5;
+
+            font-size: clamp(42px, 8vw, 105px);
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: #17243d;
+
+            opacity: 0;
+            transform: translateY(12px) scale(.97);
+
+            animation:
+                introTitleIn .7s ease forwards;
+
+            user-select: none;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0, 194, 255, .4);
-            border-radius: 3px;
+        .intro-title span {
+            display: inline-block;
         }
 
-        /* =========================================================
-           BASIC ANIMATIONS
-        ========================================================= */
-
-        @keyframes fadeIn {
+        @keyframes introTitleIn {
             from {
                 opacity: 0;
-                transform: translateY(8px) scale(.98);
+                transform: translateY(12px) scale(.97);
             }
 
             to {
@@ -116,2933 +95,1103 @@
             }
         }
 
-        @keyframes modalFadeIn {
+        /* =====================================================
+           БАБОЧКА
+        ===================================================== */
+
+        .butterfly {
+            position: absolute;
+            z-index: 10;
+
+            left: 50%;
+            top: 50%;
+
+            width: 46px;
+            height: 46px;
+
+            opacity: 0;
+
+            /*
+                Начальная точка — примерно середина экрана.
+                Дальше вся траектория задаётся JS.
+            */
+            transform:
+                translate(-50%, -50%)
+                rotate(0deg);
+
+            pointer-events: none;
+        }
+
+        .butterfly.active {
+            opacity: 1;
+        }
+
+        /*
+            Само тело бабочки.
+            Она всегда ориентирована вертикально,
+            поэтому не переворачивается во время полёта.
+        */
+
+        .butterfly-body {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            width: 7px;
+            height: 25px;
+
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+
+            background: #17243d;
+            z-index: 3;
+        }
+
+        .wing {
+            position: absolute;
+            top: 50%;
+
+            width: 21px;
+            height: 31px;
+
+            border-radius: 80% 20% 80% 20%;
+
+            background: #17243d;
+
+            transform-origin: center bottom;
+        }
+
+        .wing-left {
+            right: 50%;
+            transform:
+                translateY(-50%)
+                rotate(28deg);
+        }
+
+        .wing-right {
+            left: 50%;
+            transform:
+                translateY(-50%)
+                scaleX(-1)
+                rotate(28deg);
+        }
+
+        .wing-inner-left,
+        .wing-inner-right {
+            position: absolute;
+            width: 9px;
+            height: 13px;
+            background: #eef1f4;
+            border-radius: 70%;
+            opacity: .9;
+        }
+
+        .wing-inner-left {
+            left: 5px;
+            top: 8px;
+        }
+
+        .wing-inner-right {
+            right: 5px;
+            top: 8px;
+        }
+
+        /* лёгкое движение крыльев */
+
+        .butterfly.active .wing-left {
+            animation: wingLeft .18s ease-in-out infinite alternate;
+        }
+
+        .butterfly.active .wing-right {
+            animation: wingRight .18s ease-in-out infinite alternate;
+        }
+
+        @keyframes wingLeft {
             from {
-                opacity: 0;
-                transform: scale(.95) translateY(10px);
+                transform:
+                    translateY(-50%)
+                    rotate(18deg);
             }
 
             to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
+                transform:
+                    translateY(-50%)
+                    rotate(42deg);
             }
         }
 
-        @keyframes heartPulse {
-            0% {
-                transform: scale(1);
+        @keyframes wingRight {
+            from {
+                transform:
+                    translateY(-50%)
+                    scaleX(-1)
+                    rotate(18deg);
             }
 
-            50% {
-                transform: scale(1.15);
+            to {
+                transform:
+                    translateY(-50%)
+                    scaleX(-1)
+                    rotate(42deg);
             }
-
-            100% {
-                transform: scale(1);
-            }
         }
 
-        .animate-fade-in {
-            animation: fadeIn .4s cubic-bezier(.16, 1, .3, 1) forwards;
-        }
+        /* =====================================================
+           ЛОГОТИП
+        ===================================================== */
 
-        .animate-modal {
-            animation: modalFadeIn .3s cubic-bezier(.16, 1, .3, 1) forwards;
-        }
-
-        /* =========================================================
-           FAVORITE
-        ========================================================= */
-
-        .wishlist-btn.active svg,
-        .favorite-icon.active svg,
-        .wishlist-btn.active,
-        .favorite-icon.active {
-            fill: #FF3B30 !important;
-            stroke: #FF3B30 !important;
-            color: #FF3B30 !important;
-            transform: scale(1.12);
-            filter: drop-shadow(0 0 6px rgba(255, 59, 48, .35));
-            animation: heartPulse .3s ease-in-out;
-        }
-
-        /* =========================================================
-           START SCREEN
-        ========================================================= */
-
-        #milip-intro-overlay {
+        .site-logo {
             position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff;
-            overflow: hidden;
-            display: block;
-            z-index: 99999;
-            pointer-events: none;
-            transition:
-                opacity .55s ease,
-                visibility .55s ease;
+            top: 24px;
+            left: 28px;
+
+            z-index: 100;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -1px;
+
+            color: #17243d;
         }
 
-        html.dark #milip-intro-overlay {
-            background: #040B14;
-        }
+        .logo-mark {
+            width: 38px;
+            height: 38px;
 
-        #milip-intro-overlay.hidden-intro {
-            opacity: 0;
-            visibility: hidden;
-        }
+            border-radius: 12px;
 
-        /*
-            Главная бабочка.
-
-            --target-x / --target-y вычисляются JavaScript
-            относительно центра экрана.
-
-            В результате она всегда летит именно к логотипу,
-            независимо от размера монитора.
-        */
-
-        #introButterfly {
-            --target-x: 0px;
-            --target-y: 0px;
-
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 58px;
-            height: 58px;
-            z-index: 100001;
-            pointer-events: none;
-
-            transform: translate(-50%, -50%);
-
-            animation:
-                introFlight 6.2s
-                cubic-bezier(.22, .61, .36, 1)
-                forwards;
-        }
-
-        .intro-butterfly-svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-            fill: #00C2FF;
-            filter:
-                drop-shadow(0 0 8px rgba(0, 194, 255, .45))
-                drop-shadow(0 0 18px rgba(0, 194, 255, .16));
-
-            transform-origin: center;
-            animation: wingBeat .19s ease-in-out infinite alternate;
-        }
-
-        /*
-            Маленькая буква M.
-            Она появляется поверх бабочки в момент превращения.
-        */
-
-        .intro-morph-m {
-            position: absolute;
-            inset: 0;
+            background: #17243d;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            font-size: 45px;
-            line-height: 1;
+            color: white;
+            font-size: 19px;
             font-weight: 900;
-            letter-spacing: -.08em;
+        }
 
-            color: #00C2FF;
+        /* =====================================================
+           ОСНОВНОЙ САЙТ
+        ===================================================== */
+
+        #site {
+            min-height: 100vh;
 
             opacity: 0;
-            transform: scale(.2) rotate(-15deg);
+            transform: translateY(8px);
 
-            text-shadow:
-                0 0 8px rgba(0, 194, 255, .35),
-                0 0 20px rgba(0, 194, 255, .18);
-
-            animation:
-                morphIntoM 6.2s
-                cubic-bezier(.22, .61, .36, 1)
-                forwards;
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
         }
 
-        @keyframes wingBeat {
-            from {
-                transform: scaleX(1) rotate(-2deg);
-            }
-
-            to {
-                transform: scaleX(.76) rotate(2deg);
-            }
+        #site.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /*
-            0-42%
-            Красивый полёт из левого нижнего угла.
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
 
-            42-83%
-            Облёт логотипа.
+            height: 76px;
 
-            83-92%
-            Подход к букве M.
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            92-100%
-            Улёт вверх-влево.
-        */
+            padding: 0 5vw;
 
-        @keyframes introFlight {
+            background: rgba(238, 241, 244, .88);
+            backdrop-filter: blur(18px);
 
-            0% {
-                transform:
-                    translate(calc(-50vw - 40px), calc(38vh + 30px))
-                    rotate(-28deg)
-                    scale(.45);
-                opacity: 0;
-            }
-
-            7% {
-                opacity: 1;
-            }
-
-            16% {
-                transform:
-                    translate(calc(-36vw), calc(20vh))
-                    rotate(22deg)
-                    scale(.68);
-            }
-
-            26% {
-                transform:
-                    translate(calc(-23vw), calc(27vh))
-                    rotate(48deg)
-                    scale(.78);
-            }
-
-            36% {
-                transform:
-                    translate(calc(-14vw), calc(4vh))
-                    rotate(-18deg)
-                    scale(.86);
-            }
-
-            43% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 115px),
-                        calc(var(--target-y) + 5px)
-                    )
-                    rotate(18deg)
-                    scale(.72);
-            }
-
-            /* Первый круг */
-
-            49% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 60px),
-                        calc(var(--target-y) - 75px)
-                    )
-                    rotate(-12deg)
-                    scale(.66);
-            }
-
-            55% {
-                transform:
-                    translate(
-                        calc(var(--target-x) + 48px),
-                        calc(var(--target-y) - 54px)
-                    )
-                    rotate(30deg)
-                    scale(.65);
-            }
-
-            61% {
-                transform:
-                    translate(
-                        calc(var(--target-x) + 72px),
-                        calc(var(--target-y) + 22px)
-                    )
-                    rotate(75deg)
-                    scale(.64);
-            }
-
-            67% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 5px),
-                        calc(var(--target-y) + 78px)
-                    )
-                    rotate(150deg)
-                    scale(.64);
-            }
-
-            /* Второй круг */
-
-            72% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 76px),
-                        calc(var(--target-y) + 34px)
-                    )
-                    rotate(205deg)
-                    scale(.61);
-            }
-
-            77% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 65px),
-                        calc(var(--target-y) - 48px)
-                    )
-                    rotate(260deg)
-                    scale(.59);
-            }
-
-            82% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 95px),
-                        calc(var(--target-y) - 8px)
-                    )
-                    rotate(320deg)
-                    scale(.55);
-            }
-
-            /*
-                Подлетаем не на логотип,
-                а немного перед буквой M.
-            */
-
-            87% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 55px),
-                        calc(var(--target-y) + 2px)
-                    )
-                    rotate(0deg)
-                    scale(.48);
-                opacity: 1;
-            }
-
-            92% {
-                transform:
-                    translate(
-                        calc(var(--target-x) - 55px),
-                        calc(var(--target-y) + 2px)
-                    )
-                    rotate(0deg)
-                    scale(.43);
-                opacity: 1;
-            }
-
-            /*
-                После превращения в M
-                улетаем далеко вверх-влево.
-            */
-
-            100% {
-                transform:
-                    translate(
-                        calc(-50vw - 60px),
-                        calc(-48vh - 50px)
-                    )
-                    rotate(-38deg)
-                    scale(.18);
-                opacity: 0;
-            }
+            border-bottom: 1px solid rgba(23, 36, 61, .08);
         }
 
-        @keyframes morphIntoM {
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
 
-            0%,
-            82% {
-                opacity: 0;
-                transform: scale(.2) rotate(-15deg);
-            }
-
-            85% {
-                opacity: .25;
-                transform: scale(.55) rotate(-5deg);
-            }
-
-            88% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
-
-            92% {
-                opacity: 1;
-                transform: scale(1.04) rotate(0);
-            }
-
-            94% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
-
-            97%,
-            100% {
-                opacity: 0;
-                transform: scale(.18) rotate(20deg);
-            }
+            color: #17243d;
+            font-size: 23px;
+            font-weight: 900;
+            text-decoration: none;
         }
 
-        /* =========================================================
-           CART BUTTERFLY
-        ========================================================= */
+        .header-logo-mark {
+            width: 38px;
+            height: 38px;
 
-        .cart-butterfly {
-            position: fixed;
-            z-index: 99998;
-            width: 40px;
-            height: 40px;
-            pointer-events: none;
+            border-radius: 11px;
 
-            animation:
-                cartButterflyFlight
-                1.7s
-                cubic-bezier(.22, .61, .36, 1)
-                forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+            background: #17243d;
         }
 
-        .cart-butterfly svg {
-            width: 100%;
-            height: 100%;
-            fill: #00C2FF;
-            filter: drop-shadow(0 0 8px rgba(0, 194, 255, .65));
-
-            animation:
-                cartWingBeat .16s
-                ease-in-out
-                infinite
-                alternate;
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
         }
 
-        @keyframes cartWingBeat {
-            from {
-                transform: scaleX(1);
-            }
+        nav a {
+            color: #17243d;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
 
-            to {
-                transform: scaleX(.7);
-            }
+            transition: opacity .2s ease;
         }
 
-        @keyframes cartButterflyFlight {
-
-            0% {
-                transform:
-                    translate(-50%, -50%)
-                    scale(.45)
-                    rotate(-20deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            30% {
-                transform:
-                    translate(
-                        calc(-50% + var(--target-x) * .28),
-                        calc(-50% + var(--target-y) * .20)
-                    )
-                    scale(.9)
-                    rotate(30deg);
-            }
-
-            52% {
-                transform:
-                    translate(
-                        calc(-50% + var(--target-x) * .58),
-                        calc(-50% + var(--target-y) * .72)
-                    )
-                    scale(.85)
-                    rotate(-15deg);
-            }
-
-            78% {
-                transform:
-                    translate(
-                        calc(-50% + var(--target-x)),
-                        calc(-50% + var(--target-y))
-                    )
-                    scale(.7)
-                    rotate(15deg);
-                opacity: 1;
-            }
-
-            100% {
-                transform:
-                    translate(
-                        calc(-50% + var(--target-x)),
-                        calc(-50% + var(--target-y))
-                    )
-                    scale(.2)
-                    rotate(360deg);
-                opacity: 0;
-            }
+        nav a:hover {
+            opacity: .55;
         }
 
-        /* =========================================================
-           RESPONSIVE START ANIMATION
-        ========================================================= */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        @media (max-width: 640px) {
+        .icon-button {
+            width: 42px;
+            height: 42px;
 
-            #introButterfly {
-                width: 48px;
-                height: 48px;
+            border: 1px solid rgba(23, 36, 61, .1);
+            border-radius: 12px;
+
+            background: white;
+            color: #17243d;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+        .icon-button:hover {
+            transform: translateY(-2px);
+            background: #f5f7f9;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            width: min(1180px, 90vw);
+            margin: 0 auto;
+
+            padding: 100px 0 70px;
+
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-text h1 {
+            color: #17243d;
+
+            font-size: clamp(45px, 7vw, 90px);
+            line-height: .94;
+            letter-spacing: -5px;
+
+            margin-bottom: 28px;
+        }
+
+        .hero-text p {
+            max-width: 530px;
+
+            color: #5f6878;
+
+            font-size: 18px;
+            line-height: 1.65;
+
+            margin-bottom: 35px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 15px 24px;
+
+            border: 0;
+            border-radius: 14px;
+
+            background: #17243d;
+            color: white;
+
+            text-decoration: none;
+            font-weight: 800;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(23, 36, 61, .2);
+        }
+
+        .hero-card {
+            min-height: 430px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #dce2e9,
+                    #f7f8f9
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(23, 36, 61, .12);
+        }
+
+        .hero-butterfly {
+            font-size: 150px;
+            opacity: .9;
+        }
+
+        /* =====================================================
+           PRODUCTS
+        ===================================================== */
+
+        .products {
+            width: min(1180px, 90vw);
+            margin: 0 auto;
+
+            padding: 50px 0 100px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #17243d;
+
+            font-size: 38px;
+            letter-spacing: -2px;
+        }
+
+        .section-title p {
+            color: #7b8491;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+        .product {
+            padding: 16px;
+
+            border-radius: 22px;
+
+            background: white;
+
+            border: 1px solid rgba(23, 36, 61, .07);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 20px 50px rgba(23, 36, 61, .1);
+        }
+
+        .product-image {
+            height: 230px;
+
+            border-radius: 17px;
+
+            background: #edf0f3;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 16px;
+
+            font-size: 70px;
+        }
+
+        .product h3 {
+            color: #17243d;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            color: #17243d;
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 50px 5vw;
+
+            background: #17243d;
+            color: white;
+
+            text-align: center;
+        }
+
+        footer strong {
+            font-size: 22px;
+        }
+
+        footer p {
+            margin-top: 10px;
+            opacity: .65;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 0 20px;
             }
 
-            .intro-morph-m {
-                font-size: 37px;
+            nav {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 60px;
+            }
+
+            .hero-card {
+                min-height: 300px;
+            }
+
+            .product-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .intro-title {
+                letter-spacing: -3px;
+            }
+
+            .site-logo {
+                top: 18px;
+                left: 18px;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
+        @media (max-width: 480px) {
 
-            #introButterfly,
-            .intro-morph-m,
-            .intro-butterfly-svg {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                letter-spacing: -3px;
             }
         }
     </style>
 </head>
 
-<body
-    class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden"
->
+<body>
 
-    <!-- =========================================================
-         START SCREEN
-    ========================================================== -->
+    <!-- =====================================================
+         INTRO
+    ===================================================== -->
 
-    <div id="milip-intro-overlay">
+    <div id="intro">
 
-        <div id="introButterfly">
+        <!-- маленький логотип, к которому прилетает бабочка -->
 
-            <svg
-                class="intro-butterfly-svg"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
-            </svg>
-
-            <span class="intro-morph-m">M</span>
-
+        <div class="site-logo">
+            <div class="logo-mark">M</div>
+            <span>MILIPSTORE</span>
         </div>
 
+        <div class="intro-content">
+
+            <!-- Главная надпись -->
+            <div class="intro-title" id="introTitle">
+                <span>M</span><span>I</span><span>L</span><span>I</span><span>P</span><span>S</span><span>T</span><span>O</span><span>R</span><span>E</span>
+            </div>
+
+            <!-- Бабочка -->
+
+            <div class="butterfly" id="butterfly">
+
+                <div class="wing wing-left">
+                    <div class="wing-inner-left"></div>
+                </div>
+
+                <div class="wing wing-right">
+                    <div class="wing-inner-right"></div>
+                </div>
+
+                <div class="butterfly-body"></div>
+
+            </div>
+
+        </div>
     </div>
 
-    <!-- =========================================================
-         TOASTS
-    ========================================================== -->
 
-    <div
-        id="toastContainer"
-        class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"
-    ></div>
+    <!-- =====================================================
+         MAIN SITE
+    ===================================================== -->
 
-    <!-- =========================================================
-         HEADER
-    ========================================================== -->
+    <main id="site">
 
-    <header
-        class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/90 dark:bg-[#040B14]/90 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full"
-    >
-        <div
-            class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between"
-        >
+        <header>
 
-            <div class="flex items-center space-x-6 sm:space-x-10 min-w-0">
+            <a href="#" class="header-logo">
+                <div class="header-logo-mark">M</div>
+                MILIPSTORE
+            </a>
 
-                <!-- LOGO -->
+            <nav>
+                <a href="#catalog">Каталог</a>
+                <a href="#about">О нас</a>
+                <a href="#contacts">Контакты</a>
+            </nav>
 
-                <a
-                    href="#"
-                    onclick="goHome(); return false;"
-                    class="flex items-center space-x-3 group min-w-0"
-                    aria-label="MILIPSTORE — на главную"
-                >
+            <div class="header-actions">
 
-                    <svg
-                        id="headerLogoIcon"
-                        class="w-8 h-8 text-[#00C2FF] flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
-                        viewBox="0 0 32 32"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z"
-                            fill="currentColor"
-                            fill-opacity=".9"
-                        />
+                <button class="icon-button" aria-label="Избранное">
+                    ♡
+                </button>
 
-                        <path
-                            d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z"
-                            fill="currentColor"
-                            fill-opacity=".9"
-                        />
+                <button class="icon-button" aria-label="Корзина">
+                    🛒
+                </button>
 
-                        <path
-                            d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z"
-                            fill="currentColor"
-                        />
+            </div>
 
-                        <path
-                            d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z"
-                            fill="currentColor"
-                        />
+        </header>
 
-                        <circle
-                            cx="16"
-                            cy="16"
-                            r="3"
-                            class="text-[#D8DCF0] dark:text-[#040B14]"
-                            fill="currentColor"
-                        />
-                    </svg>
 
-                    <span
-                        id="headerLogoText"
-                        class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent"
-                    >
-                        MILIPSTORE
-                    </span>
+        <!-- HERO -->
 
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <h1>
+                    MILIPSTORE
+                </h1>
+
+                <p>
+                    Современный магазин с аккуратным дизайном,
+                    качественными товарами и простым способом
+                    выбрать то, что действительно нравится.
+                </p>
+
+                <a href="#catalog" class="hero-button">
+                    Перейти в каталог
                 </a>
 
-                <!-- NAV -->
-
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-
-                    <a
-                        href="#"
-                        onclick="scrollToCatalog(); return false;"
-                        class="hover:text-[#00C2FF] transition-colors"
-                        data-i18n="nav_catalog"
-                    >
-                        Каталог
-                    </a>
-
-                    <button
-                        onclick="openSearchModal()"
-                        class="flex items-center space-x-1.5 hover:text-[#00C2FF] transition-colors"
-                    >
-                        <span data-i18n="nav_search">Пошук</span>
-                    </button>
-
-                </nav>
-
             </div>
 
-            <!-- HEADER ACTIONS -->
-
-            <div class="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
-
-                <!-- LANGUAGE -->
-
-                <div
-                    class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold"
-                >
-
-                    <button
-                        id="langBtnUa"
-                        onclick="setLanguage('ua')"
-                        class="px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm"
-                    >
-                        UA
-                    </button>
-
-                    <button
-                        id="langBtnRu"
-                        onclick="setLanguage('ru')"
-                        class="px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]"
-                    >
-                        RU
-                    </button>
-
+            <div class="hero-card">
+                <div class="hero-butterfly">
+                    🦋
                 </div>
-
-                <!-- THEME -->
-
-                <button
-                    onclick="toggleTheme()"
-                    id="themeToggleBtn"
-                    class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm"
-                    aria-label="Переключити тему"
-                >
-
-                    <svg
-                        id="sunIcon"
-                        class="w-5 h-5 hidden"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                        />
-                    </svg>
-
-                    <svg
-                        id="moonIcon"
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                        />
-                    </svg>
-
-                </button>
-
-                <!-- FAVORITES -->
-
-                <button
-                    onclick="openFavoritesModal()"
-                    class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#FF3366] transition-colors"
-                >
-
-                    <svg
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
-                    </svg>
-
-                    <span
-                        id="favoritesBadge"
-                        class="absolute -top-1 -right-1 bg-[#FF3366] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg"
-                    >
-                        0
-                    </span>
-
-                </button>
-
-                <!-- CART -->
-
-                <button
-                    id="cartIconButton"
-                    onclick="openCartDrawer()"
-                    class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors"
-                >
-
-                    <svg
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                        />
-                    </svg>
-
-                    <span
-                        id="cartBadge"
-                        class="absolute -top-1 -right-1 bg-[#00C2FF] text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg"
-                    >
-                        0
-                    </span>
-
-                </button>
-
             </div>
-        </div>
-    </header>
 
-    <!-- =========================================================
-         MAIN
-    ========================================================== -->
+        </section>
 
-    <main class="flex-grow w-full overflow-hidden">
 
-        <!-- CATALOG -->
+        <!-- PRODUCTS -->
 
-        <div
-            id="catalogView"
-            class="view-section animate-fade-in w-full"
-        >
+        <section class="products" id="catalog">
 
-            <!-- HERO -->
+            <div class="section-title">
 
-            <section
-                class="relative overflow-hidden py-12 lg:py-24 px-6 sm:px-10 lg:px-16 w-full"
-            >
-
-                <div
-                    class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
-                >
-
-                    <div
-                        class="lg:col-span-7 space-y-6 text-left"
-                    >
-
-                        <div
-                            class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]"
-                        >
-                            <span>MILIP / 001</span>
-                            <span>•</span>
-                            <span data-i18n="hero_badge">ULTIMATE HARDWARE</span>
-                        </div>
-
-                        <h1
-                            class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight"
-                        >
-                            MCHOSE
-                            <br>
-                            <span class="text-[#00C2FF]">A7 V2 PRO</span>
-                        </h1>
-
-                        <p
-                            id="heroDesc"
-                            class="text-gray-600 dark:text-gray-400 max-w-2xl text-base sm:text-lg font-light leading-relaxed"
-                        >
-                            Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.
-                        </p>
-
-                        <div class="pt-4 flex items-center">
-
-                            <button
-                                onclick="openProductPage()"
-                                class="w-full sm:w-auto px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl flex items-center justify-center"
-                            >
-                                <span data-i18n="hero_btn">
-                                    Детальніше про продукт
-                                </span>
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <div class="lg:col-span-5 flex justify-center w-full">
-
-                        <div
-                            class="relative w-full max-w-md bg-[#C6CCDF] dark:bg-[#07101B] p-6 rounded-3xl border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl group cursor-pointer"
-                            onclick="openProductPage()"
-                        >
-
-                            <img
-                                src="Главная фото для каталога.jpg"
-                                alt="MCHOSE A7 V2 PRO"
-                                class="w-full h-auto aspect-square object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- CATALOG PRODUCTS -->
-
-            <section
-                id="catalogSection"
-                class="w-full px-6 sm:px-10 lg:px-16 pb-24"
-            >
-
-                <div
-                    class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end"
-                >
-
-                    <div>
-
-                        <span
-                            class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold"
-                            data-i18n="cat_sub"
-                        >
-                            Ексклюзивний реліз
-                        </span>
-
-                        <h2
-                            class="text-2xl sm:text-3xl font-extrabold mt-1"
-                            data-i18n="cat_title"
-                        >
-                            Каталог обладнання
-                        </h2>
-
-                    </div>
-
-                    <span
-                        class="text-sm text-gray-500 font-medium"
-                        data-i18n="cat_stock"
-                    >
-                        У наявності
-                    </span>
-
-                </div>
-
-                <div
-                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                >
-
-                    <!-- PRODUCT CARD -->
-
-                    <div
-                        class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative"
-                    >
-
-                        <div class="absolute top-5 right-5 z-10">
-
-                            <button
-                                onclick="toggleFavorite('MCHOSE A7 V2 PRO',2449,'Главная фото для каталога.jpg',currentSelectedColor)"
-                                class="wishlist-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3B30] transition-colors"
-                            >
-
-                                <svg
-                                    class="w-5 h-5 fav-icon-MCHOSE-A7-V2-PRO"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                    />
-                                </svg>
-
-                            </button>
-
-                        </div>
-
-                        <div
-                            onclick="openProductPage()"
-                            class="cursor-pointer"
-                        >
-
-                            <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">
-                                MILIP / 001
-                            </div>
-
-                            <h3 class="font-bold text-lg mb-2">
-                                MCHOSE A7 V2 PRO
-                            </h3>
-
-                            <p
-                                id="cardDesc"
-                                class="text-xs text-gray-600 dark:text-gray-400 mb-4 line-clamp-2"
-                            >
-                                PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.
-                            </p>
-
-                            <div
-                                class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2"
-                            >
-
-                                <img
-                                    src="Главная фото для каталога.jpg"
-                                    alt="MCHOSE A7 V2 PRO"
-                                    class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                                    loading="lazy"
-                                >
-
-                            </div>
-
-                            <div class="text-2xl font-extrabold mb-4">
-                                2 449 ₴
-                            </div>
-
-                        </div>
-
-                        <button
-                            onclick="addToCartWithAnimation(event,'MCHOSE A7 V2 PRO',2449,currentSelectedColor,'Главная фото для каталога.jpg')"
-                            class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm"
-                            data-i18n="btn_add_cart"
-                        >
-                            ДОДАТИ В КОШИК
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-        <!-- =====================================================
-             PRODUCT VIEW
-        ====================================================== -->
-
-        <div
-            id="productView"
-            class="view-section hidden py-12 px-6 sm:px-10 lg:px-16 w-full animate-fade-in"
-            data-product-id="MCHOSE A7 V2 PRO"
-        >
-
-            <button
-                onclick="switchView('catalog')"
-                class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium"
-            >
-
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15 19l-7-7 7-7"
-                    />
-                </svg>
-
-                <span data-i18n="prod_back">
-                    Назад до каталогу
-                </span>
-
-            </button>
-
-            <div
-                class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto"
-            >
-
-                <!-- PRODUCT IMAGES -->
-
-                <div class="lg:col-span-7 space-y-4">
-
-                    <div
-                        class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center"
-                    >
-
-                        <img
-                            id="mainProductImage"
-                            src="Главная фото для каталога.jpg"
-                            alt="MCHOSE A7 V2 PRO"
-                            class="w-full h-auto aspect-square object-contain rounded-2xl shadow-md transition-opacity duration-300"
-                        >
-
-                    </div>
-
-                    <div
-                        class="flex space-x-3 overflow-x-auto pb-2"
-                        id="productThumbnails"
-                    >
-
-                        <button
-                            onclick="changePhotoAndColor('Главная фото для каталога.jpg',null,this)"
-                            class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
-                        >
-                            <img
-                                src="Главная фото для каталога.jpg"
-                                class="w-full h-full object-contain"
-                                loading="lazy"
-                            >
-                        </button>
-
-                        <button
-                            onclick="changePhotoAndColor('Белая мышка.jpg','White',this)"
-                            class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
-                        >
-                            <img
-                                src="Белая мышка.jpg"
-                                class="w-full h-full object-contain"
-                                loading="lazy"
-                            >
-                        </button>
-
-                        <button
-                            onclick="changePhotoAndColor('Черная мышка.jpg','Black',this)"
-                            class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
-                        >
-                            <img
-                                src="Черная мышка.jpg"
-                                class="w-full h-full object-contain"
-                                loading="lazy"
-                            >
-                        </button>
-
-                        <button
-                            onclick="changePhotoAndColor('Розовая мышка.jpg','Pink',this)"
-                            class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
-                        >
-                            <img
-                                src="Розовая мышка.jpg"
-                                class="w-full h-full object-contain"
-                                loading="lazy"
-                            >
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <!-- PRODUCT INFO -->
-
-                <div class="lg:col-span-5 space-y-6">
-
-                    <div>
-
-                        <div class="text-xs font-mono text-[#00C2FF] font-bold mb-1">
-                            MILIP / 001
-                        </div>
-
-                        <h1 class="text-4xl font-extrabold mb-3">
-                            MCHOSE A7 V2 PRO
-                        </h1>
-
-                        <div class="text-3xl font-extrabold">
-                            2 449 ₴
-                        </div>
-
-                    </div>
-
-                    <!-- COLORS -->
-
-                    <div
-                        class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]"
-                    >
-
-                        <span
-                            class="text-xs font-mono text-gray-500 uppercase font-bold"
-                        >
-                            <span data-i18n="prod_color_label">Колір:</span>
-
-                            <span
-                                id="selectedColorName"
-                                class="font-extrabold text-[#00C2FF]"
-                            >
-                                Не вибрано
-                            </span>
-                        </span>
-
-                        <div class="flex items-center space-x-4">
-
-                            <button
-                                id="colorBtnWhite"
-                                onclick="changePhotoAndColor('Белая мышка.jpg','White')"
-                                class="color-picker-btn w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md hover:scale-110 transition-transform"
-                            ></button>
-
-                            <button
-                                id="colorBtnBlack"
-                                onclick="changePhotoAndColor('Черная мышка.jpg','Black')"
-                                class="color-picker-btn w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md hover:scale-110 transition-transform"
-                            ></button>
-
-                            <button
-                                id="colorBtnPink"
-                                onclick="changePhotoAndColor('Розовая мышка.jpg','Pink')"
-                                class="color-picker-btn w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md hover:scale-110 transition-transform"
-                            ></button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- QUANTITY -->
-
-                    <div class="flex items-center space-x-3 pt-3">
-
-                        <div
-                            class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] h-14 px-4 shadow-inner"
-                        >
-
-                            <button
-                                onclick="updateQty(-1)"
-                                class="w-8 h-full flex items-center justify-center font-bold text-lg"
-                            >
-                                -
-                            </button>
-
-                            <span
-                                id="productQty"
-                                class="w-8 text-center font-extrabold text-lg"
-                            >
-                                1
-                            </span>
-
-                            <button
-                                onclick="updateQty(1)"
-                                class="w-8 h-full flex items-center justify-center font-bold text-lg"
-                            >
-                                +
-                            </button>
-
-                        </div>
-
-                        <button
-                            onclick="addCurrentProductToCartWithAnimation(event)"
-                            class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm"
-                            data-i18n="btn_add_cart"
-                        >
-                            ДОДАТИ В КОШИК
-                        </button>
-
-                        <button
-                            onclick="toggleFavorite('MCHOSE A7 V2 PRO',2449,currentSelectedImg,currentSelectedColor)"
-                            class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md"
-                        >
-
-                            <svg
-                                class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                                />
-                            </svg>
-
-                        </button>
-
-                    </div>
-
-                    <!-- ACCORDIONS -->
-
-                    <div
-                        class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3"
-                    >
-
-                        <!-- SPECS -->
-
-                        <div
-                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
-                        >
-
-                            <button
-                                onclick="toggleAccordion('specsAccordion')"
-                                class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors"
-                            >
-
-                                <span class="flex items-center space-x-2">
-
-                                    <svg
-                                        class="w-4 h-4 text-[#00C2FF]"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                                        />
-                                    </svg>
-
-                                    <span data-i18n="acc_specs">
-                                        Технічні характеристики
-                                    </span>
-
-                                </span>
-
-                                <span
-                                    id="specsAccordionArrow"
-                                    class="transition-transform duration-300 rotate-180"
-                                >
-                                    ▼
-                                </span>
-
-                            </button>
-
-                            <div
-                                id="specsAccordion"
-                                class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                            >
-
-                                <p>
-                                    • <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)
-                                </p>
-
-                                <p>
-                                    • <b>Частота опитування:</b> Підтримка до 8000 Hz
-                                </p>
-
-                                <p>
-                                    • <b>Перемикачі:</b> Довговічні механічні перемикачі з чітким кліком
-                                </p>
-
-                                <p>
-                                    • <b>Режими підключення:</b> Type-C, 2.4 GHz та Bluetooth
-                                </p>
-
-                                <p>
-                                    • <b>Вага:</b> близько 54 грамів
-                                </p>
-
-                                <p>
-                                    • <b>Акумулятор:</b> автономність до кількох тижнів активного використання
-                                </p>
-
-                                <p>
-                                    • <b>Сумісність:</b> Windows, macOS, Linux
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <!-- BUNDLE -->
-
-                        <div
-                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
-                        >
-
-                            <button
-                                onclick="toggleAccordion('bundleAccordion')"
-                                class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors"
-                            >
-
-                                <span class="flex items-center space-x-2">
-
-                                    <svg
-                                        class="w-4 h-4 text-[#00C2FF]"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                                        />
-                                    </svg>
-
-                                    <span data-i18n="acc_bundle">
-                                        Комплектація
-                                    </span>
-
-                                </span>
-
-                                <span
-                                    id="bundleAccordionArrow"
-                                    class="transition-transform duration-300 rotate-180"
-                                >
-                                    ▼
-                                </span>
-
-                            </button>
-
-                            <div
-                                id="bundleAccordion"
-                                class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                            >
-
-                                <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
-                                <p>2. 8K бездротовий ресивер</p>
-                                <p>3. Кабель USB Type-C</p>
-                                <p>4. Комплект тефлонових глайдів</p>
-                                <p>5. Інструкція та гарантійний талон</p>
-
-                            </div>
-
-                        </div>
-
-                        <!-- SHIPPING -->
-
-                        <div
-                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
-                        >
-
-                            <button
-                                onclick="toggleAccordion('shippingAccordion')"
-                                class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors"
-                            >
-
-                                <span class="flex items-center space-x-2">
-
-                                    <svg
-                                        class="w-4 h-4 text-[#00C2FF]"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M5 13l4 4L19 7"
-                                        />
-                                    </svg>
-
-                                    <span data-i18n="acc_shipping">
-                                        Доставка
-                                    </span>
-
-                                </span>
-
-                                <span
-                                    id="shippingAccordionArrow"
-                                    class="transition-transform duration-300"
-                                >
-                                    ▼
-                                </span>
-
-                            </button>
-
-                            <div
-                                id="shippingAccordion"
-                                class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                            >
-
-                                <p>
-                                    Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні або онлайн-оплата.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <!-- WARRANTY -->
-
-                        <div
-                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
-                        >
-
-                            <button
-                                onclick="toggleAccordion('warrantyAccordion')"
-                                class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors"
-                            >
-
-                                <span class="flex items-center space-x-2">
-
-                                    <svg
-                                        class="w-4 h-4 text-[#00C2FF]"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                                        />
-                                    </svg>
-
-                                    <span data-i18n="acc_warranty">
-                                        Гарантія
-                                    </span>
-
-                                </span>
-
-                                <span
-                                    id="warrantyAccordionArrow"
-                                    class="transition-transform duration-300"
-                                >
-                                    ▼
-                                </span>
-
-                            </button>
-
-                            <div
-                                id="warrantyAccordion"
-                                class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                            >
-
-                                <p>
-                                    Офіційна гарантія від виробника та магазину складає 12 місяців.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                <div>
+                    <h2>Каталог</h2>
+                    <p>Избранные товары MILIPSTORE</p>
                 </div>
 
             </div>
 
-        </div>
+            <div class="product-grid">
+
+                <article class="product">
+
+                    <div class="product-image">
+                        🎧
+                    </div>
+
+                    <h3>
+                        Premium Headphones
+                    </h3>
+
+                    <div class="product-price">
+                        2 499 ₴
+                    </div>
+
+                </article>
+
+
+                <article class="product">
+
+                    <div class="product-image">
+                        🖱️
+                    </div>
+
+                    <h3>
+                        Gaming Mouse
+                    </h3>
+
+                    <div class="product-price">
+                        1 799 ₴
+                    </div>
+
+                </article>
+
+
+                <article class="product">
+
+                    <div class="product-image">
+                        ⌨️
+                    </div>
+
+                    <h3>
+                        Mechanical Keyboard
+                    </h3>
+
+                    <div class="product-price">
+                        2 299 ₴
+                    </div>
+
+                </article>
+
+
+                <article class="product">
+
+                    <div class="product-image">
+                        🖥️
+                    </div>
+
+                    <h3>
+                        Gaming Monitor
+                    </h3>
+
+                    <div class="product-price">
+                        7 999 ₴
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <footer id="contacts">
+
+            <strong>MILIPSTORE</strong>
+
+            <p>
+                Современный магазин для тех, кто ценит стиль.
+            </p>
+
+        </footer>
 
     </main>
 
-    <!-- =========================================================
-         FOOTER
-    ========================================================== -->
-
-    <footer
-        class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500 px-6"
-    >
-        <p data-i18n="footer_text">
-            © 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.
-        </p>
-    </footer>
-
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================== -->
 
     <script>
 
-        /* =========================================================
-           STATE
-        ========================================================== */
+        /*
+        ========================================================
+        INTRO ANIMATION
 
-        let currentSelectedColor = null;
-        let currentSelectedImg = 'Главная фото для каталога.jpg';
-        let currentProductQty = 1;
-        let currentLang = 'ua';
+        Сценарий:
 
-        /* =========================================================
-           TRANSLATIONS
-        ========================================================== */
+        1. Появляется MILIPSTORE.
+        2. Бабочка появляется примерно в центре.
+        3. Плавно летит вокруг надписи.
+        4. Подлетает к букве M.
+        5. Немного зависает.
+        6. Летит вверх-влево к логотипу.
+        7. Прилетает к логотипу.
+        8. Открывается сайт.
+        ========================================================
+        */
 
-        const translations = {
+        const intro = document.getElementById("intro");
+        const butterfly = document.getElementById("butterfly");
+        const introTitle = document.getElementById("introTitle");
+        const site = document.getElementById("site");
 
-            ua: {
-                nav_catalog: 'Каталог',
-                nav_search: 'Пошук',
+        const sleep = ms =>
+            new Promise(resolve => setTimeout(resolve, ms));
 
-                hero_badge: 'ULTIMATE HARDWARE',
 
-                hero_desc:
-                    'Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.',
+        /*
+            Получаем координаты центра элемента.
+        */
 
-                hero_btn: 'Детальніше про продукт',
-
-                cat_sub: 'Ексклюзивний реліз',
-                cat_title: 'Каталог обладнання',
-                cat_stock: 'У наявності',
-
-                card_desc:
-                    'PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.',
-
-                btn_add_cart: 'ДОДАТИ В КОШИК',
-
-                prod_back: 'Назад до каталогу',
-
-                prod_color_label: 'Колір:',
-                prod_color_none: 'Не вибрано',
-                prod_color_white: 'Білий',
-                prod_color_black: 'Чорний',
-                prod_color_pink: 'Рожевий',
-
-                acc_specs: 'Технічні характеристики',
-                acc_bundle: 'Комплектація',
-                acc_shipping: 'Доставка',
-                acc_warranty: 'Гарантія',
-
-                footer_text:
-                    '© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.'
-            },
-
-            ru: {
-                nav_catalog: 'Каталог',
-                nav_search: 'Поиск',
-
-                hero_badge: 'ULTIMATE HARDWARE',
-
-                hero_desc:
-                    'Флагманская беспроводная игровая мышь с поддержкой 8K HyperPolling, сенсором PixArt PAW3395 и ультралегким корпусом.',
-
-                hero_btn: 'Подробнее о продукте',
-
-                cat_sub: 'Эксклюзивный релиз',
-                cat_title: 'Каталог оборудования',
-                cat_stock: 'В наличии',
-
-                card_desc:
-                    'PixArt PAW3395, 8K HyperPolling, 54г, три режима подключения.',
-
-                btn_add_cart: 'ДОБАВИТЬ В КОРЗИНУ',
-
-                prod_back: 'Назад в каталог',
-
-                prod_color_label: 'Цвет:',
-                prod_color_none: 'Не выбрано',
-                prod_color_white: 'Белый',
-                prod_color_black: 'Черный',
-                prod_color_pink: 'Розовый',
-
-                acc_specs: 'Технические характеристики',
-                acc_bundle: 'Комплектация',
-                acc_shipping: 'Доставка',
-                acc_warranty: 'Гарантия',
-
-                footer_text:
-                    '© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.'
-            }
-
-        };
-
-        /* =========================================================
-           STARTUP
-        ========================================================== */
-
-        window.addEventListener('DOMContentLoaded', () => {
-
-            /*
-                Всегда открываем сайт с самого верха.
-            */
-
-            window.scrollTo(0, 0);
-
-            /*
-                Сначала определяем координату текста MILIPSTORE.
-
-                Бабочка садится немного ЛЕВЕЕ буквы M,
-                поэтому она не перекрывает логотип.
-            */
-
-            setupIntroButterfly();
-
-            /*
-                Стартовая сцена длится около 6 секунд.
-            */
-
-            setTimeout(() => {
-
-                const overlay =
-                    document.getElementById('milip-intro-overlay');
-
-                if (overlay) {
-                    overlay.classList.add('hidden-intro');
-                }
-
-            }, 6000);
-
-            updateFavoritesUI();
-            updateCartUI();
-
-        });
-
-        /* =========================================================
-           INTRO BUTTERFLY POSITION
-        ========================================================== */
-
-        function setupIntroButterfly() {
-
-            const butterfly =
-                document.getElementById('introButterfly');
-
-            const logoText =
-                document.getElementById('headerLogoText');
-
-            if (!butterfly || !logoText) return;
+        function getCenter(element) {
 
             const rect =
-                logoText.getBoundingClientRect();
+                element.getBoundingClientRect();
 
-            /*
-                Центр точки назначения.
-
-                Бабочка находится немного левее
-                самой первой буквы M.
-            */
-
-            const targetX =
-                rect.left - 30 + (rect.width / 2) -
-                (window.innerWidth / 2);
-
-            const targetY =
-                rect.top + (rect.height / 2) -
-                (window.innerHeight / 2);
-
-            butterfly.style.setProperty(
-                '--target-x',
-                `${targetX}px`
-            );
-
-            butterfly.style.setProperty(
-                '--target-y',
-                `${targetY}px`
-            );
-
+            return {
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
         }
 
-        window.addEventListener('resize', () => {
 
-            const overlay =
-                document.getElementById('milip-intro-overlay');
+        /*
+            Двигаем бабочку по плавной траектории.
 
-            /*
-                Не пересчитываем траекторию после того,
-                как стартовая сцена закончилась.
-            */
+            Важный момент:
 
-            if (
-                overlay &&
-                !overlay.classList.contains('hidden-intro')
-            ) {
-                setupIntroButterfly();
-            }
+            Бабочка НЕ вращается.
 
-        });
+            То есть она не будет лететь боком,
+            вверх ногами или "жопой вверх".
 
-        /* =========================================================
-           HOME / LOGO
-        ========================================================== */
+            Крылья просто машут,
+            а сама бабочка всегда остаётся
+            вертикально ориентированной.
+        */
 
-        function goHome() {
+        function flyTo(x, y, duration, curve = 0) {
 
-            switchView('catalog');
+            return new Promise(resolve => {
 
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+                const start =
+                    butterfly.getBoundingClientRect();
 
-        }
+                const startX =
+                    start.left + start.width / 2;
 
-        function scrollToCatalog() {
+                const startY =
+                    start.top + start.height / 2;
 
-            const catalog =
-                document.getElementById('catalogSection');
+                const startTime =
+                    performance.now();
 
-            if (!catalog) return;
 
-            catalog.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+                function animate(now) {
 
-        }
-
-        /* =========================================================
-           LANGUAGE
-        ========================================================== */
-
-        function setLanguage(lang) {
-
-            currentLang = lang;
-
-            const t = translations[lang];
-
-            document
-                .getElementById('htmlRoot')
-                .setAttribute('lang', lang);
-
-            const ua =
-                document.getElementById('langBtnUa');
-
-            const ru =
-                document.getElementById('langBtnRu');
-
-            if (lang === 'ua') {
-
-                ua.className =
-                    'px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm';
-
-                ru.className =
-                    'px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]';
-
-            } else {
-
-                ru.className =
-                    'px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm';
-
-                ua.className =
-                    'px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]';
-
-            }
-
-            document
-                .querySelectorAll('[data-i18n]')
-                .forEach(el => {
-
-                    const key =
-                        el.getAttribute('data-i18n');
-
-                    if (t[key]) {
-                        el.innerText = t[key];
-                    }
-
-                });
-
-            const hero =
-                document.getElementById('heroDesc');
-
-            const card =
-                document.getElementById('cardDesc');
-
-            if (hero) {
-                hero.innerText = t.hero_desc;
-            }
-
-            if (card) {
-                card.innerText = t.card_desc;
-            }
-
-            if (!currentSelectedColor) {
-
-                const color =
-                    document.getElementById('selectedColorName');
-
-                if (color) {
-                    color.innerText =
-                        t.prod_color_none;
-                }
-
-            } else {
-
-                updateSelectedColorDisplay();
-
-            }
-
-        }
-
-        /* =========================================================
-           COLOR
-        ========================================================== */
-
-        function updateSelectedColorDisplay() {
-
-            if (!currentSelectedColor) return;
-
-            const t =
-                translations[currentLang];
-
-            let color =
-                currentSelectedColor;
-
-            if (currentSelectedColor === 'White') {
-                color = t.prod_color_white;
-            }
-
-            if (currentSelectedColor === 'Black') {
-                color = t.prod_color_black;
-            }
-
-            if (currentSelectedColor === 'Pink') {
-                color = t.prod_color_pink;
-            }
-
-            const element =
-                document.getElementById('selectedColorName');
-
-            if (!element) return;
-
-            element.innerText = color;
-
-            element.className =
-                'font-extrabold text-gray-900 dark:text-white';
-
-        }
-
-        function changePhotoAndColor(
-            imgPath,
-            colorName,
-            btnElement
-        ) {
-
-            currentSelectedColor = colorName;
-            currentSelectedImg = imgPath;
-
-            const color =
-                document.getElementById('selectedColorName');
-
-            if (colorName) {
-
-                updateSelectedColorDisplay();
-
-            } else if (color) {
-
-                color.innerText =
-                    translations[currentLang].prod_color_none;
-
-                color.className =
-                    'font-extrabold text-[#00C2FF]';
-
-            }
-
-            const mainImg =
-                document.getElementById('mainProductImage');
-
-            if (mainImg) {
-
-                mainImg.style.opacity = '.3';
-
-                setTimeout(() => {
-
-                    mainImg.src = imgPath;
-                    mainImg.style.opacity = '1';
-
-                }, 150);
-
-            }
-
-            document
-                .querySelectorAll('.color-picker-btn')
-                .forEach(btn => {
-
-                    btn.classList.remove(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-                });
-
-            const selectedButton = {
-
-                White:
-                    'colorBtnWhite',
-
-                Black:
-                    'colorBtnBlack',
-
-                Pink:
-                    'colorBtnPink'
-
-            }[colorName];
-
-            if (selectedButton) {
-
-                document
-                    .getElementById(selectedButton)
-                    ?.classList.add(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-            }
-
-            if (btnElement) {
-
-                document
-                    .querySelectorAll('#productThumbnails button')
-                    .forEach(btn => {
-
-                        btn.classList.remove(
-                            'border-[#00C2FF]'
+                    const progress =
+                        Math.min(
+                            (now - startTime) / duration,
+                            1
                         );
 
-                    });
+                    /*
+                        smoothstep делает движение
+                        намного мягче обычного linear.
+                    */
 
-                btnElement.classList.add(
-                    'border-[#00C2FF]'
-                );
+                    const eased =
+                        progress * progress *
+                        (3 - 2 * progress);
 
-            }
 
-        }
+                    /*
+                        Небольшая синусоидальная дуга.
 
-        /* =========================================================
-           VIEW SWITCHING
-        ========================================================== */
+                        Благодаря этому бабочка
+                        не летит как по линейке.
+                    */
 
-        function switchView(viewName) {
+                    const arc =
+                        Math.sin(progress * Math.PI) *
+                        curve;
 
-            document
-                .querySelectorAll('.view-section')
-                .forEach(el => {
 
-                    el.classList.add('hidden');
+                    const currentX =
+                        startX +
+                        (x - startX) * eased;
 
-                });
+                    const currentY =
+                        startY +
+                        (y - startY) * eased +
+                        arc;
 
-            if (viewName === 'catalog') {
 
-                document
-                    .getElementById('catalogView')
-                    .classList.remove('hidden');
+                    butterfly.style.left =
+                        currentX + "px";
 
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                    butterfly.style.top =
+                        currentY + "px";
 
-            }
+                    butterfly.style.transform =
+                        "translate(-50%, -50%)";
 
-            if (viewName === 'product') {
 
-                document
-                    .getElementById('productView')
-                    .classList.remove('hidden');
+                    if (progress < 1) {
 
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                        requestAnimationFrame(animate);
 
-            }
+                    } else {
 
-        }
+                        resolve();
 
-        function openProductPage() {
-            switchView('product');
-        }
-
-        /* =========================================================
-           QUANTITY
-        ========================================================== */
-
-        function updateQty(delta) {
-
-            currentProductQty += delta;
-
-            if (currentProductQty < 1) {
-                currentProductQty = 1;
-            }
-
-            const element =
-                document.getElementById('productQty');
-
-            if (element) {
-                element.innerText =
-                    currentProductQty;
-            }
-
-        }
-
-        /* =========================================================
-           FAVORITES
-        ========================================================== */
-
-        function getFavorites() {
-
-            try {
-
-                const data =
-                    JSON.parse(
-                        localStorage.getItem('milip_favorites')
-                    ) || [];
-
-                return data.filter(
-                    item =>
-                        item &&
-                        item.id &&
-                        item.id !== 'undefined'
-                );
-
-            } catch {
-                return [];
-            }
-
-        }
-
-        function toggleFavorite(
-            id,
-            price = 2449,
-            img = 'Главная фото для каталога.jpg',
-            color = 'White'
-        ) {
-
-            if (!id || id === 'undefined') {
-                return;
-            }
-
-            let favorites =
-                getFavorites();
-
-            const index =
-                favorites.findIndex(
-                    item => item.id === id
-                );
-
-            if (index > -1) {
-
-                favorites.splice(index, 1);
-
-                showToast(
-                    currentLang === 'ua'
-                        ? 'Видалено з обраного'
-                        : 'Удалено из избранного'
-                );
-
-            } else {
-
-                favorites.push({
-                    id,
-                    price,
-                    img,
-                    color: color || 'White',
-                    qty: currentProductQty
-                });
-
-                showToast(
-                    currentLang === 'ua'
-                        ? 'Додано в обране'
-                        : 'Добавлено в избранное'
-                );
-
-            }
-
-            localStorage.setItem(
-                'milip_favorites',
-                JSON.stringify(favorites)
-            );
-
-            updateFavoritesUI();
-
-        }
-
-        function updateFavoritesUI() {
-
-            const favorites =
-                getFavorites();
-
-            const badge =
-                document.getElementById('favoritesBadge');
-
-            if (badge) {
-
-                if (favorites.length) {
-
-                    badge.innerText =
-                        favorites.length;
-
-                    badge.classList.remove('hidden');
-
-                } else {
-
-                    badge.classList.add('hidden');
-
+                    }
                 }
 
-            }
-
-            document
-                .querySelectorAll('.wishlist-btn')
-                .forEach(btn => {
-
-                    btn.classList.remove('active');
-
-                });
-
-            favorites.forEach(item => {
-
-                const className =
-                    item.id.replace(/\s+/g, '-');
-
-                document
-                    .querySelectorAll(
-                        `.fav-icon-${className}`
-                    )
-                    .forEach(icon => {
-
-                        icon
-                            .closest('.wishlist-btn')
-                            ?.classList.add('active');
-
-                        icon.classList.add('active');
-
-                    });
-
+                requestAnimationFrame(animate);
             });
-
         }
 
-        /* =========================================================
-           CART
-        ========================================================== */
 
-        function getCart() {
+        /*
+            Основная последовательность.
+        */
 
-            try {
+        async function startIntro() {
 
-                return JSON.parse(
-                    localStorage.getItem('milip_cart')
-                ) || [];
+            await sleep(650);
 
-            } catch {
-                return [];
-            }
+            butterfly.classList.add("active");
 
-        }
 
-        function playButterflyAnimation(event) {
+            /*
+                Начальная позиция.
 
-            const cartIcon =
-                document.getElementById('cartIconButton');
+                Не снизу экрана.
 
-            if (!cartIcon || !event) return;
+                Бабочка появляется примерно
+                в центральной части.
+            */
 
-            const rect =
-                cartIcon.getBoundingClientRect();
+            const screenCenterX =
+                window.innerWidth * .48;
 
-            const startX =
-                event.clientX;
+            const screenCenterY =
+                window.innerHeight * .55;
 
-            const startY =
-                event.clientY;
-
-            const targetX =
-                rect.left +
-                rect.width / 2 -
-                startX;
-
-            const targetY =
-                rect.top +
-                rect.height / 2 -
-                startY;
-
-            const butterfly =
-                document.createElement('div');
-
-            butterfly.className =
-                'cart-butterfly';
 
             butterfly.style.left =
-                `${startX}px`;
+                screenCenterX + "px";
 
             butterfly.style.top =
-                `${startY}px`;
+                screenCenterY + "px";
 
-            butterfly.style.setProperty(
-                '--target-x',
-                `${targetX}px`
+
+            await sleep(150);
+
+
+            /*
+                ------------------------------------------------
+                ЭТАП 1
+
+                Плавный полёт вправо-вверх.
+                ------------------------------------------------
+            */
+
+            await flyTo(
+                window.innerWidth * .62,
+                window.innerHeight * .39,
+                520,
+                -30
             );
 
-            butterfly.style.setProperty(
-                '--target-y',
-                `${targetY}px`
+
+            /*
+                ------------------------------------------------
+                ЭТАП 2
+
+                Облетаем верхнюю часть MILIPSTORE.
+                ------------------------------------------------
+            */
+
+            await flyTo(
+                window.innerWidth * .69,
+                window.innerHeight * .43,
+                380,
+                -35
             );
 
-            butterfly.innerHTML = `
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
-                </svg>
-            `;
 
-            document.body.appendChild(
-                butterfly
+            /*
+                ------------------------------------------------
+                ЭТАП 3
+
+                Возвращаемся к началу слова.
+
+                Здесь бабочка красиво подходит
+                к первой букве M.
+                ------------------------------------------------
+            */
+
+            const titleRect =
+                introTitle.getBoundingClientRect();
+
+            const firstLetter =
+                introTitle.querySelector("span");
+
+            const mRect =
+                firstLetter.getBoundingClientRect();
+
+
+            const mX =
+                mRect.left - 15;
+
+            const mY =
+                mRect.top +
+                mRect.height / 2;
+
+
+            await flyTo(
+                mX,
+                mY,
+                550,
+                25
             );
 
-            setTimeout(() => {
 
-                butterfly.remove();
+            /*
+                Бабочка немного зависает
+                возле M.
+            */
 
-                cartIcon.classList.add(
-                    'scale-125'
-                );
+            await sleep(260);
 
-                setTimeout(() => {
 
-                    cartIcon.classList.remove(
-                        'scale-125'
-                    );
+            /*
+                ------------------------------------------------
+                ЭТАП 4
 
-                }, 200);
+                Самый красивый момент.
 
-            }, 1750);
+                Из возле M бабочка летит
+                ВВЕРХ и ВЛЕВО.
 
+                Именно туда, где находится
+                логотип сайта.
+                ------------------------------------------------
+            */
+
+            const logo =
+                document.querySelector(".site-logo");
+
+            const logoRect =
+                logo.getBoundingClientRect();
+
+
+            const logoX =
+                logoRect.left +
+                logoRect.width * .55;
+
+            const logoY =
+                logoRect.top +
+                logoRect.height * .5;
+
+
+            /*
+                Первая часть — вверх.
+            */
+
+            await flyTo(
+                mX - 20,
+                mY - 90,
+                420,
+                -15
+            );
+
+
+            /*
+                Вторая часть — вверх-влево,
+                прямо к логотипу.
+            */
+
+            await flyTo(
+                logoX,
+                logoY,
+                650,
+                -20
+            );
+
+
+            /*
+                Бабочка прилетела к логотипу.
+
+                Маленькая пауза,
+                чтобы пользователь увидел момент.
+            */
+
+            await sleep(120);
+
+
+            /*
+                Убираем вступление.
+            */
+
+            intro.classList.add("hide");
+
+            site.classList.add("show");
+
+
+            /*
+                Полностью убираем intro после
+                окончания fade-out.
+            */
+
+            await sleep(750);
+
+            intro.style.display = "none";
         }
 
-        function addToCart(
-            id,
-            price,
-            color,
-            img,
-            qty = 1
-        ) {
 
-            if (!id || id === 'undefined') {
-                return;
-            }
-
-            const finalColor =
-                color || 'White';
-
-            let cart =
-                getCart();
-
-            const existing =
-                cart.find(
-                    item =>
-                        item.id === id &&
-                        item.color === finalColor
-                );
-
-            if (existing) {
-
-                existing.qty += qty;
-
-            } else {
-
-                cart.push({
-                    id,
-                    price,
-                    color: finalColor,
-                    img:
-                        img ||
-                        'Главная фото для каталога.jpg',
-                    qty
-                });
-
-            }
-
-            localStorage.setItem(
-                'milip_cart',
-                JSON.stringify(cart)
-            );
-
-            updateCartUI();
-
-            showToast(
-                currentLang === 'ua'
-                    ? 'Товар додано в кошик'
-                    : 'Товар добавлен в корзину'
-            );
-
-        }
-
-        function addToCartWithAnimation(
-            event,
-            id,
-            price,
-            color,
-            img
-        ) {
-
-            playButterflyAnimation(event);
-
-            addToCart(
-                id,
-                price,
-                color,
-                img,
-                1
-            );
-
-        }
-
-        function addCurrentProductToCartWithAnimation(
-            event
-        ) {
-
-            if (!currentSelectedColor) {
-
-                showToast(
-                    currentLang === 'ua'
-                        ? 'Будь ласка, оберіть колір товару'
-                        : 'Пожалуйста, выберите цвет товара'
-                );
-
-                return;
-            }
-
-            playButterflyAnimation(event);
-
-            addToCart(
-                'MCHOSE A7 V2 PRO',
-                2449,
-                currentSelectedColor,
-                currentSelectedImg,
-                currentProductQty
-            );
-
-        }
-
-        function updateCartUI() {
-
-            const cart =
-                getCart();
-
-            const badge =
-                document.getElementById('cartBadge');
-
-            if (!badge) return;
-
-            const total =
-                cart.reduce(
-                    (sum, item) =>
-                        sum + item.qty,
-                    0
-                );
-
-            if (total > 0) {
-
-                badge.innerText =
-                    total;
-
-                badge.classList.remove(
-                    'hidden'
-                );
-
-            } else {
-
-                badge.classList.add(
-                    'hidden'
-                );
-
-            }
-
-        }
-
-        /* =========================================================
-           TOAST
-        ========================================================== */
-
-        function showToast(text) {
-
-            const container =
-                document.getElementById(
-                    'toastContainer'
-                );
-
-            if (!container) return;
-
-            const toast =
-                document.createElement('div');
-
-            toast.className =
-                'bg-[#07101B] text-white border border-[#11223A] px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold animate-fade-in pointer-events-auto flex items-center space-x-2';
-
-            toast.innerHTML =
-                `<span>${text}</span>`;
-
-            container.appendChild(toast);
-
-            setTimeout(() => {
-
-                toast.style.opacity = '0';
-
-                setTimeout(() => {
-
-                    toast.remove();
-
-                }, 300);
-
-            }, 2500);
-
-        }
-
-        /* =========================================================
-           ACCORDION
-        ========================================================== */
-
-        function toggleAccordion(id) {
-
-            const element =
-                document.getElementById(id);
-
-            const arrow =
-                document.getElementById(
-                    `${id}Arrow`
-                );
-
-            if (!element) return;
-
-            element.classList.toggle(
-                'hidden'
-            );
-
-            if (arrow) {
-
-                arrow.style.transform =
-                    element.classList.contains('hidden')
-                        ? 'rotate(0deg)'
-                        : 'rotate(180deg)';
-
-            }
-
-        }
-
-        /* =========================================================
-           FAVORITES MODAL
-        ========================================================== */
-
-        function openFavoritesModal() {
-
-            document
-                .getElementById('favoritesModal')
-                ?.remove();
-
-            const favorites =
-                getFavorites();
-
-            const modal =
-                document.createElement('div');
-
-            modal.id =
-                'favoritesModal';
-
-            modal.className =
-                'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4';
-
-            const ua =
-                currentLang === 'ua';
-
-            const title =
-                ua
-                    ? 'Обране'
-                    : 'Избранное';
-
-            const empty =
-                ua
-                    ? 'Список обраного порожній'
-                    : 'Список избранного пуст';
-
-            const add =
-                ua
-                    ? 'Додати у кошик'
-                    : 'Добавить в корзину';
-
-            const remove =
-                ua
-                    ? 'Видалити'
-                    : 'Удалить';
-
-            let html = `
-
-                <div
-                    class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[80vh] flex flex-col"
-                >
-
-                    <div
-                        class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]"
-                    >
-
-                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">
-                            ${title}
-                        </h3>
-
-                        <button
-                            onclick="document.getElementById('favoritesModal').remove()"
-                            class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg"
-                        >
-                            ✕
-                        </button>
-
-                    </div>
-
-                    <div
-                        class="overflow-y-auto py-4 space-y-3 flex-grow"
-                    >
-            `;
-
-            if (!favorites.length) {
-
-                html += `
-                    <p class="text-center text-gray-500 py-8 text-sm">
-                        ${empty}
-                    </p>
-                `;
-
-            } else {
-
-                favorites.forEach(item => {
-
-                    let color =
-                        item.color || 'White';
-
-                    if (!ua) {
-
-                        if (color === 'White') {
-                            color = 'Белый';
-                        }
-
-                        if (color === 'Black') {
-                            color = 'Черный';
-                        }
-
-                        if (color === 'Pink') {
-                            color = 'Розовый';
-                        }
-
-                    }
-
-                    html += `
-
-                        <div
-                            class="flex flex-col sm:flex-row sm:items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3"
-                        >
-
-                            <div
-                                class="flex items-center space-x-3 cursor-pointer"
-                                onclick="document.getElementById('favoritesModal').remove(); openProductPage();"
-                            >
-
-                                <img
-                                    src="${item.img}"
-                                    class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1"
-                                >
-
-                                <div>
-
-                                    <h4
-                                        class="font-bold text-sm text-gray-900 dark:text-white"
-                                    >
-                                        ${item.id}
-                                    </h4>
-
-                                    <div class="text-[11px] text-gray-500">
-                                        ${ua ? 'Колір' : 'Цвет'}:
-                                        <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                            ${color}
-                                        </span>
-                                    </div>
-
-                                    <div class="text-xs font-extrabold text-[#00C2FF]">
-                                        ${item.price} ₴
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div
-                                class="flex items-center justify-between sm:justify-end space-x-3"
-                            >
-
-                                <button
-                                    onclick="addToCart('${item.id}',${item.price},'${item.color || 'White'}','${item.img}',${item.qty || 1})"
-                                    class="px-3 py-2 bg-white text-black dark:bg-[#0F172A] dark:text-white text-xs font-extrabold rounded-xl shadow hover:opacity-90 transition-all"
-                                >
-                                    ${add}
-                                </button>
-
-                                <button
-                                    onclick="toggleFavorite('${item.id}'); openFavoritesModal();"
-                                    class="text-xs font-extrabold text-red-500 hover:underline px-2 py-1"
-                                >
-                                    ${remove}
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    `;
-
-                });
-
-            }
-
-            html += `
-                    </div>
-                </div>
-            `;
-
-            modal.innerHTML =
-                html;
-
-            document.body.appendChild(
-                modal
-            );
-
-        }
-
-        /* =========================================================
-           CART DRAWER
-        ========================================================== */
-
-        function openCartDrawer() {
-
-            document
-                .getElementById('cartDrawer')
-                ?.remove();
-
-            const cart =
-                getCart();
-
-            const drawer =
-                document.createElement('div');
-
-            drawer.id =
-                'cartDrawer';
-
-            drawer.className =
-                'fixed inset-0 z-50 overflow-hidden';
-
-            const totalPrice =
-                cart.reduce(
-                    (sum, item) =>
-                        sum +
-                        item.price *
-                        item.qty,
-                    0
-                );
-
-            const ua =
-                currentLang === 'ua';
-
-            const title =
-                ua
-                    ? 'Кошик'
-                    : 'Корзина';
-
-            const empty =
-                ua
-                    ? 'Кошик порожній'
-                    : 'Корзина пуста';
-
-            const total =
-                ua
-                    ? 'Загалом:'
-                    : 'Итого:';
-
-            const order =
-                ua
-                    ? 'ОФОРМИТИ ЗАМОВЛЕННЯ'
-                    : 'ОФОРМИТЬ ЗАКАЗ';
-
-            const remove =
-                ua
-                    ? 'Видалити'
-                    : 'Удалить';
-
-            let itemsHtml = '';
-
-            if (!cart.length) {
-
-                itemsHtml = `
-                    <p class="text-center text-gray-500 py-12 text-sm">
-                        ${empty}
-                    </p>
-                `;
-
-            } else {
-
-                cart.forEach((item, index) => {
-
-                    let color =
-                        item.color;
-
-                    if (!ua) {
-
-                        if (color === 'White') {
-                            color = 'Белый';
-                        }
-
-                        if (color === 'Black') {
-                            color = 'Черный';
-                        }
-
-                        if (color === 'Pink') {
-                            color = 'Розовый';
-                        }
-
-                    }
-
-                    itemsHtml += `
-
-                        <div
-                            class="flex items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3"
-                        >
-
-                            <img
-                                src="${item.img}"
-                                class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1 flex-shrink-0"
-                            >
-
-                            <div class="flex-grow min-w-0">
-
-                                <h4
-                                    class="font-bold text-xs text-gray-900 dark:text-white truncate"
-                                >
-                                    ${item.id}
-                                </h4>
-
-                                <div class="text-[10px] text-gray-500">
-                                    ${ua ? 'Колір' : 'Цвет'}:
-                                    <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                        ${color}
-                                    </span>
-                                </div>
-
-                                <div class="text-xs font-extrabold text-[#00C2FF] mt-0.5">
-                                    ${item.price} ₴ × ${item.qty}
-                                </div>
-
-                            </div>
-
-                            <button
-                                onclick="removeFromCart(${index})"
-                                class="text-red-500 hover:text-red-700 p-2 text-xs font-bold"
-                            >
-                                ${remove}
-                            </button>
-
-                        </div>
-
-                    `;
-
-                });
-
-            }
-
-            drawer.innerHTML = `
-
-                <div
-                    class="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                    onclick="document.getElementById('cartDrawer').remove()"
-                ></div>
-
-                <div
-                    class="absolute inset-y-0 right-0 max-w-full flex pl-10"
-                >
-
-                    <div
-                        class="w-screen max-w-md bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex flex-col p-6 animate-fade-in"
-                    >
-
-                        <div
-                            class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]"
-                        >
-
-                            <h3
-                                class="font-extrabold text-lg text-gray-900 dark:text-white"
-                            >
-                                ${title}
-                            </h3>
-
-                            <button
-                                onclick="document.getElementById('cartDrawer').remove()"
-                                class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg"
-                            >
-                                ✕
-                            </button>
-
-                        </div>
-
-                        <div
-                            class="overflow-y-auto py-4 space-y-3 flex-grow"
-                        >
-                            ${itemsHtml}
-                        </div>
-
-                        <div
-                            class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4"
-                        >
-
-                            <div
-                                class="flex items-center justify-between font-extrabold text-base"
-                            >
-
-                                <span>
-                                    ${total}
-                                </span>
-
-                                <span class="text-[#00C2FF]">
-                                    ${totalPrice} ₴
-                                </span>
-
-                            </div>
-
-                            <button
-                                onclick="finishOrder()"
-                                class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90 transition-opacity"
-                            >
-                                ${order}
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-            `;
-
-            document.body.appendChild(
-                drawer
-            );
-
-        }
-
-        function finishOrder() {
-
-            showToast(
-                currentLang === 'ua'
-                    ? 'Оформлення замовлення успішне!'
-                    : 'Оформление заказа успешно!'
-            );
-
-            localStorage.removeItem(
-                'milip_cart'
-            );
-
-            updateCartUI();
-
-            document
-                .getElementById('cartDrawer')
-                ?.remove();
-
-        }
-
-        function removeFromCart(index) {
-
-            let cart =
-                getCart();
-
-            cart.splice(index, 1);
-
-            localStorage.setItem(
-                'milip_cart',
-                JSON.stringify(cart)
-            );
-
-            updateCartUI();
-
-            openCartDrawer();
-
-        }
-
-        /* =========================================================
-           SEARCH
-        ========================================================== */
-
-        function openSearchModal() {
-
-            showToast(
-                currentLang === 'ua'
-                    ? 'Пошук активний'
-                    : 'Поиск активен'
-            );
-
-        }
-
-        /* =========================================================
-           THEME
-        ========================================================== */
-
-        function toggleTheme() {
-
-            document
-                .documentElement
-                .classList
-                .toggle('dark');
-
-            document
-                .getElementById('sunIcon')
-                .classList
-                .toggle('hidden');
-
-            document
-                .getElementById('moonIcon')
-                .classList
-                .toggle('hidden');
-
-        }
+        /*
+            Запускаем после загрузки страницы.
+        */
+
+        window.addEventListener(
+            "load",
+            startIntro
+        );
 
     </script>
 
