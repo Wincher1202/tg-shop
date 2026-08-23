@@ -99,6 +99,7 @@
             justify-content: center;
             z-index: 99999;
             transition: opacity 0.5s ease, visibility 0.5s ease;
+            pointer-events: none;
         }
         html.dark #milip-intro-overlay {
             background: #040B14;
@@ -106,28 +107,41 @@
         #milip-intro-overlay.hidden-intro {
             opacity: 0;
             visibility: hidden;
+        }
+
+        /* 3-секундная бомбезная леташка, улетающая в левый верхний угол к логотипу */
+        @keyframes introFlyaround {
+            0% {
+                transform: translate(0, 50px) scale(2.2) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translate(25vw, -15vh) scale(2) rotate(45deg);
+            }
+            35% {
+                transform: translate(-25vw, -30vh) scale(1.6) rotate(140deg);
+            }
+            65% {
+                transform: translate(15vw, 15vh) scale(1.2) rotate(240deg);
+            }
+            85% {
+                transform: translate(-10vw, -10vh) scale(0.8) rotate(310deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-42vw, -42vh) scale(0.25) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .intro-flying-butterfly {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 100000;
             pointer-events: none;
-        }
-        .intro-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .intro-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            color: #0F172A;
-            opacity: 0;
-            transform: scale(0.95);
-            animation: titleAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        html.dark .intro-title {
-            color: #F1F5F9;
-        }
-        @keyframes titleAppear {
-            to { opacity: 1; transform: scale(1); }
+            animation: introFlyaround 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         /* Анимация полета бабочки в кошик */
@@ -165,10 +179,13 @@
 </head>
 <body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
 
-    <div id="milip-intro-overlay">
-        <div class="intro-container">
-            <div class="intro-title">MILIPSTORE</div>
-        </div>
+    <div id="milip-intro-overlay"></div>
+
+    <!-- Бомбезная бабочка, которая летает 3 секунды и уходит в левый угол к лого -->
+    <div class="intro-flying-butterfly">
+        <svg width="70" height="70" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 15px rgba(0,194,255,0.9));">
+            <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
+        </svg>
     </div>
 
     <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"></div>
@@ -206,7 +223,6 @@
                     <span id="favoritesBadge" class="absolute -top-1 -right-1 bg-[#FF3366] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
                 </button>
 
-                <!-- Иконка корзины с id для анимации бабочки -->
                 <button id="cartIconButton" onclick="openCartDrawer()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     <span id="cartBadge" class="absolute -top-1 -right-1 bg-[#00C2FF] text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
@@ -290,7 +306,6 @@
                     <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center">
                         <img id="mainProductImage" src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl shadow-md transition-opacity duration-300">
                     </div>
-                    <!-- 4 ФОТОГРАФІЇ В ГАЛЕРЕЇ -->
                     <div class="flex space-x-3 overflow-x-auto pb-2" id="productThumbnails">
                         <button onclick="changePhotoAndColor('Главная фото для каталога.jpg', null, this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Главная фото для каталога.jpg" class="w-full h-full object-contain" loading="lazy"></button>
                         <button onclick="changePhotoAndColor('Белая мышка.jpg', 'White', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Белая мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
@@ -306,7 +321,6 @@
                         <div class="text-3xl font-extrabold">2 449 ₴</div>
                     </div>
 
-                    <!-- ВЫБОР ЦВЕТА (Изначально не выбран) -->
                     <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
                         <span class="text-xs font-mono text-gray-500 uppercase font-bold">Колір: <span id="selectedColorName" class="font-extrabold text-[#00C2FF]">Не вибрано</span></span>
                         <div class="flex items-center space-x-4">
@@ -330,7 +344,6 @@
                         </button>
                     </div>
 
-                    <!-- АККОРДЕОНЫ -->
                     <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
                         <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
                             <button onclick="toggleAccordion('specsAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
@@ -404,7 +417,7 @@
     </footer>
 
     <script>
-        let currentSelectedColor = null; // Изначально цвет не выбран
+        let currentSelectedColor = null; 
         let currentSelectedImg = 'Главная фото для каталога.jpg';
         let currentProductQty = 1;
 
@@ -412,7 +425,7 @@
             setTimeout(() => {
                 const overlay = document.getElementById('milip-intro-overlay');
                 if (overlay) overlay.classList.add('hidden-intro');
-            }, 900);
+            }, 3000);
             updateFavoritesUI();
             updateCartUI();
         });
@@ -460,7 +473,6 @@
                 }, 150);
             }
 
-            // Убираем обводку со всех кружков цветов, а если выбран конкретный — подсвечиваем его
             document.querySelectorAll('.color-picker-btn').forEach(b => {
                 b.classList.remove('border-[#00C2FF]', 'scale-110', 'ring-2', 'ring-[#00C2FF]');
             });
@@ -544,7 +556,6 @@
             }
         }
 
-        // Анимация полета бабочки в кошик
         function playButterflyAnimation(event) {
             const cartIcon = document.getElementById('cartIconButton');
             if (!cartIcon) return;
@@ -580,8 +591,6 @@
 
         function addToCart(id, price, color, img, qty = 1) {
             if (!id || id === 'undefined') return;
-            
-            // Если цвет не выбран при добавлении со страницы товара, подскажем пользователю или поставим дефолтный белый
             const finalColor = color || 'White';
 
             let cart = getCart();
@@ -698,7 +707,6 @@
             document.body.appendChild(modal);
         }
 
-        // БОКОВАЯ ШТОРКА КОРЗИНЫ (DRAWER)
         function openCartDrawer() {
             let existingDrawer = document.getElementById('cartDrawer');
             if (existingDrawer) existingDrawer.remove();
