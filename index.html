@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MILIPSTORE — Gaming Gear</title>
+    <!-- Подключаем шрифт Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* ОБЩИЕ СТИЛИ И ПЕРЕМЕННЫЕ */
         :root {
             --bg-color: #0b0f19;
             --card-bg: #131b2e;
-            --accent-color: #00f0ff;
-            --text-color: #ffffff;
+            --accent-cyan: #00f0ff;
+            --accent-purple: #7928ca;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
             --border-color: rgba(0, 240, 255, 0.15);
         }
 
@@ -23,226 +26,312 @@
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            padding: 12px;
-            padding-right: 48px;
-            padding-bottom: 90px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Шапка */
+        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .brand-logo {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-        }
-
-        /* Верхние кнопки в правом углу */
-        .header-actions {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            background: rgba(18, 25, 43, 0.95);
-            border: 1px solid var(--border-color);
-            padding: 4px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            position: absolute;
-            right: 44px;
-            top: 0px;
-            z-index: 98;
-        }
-
-        .icon-btn {
-            background: rgba(18, 25, 43, 0.95);
-            border: 1px solid var(--border-color);
-            color: var(--accent-color);
-            padding: 5px 7px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        .badge-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #7928ca;
-            color: white;
-            font-size: 9px;
-            padding: 1px 4px;
-            border-radius: 50%;
-        }
-
-        /* Правая вертикальная панель */
-        .right-sidebar-panel {
-            position: fixed;
-            right: 0;
+            padding: 16px 24px;
+            background-color: rgba(19, 27, 46, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
             top: 0;
-            bottom: 0;
-            width: 38px;
-            background: linear-gradient(135deg, rgba(25, 38, 66, 0.95), rgba(220, 235, 255, 0.9));
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            box-shadow: -3px 0 15px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px;
-            padding: 10px 0;
-            z-index: 99;
+            z-index: 100;
         }
 
-        .side-btn {
-            width: 28px;
-            height: 28px;
-            background: rgba(13, 19, 33, 0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .header-right {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 12px;
+            gap: 16px;
+        }
+
+        .header-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 15px;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .side-btn:hover {
-            transform: scale(1.05);
-            border-color: var(--accent-color);
-        }
-
-        /* Контейнер сетки товаров */
-        .products-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-        }
-
-        .product-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .product-img {
-            height: 90px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 32px;
+            gap: 4px;
+            transition: color 0.2s;
         }
 
-        .product-title {
-            font-size: 13px;
+        .header-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        .counter {
+            background-color: var(--accent-purple);
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
             font-weight: 600;
         }
 
-        .product-price {
+        .lang-switch {
             font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .lang-switch:hover {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        /* ОСНОВНОЙ МАКЕТ (СЕТКА + ПРАВАЯ ПАНЕЛЬ) */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 180px; /* Плотная фиксированная колонка для правой панели */
+            gap: 16px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 16px;
+            flex: 1;
+        }
+
+        /* СЕТКА ТОВАРОВ */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            align-content: start;
+        }
+
+        /* КАРТОЧКА ТОВАРА */
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+        }
+
+        .product-img {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .product-price {
+            font-size: 15px;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--accent-cyan);
         }
 
         .buy-btn {
-            background: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-cyan), #0082ff);
             color: #0b0f19;
             border: none;
             border-radius: 6px;
             padding: 8px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
+            transition: opacity 0.2s, box-shadow 0.2s;
             margin-top: 4px;
+            width: 100%;
+        }
+
+        .buy-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        /* ПРАВАЯ БОКОВАЯ ПАНЕЛЬ */
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            height: fit-content;
+        }
+
+        .sidebar-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-btn:hover {
+            background-color: rgba(0, 240, 255, 0.05);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                padding-bottom: 80px;
+            }
+
+            .sidebar-panel {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                flex-direction: row;
+                justify-content: space-around;
+                background-color: rgba(19, 27, 46, 0.95);
+                backdrop-filter: blur(12px);
+                border-radius: 0;
+                border-top: 1px solid var(--border-color);
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 10px 16px;
+                z-index: 100;
+                gap: 8px;
+            }
+
+            .sidebar-btn {
+                flex: 1;
+                padding: 10px 4px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Правая вертикальная панель -->
-    <div class="right-sidebar-panel">
-        <div class="side-btn" title="Зв'язок">📞</div>
-        <div class="side-btn" title="Правила">📜</div>
-        <div class="side-btn" title="Відгуки">⭐</div>
-    </div>
-
-    <!-- Шапка сайта -->
-    <div class="header">
-        <div class="brand-logo">MILIPSTORE</div>
-        <div class="header-actions">
-            <button class="icon-btn" onclick="openScreen('favorites')">❤️ <span id="fav-count" class="badge-count">0</span></button>
-            <button class="icon-btn" onclick="openScreen('cart')">🛒 <span id="cart-count" class="badge-count">0</span></button>
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ (HEADER) -->
+    <header class="header">
+        <div class="logo">MILIPSTORE</div>
+        <div class="header-right">
+            <button class="header-btn" title="Обране">❤️ <span class="counter">0</span></button>
+            <button class="header-btn" title="Кошик">🛒 <span class="counter">0</span></button>
+            <div class="lang-switch">UA/EN</div>
         </div>
-    </div>
+    </header>
 
-    <!-- Сетка товаров -->
-    <div class="products-container">
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР (СЕТКА + ПРАВАЯ ПАНЕЛЬ) -->
+    <div class="main-layout">
         
-        <div class="product-card">
-            <div class="product-img">🎮</div>
-            <div class="product-title">ATK Blazing Sky F1 V2</div>
-            <div class="product-price">2 699 ₴</div>
-            <button class="buy-btn" onclick="buyProduct('ATK Blazing Sky F1 V2', '2699')">КУПИТИ</button>
-        </div>
+        <!-- СЕТКА ТОВАРОВ -->
+        <main class="products-grid">
+            
+            <!-- Карточка 1 -->
+            <div class="product-card">
+                <div class="product-img">🎮</div>
+                <div class="product-info">
+                    <h3 class="product-title">Gaming Mouse Pro</h3>
+                    <div>
+                        <div class="product-price">1 499 ₴</div>
+                        <button class="buy-btn">В КОШИК</button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="product-card">
-            <div class="product-img">⌨️</div>
-            <div class="product-title">Mechanical Keyboard</div>
-            <div class="product-price">2 899 ₴</div>
-            <button class="buy-btn" onclick="buyProduct('Mechanical Keyboard', '2899')">КУПИТИ</button>
-        </div>
+            <!-- Карточка 2 -->
+            <div class="product-card">
+                <div class="product-img">⌨️</div>
+                <div class="product-info">
+                    <h3 class="product-title">Mechanical Keyboard</h3>
+                    <div>
+                        <div class="product-price">2 899 ₴</div>
+                        <button class="buy-btn">В КОШИК</button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="product-card">
-            <div class="product-img">🎧</div>
-            <div class="product-title">RGB Headset X</div>
-            <div class="product-price">1 999 ₴</div>
-            <button class="buy-btn" onclick="buyProduct('RGB Headset X', '1999')">КУПИТИ</button>
-        </div>
+            <!-- Карточка 3 -->
+            <div class="product-card">
+                <div class="product-img">🎧</div>
+                <div class="product-info">
+                    <h3 class="product-title">RGB Headset X</h3>
+                    <div>
+                        <div class="product-price">1 999 ₴</div>
+                        <button class="buy-btn">В КОШИК</button>
+                    </div>
+                </div>
+            </div>
 
-        <div class="product-card">
-            <div class="product-img">🖱️</div>
-            <div class="product-title">Wireless Pad Pro</div>
-            <div class="product-price">799 ₴</div>
-            <button class="buy-btn" onclick="buyProduct('Wireless Pad Pro', '799')">КУПИТИ</button>
-        </div>
+            <!-- Карточка 4 -->
+            <div class="product-card">
+                <div class="product-img">🖱️</div>
+                <div class="product-info">
+                    <h3 class="product-title">Wireless Pad</h3>
+                    <div>
+                        <div class="product-price">799 ₴</div>
+                        <button class="buy-btn">В КОШИК</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ПРАВАЯ БОКОВАЯ ПАНЕЛЬ -->
+        <aside class="sidebar-panel">
+            <button class="sidebar-btn">☎️ Зв'язок</button>
+            <button class="sidebar-btn">⭐ Відгуки</button>
+            <button class="sidebar-btn">📜 Правила</button>
+        </aside>
 
     </div>
 
-    <script>
-        function buyProduct(name, price) {
-            const data = {
-                product: name,
-                price: price
-            };
-            if (window.Telegram && window.Telegram.WebApp) {
-                Telegram.WebApp.sendData(JSON.stringify(data));
-            } else {
-                alert('Замовлення: ' + name + ' (' + price + ' грн)');
-            }
-        }
-
-        function openScreen(type) {
-            console.log('Open screen:', type);
-        }
-    </script>
 </body>
 </html>
