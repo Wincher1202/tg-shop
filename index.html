@@ -9,11 +9,11 @@
         :root {
             --bg: #05070b;
             --surface: #0b0f17;
-            --surface-card: #101622;
-            --surface-hover: #161e2e;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(0, 240, 255, 0.3);
-            --text-main: #f1f5f9;
+            --surface-card: #0f1522;
+            --surface-hover: #141c2c;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(0, 240, 255, 0.35);
+            --text-main: #f8fafc;
             --text-muted: #8c9bae;
             --accent: #00f0ff;
             --accent-glow: rgba(0, 240, 255, 0.12);
@@ -38,8 +38,8 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER & NAVIGATION --- */
-        .header {
+        /* --- HEADER --- */
+        header {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 1000;
@@ -60,8 +60,8 @@
             text-decoration: none;
         }
 
-        /* Уникальный фирменный знак MILIPSTORE */
-        .brand-icon {
+        /* Уникальный знак MILIPSTORE */
+        .brand-emblem {
             width: 32px;
             height: 32px;
             background: linear-gradient(135deg, var(--accent), #0066ff);
@@ -73,7 +73,7 @@
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .brand-icon::before {
+        .brand-emblem::before {
             content: '';
             position: absolute;
             width: 14px;
@@ -82,49 +82,29 @@
             clip-path: polygon(0 100%, 50% 0, 100% 100%, 75% 100%, 50% 40%, 25% 100%);
         }
 
-        .brand-name {
-            font-size: 16px;
+        .brand-title {
+            font-size: 15px;
             font-weight: 700;
             letter-spacing: 3px;
             color: var(--text-main);
         }
 
-        .brand-name span {
+        .brand-title span {
             color: var(--accent);
         }
 
-        .nav-menu {
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 28px;
-            list-style: none;
+            gap: 16px;
         }
 
-        .nav-item {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-            background: none;
-            border: none;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: var(--text-main);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .action-btn {
-            background: none;
+        .icon-btn {
+            background: var(--surface-card);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 8px 14px;
+            height: 40px;
+            padding: 0 16px;
             border-radius: 12px;
             font-size: 13px;
             font-weight: 600;
@@ -135,37 +115,49 @@
             transition: var(--transition);
         }
 
-        .action-btn:hover {
-            border-color: var(--accent);
-            background: rgba(0, 240, 255, 0.04);
+        .icon-btn:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
         }
 
-        .badge-count {
+        .badge {
             background: var(--accent);
             color: var(--bg);
             font-size: 11px;
             font-weight: 700;
             padding: 1px 6px;
-            border-radius: 10px;
+            border-radius: 8px;
+        }
+
+        /* Селектор языка */
+        .lang-dropdown {
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            height: 40px;
+            padding: 0 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .lang-dropdown:hover {
+            border-color: var(--border-hover);
+            color: var(--text-main);
         }
 
         /* --- CONTAINER --- */
         .main-container {
             max-width: 1320px;
             width: 100%;
-            margin: 120px auto 80px;
+            margin: 110px auto 80px;
             padding: 0 32px;
             flex: 1;
         }
 
-        .section-title {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 32px;
-        }
-
-        /* --- VIEWS SYSTEM --- */
         .view {
             display: none;
             animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -180,45 +172,86 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- HERO & CATALOG GRID --- */
-        .hero-banner {
+        /* --- HERO БЛОК --- */
+        .hero {
             background: linear-gradient(135deg, var(--surface-card), var(--surface));
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 56px;
-            margin-bottom: 48px;
-            display: flex;
-            justify-content: space-between;
+            border-radius: 28px;
+            padding: 64px;
+            margin-bottom: 56px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
             align-items: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-banner h1 {
-            font-size: 40px;
+        .hero-content h1 {
+            font-size: 44px;
             font-weight: 700;
-            line-height: 1.15;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
         }
 
-        .hero-banner h1 span {
+        .hero-content h1 span {
             color: var(--accent);
         }
 
-        .hero-banner p {
+        .hero-content p {
             color: var(--text-muted);
-            font-size: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
             max-width: 480px;
+        }
+
+        .hero-btn {
+            background: var(--text-main);
+            color: var(--bg);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .hero-btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .hero-img-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-img-wrap img {
+            max-width: 100%;
+            height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+        }
+
+        /* --- СЕТКА КАТАЛОГА --- */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 28px;
         }
 
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 24px;
         }
 
-        /* КАРТОЧКА ТОВАРА */
+        /* КАРТОЧКА ТОВАРА (ФОТО ЗАНУМАЕТ БОЛЬШЕ ПРОСТРАНСТВА) */
         .product-card {
             background: var(--surface-card);
             border: 1px solid var(--border);
@@ -237,11 +270,10 @@
             box-shadow: 0 16px 32px var(--accent-glow);
         }
 
-        /* Кнопка Избранного на карточке */
-        .fav-card-btn {
+        .card-fav-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             background: var(--surface);
             border: 1px solid var(--border);
             width: 36px;
@@ -253,53 +285,50 @@
             cursor: pointer;
             z-index: 10;
             transition: var(--transition);
-            font-size: 16px;
         }
 
-        .fav-card-btn:hover {
+        .card-fav-btn:hover {
             border-color: var(--danger);
             transform: scale(1.1);
         }
 
-        .fav-card-btn.active {
+        .card-fav-btn.active {
             color: var(--danger);
             border-color: var(--danger);
             background: rgba(255, 51, 102, 0.1);
         }
 
-        /* Рамка под размер фото (без лишних пустот) */
-        .card-img-container {
+        /* ИСПРАВЛЕННЫЙ КОНТЕЙНЕР ФОТО (Адаптивный под размер, без лишних пустот) */
+        .card-img-box {
             width: 100%;
-            height: 180px;
+            aspect-ratio: 4 / 3;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 16px;
-            padding: 10px;
         }
 
-        .card-img-container img {
+        .card-img-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             transition: transform 0.4s ease;
         }
 
-        .product-card:hover .card-img-container img {
-            transform: scale(1.05);
+        .product-card:hover .card-img-box img {
+            transform: scale(1.06);
         }
 
-        .card-title {
+        .card-name {
             font-size: 15px;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
-        .card-stock {
+        .card-spec {
             font-size: 12px;
-            color: #10b981;
-            font-weight: 500;
-            margin-bottom: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
         }
 
         .card-bottom {
@@ -312,12 +341,11 @@
         }
 
         .card-price {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
-            color: var(--text-main);
         }
 
-        .card-buy-btn {
+        .card-btn {
             background: var(--text-main);
             color: var(--bg);
             border: none;
@@ -329,19 +357,19 @@
             transition: var(--transition);
         }
 
-        .card-buy-btn:hover {
+        .card-btn:hover {
             background: var(--accent);
             box-shadow: 0 0 15px var(--accent-glow);
         }
 
         /* --- СТРАНИЦА ТОВАРА (DETAIL) --- */
-        .product-detail-layout {
+        .detail-layout {
             background: var(--surface-card);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 40px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.1fr 1fr;
             gap: 48px;
             align-items: start;
         }
@@ -349,58 +377,95 @@
         .detail-gallery {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 24px;
         }
 
         .detail-main-img {
             max-height: 320px;
             max-width: 100%;
             object-fit: contain;
-            margin-bottom: 24px;
+        }
+
+        /* Маленькие миниатюры под главным фото */
+        .detail-thumbs {
+            display: flex;
+            gap: 12px;
+        }
+
+        .thumb {
+            width: 60px;
+            height: 60px;
+            background: var(--surface-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 6px;
+            transition: var(--transition);
+        }
+
+        .thumb.active, .thumb:hover {
+            border-color: var(--accent);
+        }
+
+        .thumb img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .color-selector {
             display: flex;
             gap: 12px;
+            margin: 16px 0 24px;
         }
 
         .color-dot {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: var(--transition);
             position: relative;
+            transition: var(--transition);
         }
 
         .color-dot.active::after {
             content: '';
             position: absolute;
-            inset: -5px;
+            inset: -6px;
             border: 1px solid var(--accent);
             border-radius: 50%;
         }
 
         .detail-info h2 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+        }
+
+        .stock-tag {
+            font-size: 13px;
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 16px;
         }
 
         .detail-price {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--accent);
-            margin: 16px 0 24px;
+            margin-bottom: 24px;
         }
 
-        .info-box {
+        .spec-box {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -411,13 +476,13 @@
             color: var(--text-muted);
         }
 
-        .info-box b {
+        .spec-box b {
             color: var(--text-main);
             display: block;
-            margin-bottom: 6px;
-            font-size: 13px;
+            margin-bottom: 4px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            letter-spacing: 1px;
         }
 
         .detail-actions {
@@ -444,7 +509,7 @@
             opacity: 0.9;
         }
 
-        .btn-outline {
+        .btn-secondary {
             background: transparent;
             border: 1px solid var(--border);
             color: var(--text-main);
@@ -456,12 +521,12 @@
             transition: var(--transition);
         }
 
-        .btn-outline:hover {
+        .btn-secondary:hover {
             border-color: var(--text-main);
         }
 
-        /* --- СТРАНИЦЫ: ОТЗЫВЫ, ПРАВИЛА, СВЯЗЬ, КОРЗИНА --- */
-        .page-content-box {
+        /* --- СТРАНИЦЫ (ИНФО, ОТЗЫВЫ, ПРАВИЛА, СВЯЗЬ) --- */
+        .page-box {
             background: var(--surface-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -470,24 +535,46 @@
             margin: 0 auto;
         }
 
-        .page-content-box h2 {
-            margin-bottom: 20px;
+        .page-box h2 {
             font-size: 24px;
+            margin-bottom: 20px;
         }
 
-        .page-content-box p, .page-content-box li {
+        .page-box p, .page-box li {
             color: var(--text-muted);
-            line-height: 1.7;
             font-size: 14px;
+            line-height: 1.7;
             margin-bottom: 12px;
         }
 
-        .page-content-box ul {
+        .page-box ul {
             padding-left: 20px;
         }
 
+        /* Отзывы */
+        .review-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .review-stars {
+            color: #fbbf24;
+            font-size: 14px;
+        }
+
         /* --- FOOTER --- */
-        .footer {
+        footer {
             background: var(--surface);
             border-top: 1px solid var(--border);
             padding: 40px 48px;
@@ -524,133 +611,147 @@
 
         /* Адаптивность */
         @media (max-width: 768px) {
-            .header { padding: 16px 20px; }
+            header { padding: 16px 20px; }
             .main-container { padding: 0 16px; margin-top: 90px; }
-            .hero-banner { padding: 32px 20px; flex-direction: column; align-items: flex-start; gap: 20px; }
-            .hero-banner h1 { font-size: 28px; }
-            .product-detail-layout { grid-template-columns: 1fr; padding: 20px; }
-            .footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 20px; }
+            .hero { grid-template-columns: 1fr; padding: 32px 20px; text-align: center; }
+            .hero-content p { margin: 0 auto 24px; }
+            .detail-layout { grid-template-columns: 1fr; padding: 20px; }
+            footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
 
     <!-- HEADER -->
-    <header class="header">
+    <header>
         <a class="brand-logo" onclick="switchView('catalog')">
-            <div class="brand-icon"></div>
-            <div class="brand-name">MILIP<span>STORE</span></div>
+            <div class="brand-emblem"></div>
+            <div class="brand-title">MILIP<span>STORE</span></div>
         </a>
 
-        <ul class="nav-menu">
-            <li><button class="nav-item active" id="nav-catalog" onclick="switchView('catalog')">Головна</button></li>
-            <li><button class="nav-item" onclick="switchView('catalog')">Каталог</button></li>
-            <li><button class="nav-item" onclick="switchView('reviews')">Відгуки</button></li>
-            <li><button class="nav-item" onclick="switchView('rules')">Правила</button></li>
-            <li><button class="nav-item" onclick="switchView('contacts')">Зв'язок</button></li>
-        </ul>
-
-        <div class="nav-actions">
-            <button class="action-btn" onclick="switchView('favorites')">
-                ❤️ <span id="fav-counter" class="badge-count">0</span>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="switchView('favorites')">
+                ❤️ <span id="fav-count" class="badge">0</span>
             </button>
-            <button class="action-btn" onclick="switchView('cart')">
-                🛒 <span id="cart-counter" class="badge-count">0</span>
+            <button class="icon-btn" onclick="switchView('cart')">
+                🛒 <span id="cart-count" class="badge">0</span>
             </button>
+            <select class="lang-dropdown" id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="ua">UA</option>
+                <option value="ru">RU</option>
+                <option value="en">EN</option>
+            </select>
         </div>
     </header>
 
     <!-- CONTAINER -->
     <div class="main-container">
 
-        <!-- 1. КАТАЛОГ / ГЛАВНАЯ -->
+        <!-- 1. ГЛАВНАЯ + КАТАЛОГ -->
         <div id="view-catalog" class="view active">
-            <div class="hero-banner">
-                <div>
-                    <h1>ULTIMATE <span>PC GEAR</span></h1>
-                    <p>Професійна кіберспортивна периферія для максимального контролю та швидкості.</p>
+            
+            <!-- HERO БЛОК -->
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 id="hero-title">NEXT-GEN <span>GAMING GEAR</span></h1>
+                    <p id="hero-desc">Профессиональные беспроводные девайсы, созданные для киберспорта, максимальной скорости и безупречного контроля.</p>
+                    <button class="hero-btn" onclick="scrollToCatalog()" id="hero-btn-text">Смотреть каталог</button>
+                </div>
+                <div class="hero-img-wrap">
+                    <img src="Главная фото для каталога.jpg" alt="Hero Gear">
                 </div>
             </div>
 
-            <h2 class="section-title">Каталог товарів</h2>
+            <h2 class="section-title" id="catalog-heading">Каталог товаров</h2>
 
-            <div class="catalog-grid">
-                <!-- Карточка товара 1 -->
+            <div class="catalog-grid" id="catalog-grid">
+                
+                <!-- Товар 1 -->
                 <div class="product-card" onclick="openProductDetail()">
-                    <button class="fav-card-btn" id="card-fav-1" onclick="toggleFavorite(event, 1)">❤️</button>
-                    <div class="card-img-container">
+                    <button class="card-fav-btn" id="fav-btn-1" onclick="toggleFavorite(event, 1)">❤️</button>
+                    <div class="card-img-box">
                         <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO">
                     </div>
-                    <div class="card-title">MCHOSE A7 V2 PRO</div>
-                    <div class="card-stock">🟢 В наявності: 5 шт.</div>
+                    <div class="card-name">MCHOSE A7 V2 PRO</div>
+                    <div class="card-spec">PAW3395 • 59g • 8000 Hz</div>
                     <div class="card-bottom">
                         <span class="card-price">2 449 ₴</span>
-                        <button class="card-buy-btn" onclick="event.stopPropagation(); addToCart(event)">В кошик</button>
+                        <button class="card-btn" onclick="event.stopPropagation(); addToCart()" id="btn-buy-1">В кошик</button>
                     </div>
                 </div>
 
-                <!-- Карточка товара 2 -->
-                <div class="product-card">
-                    <button class="fav-card-btn" id="card-fav-2" onclick="toggleFavorite(event, 2)">❤️</button>
-                    <div class="card-img-container">
+                <!-- Товар 2 -->
+                <div class="product-card" onclick="openProductDetail()">
+                    <button class="card-fav-btn" id="fav-btn-2" onclick="toggleFavorite(event, 2)">❤️</button>
+                    <div class="card-img-box">
                         <img src="Розовая мышка.jpg" alt="Mechanical Keyboard">
                     </div>
-                    <div class="card-title">Mechanical Keyboard RGB</div>
-                    <div class="card-stock">🟢 В наявності: 3 шт.</div>
+                    <div class="card-name">Mechanical Keyboard RGB</div>
+                    <div class="card-spec">Hot-swap • Linear Switches</div>
                     <div class="card-bottom">
                         <span class="card-price">2 899 ₴</span>
-                        <button class="card-buy-btn" onclick="event.stopPropagation(); addToCart(event)">В кошик</button>
+                        <button class="card-btn" onclick="event.stopPropagation(); addToCart()" id="btn-buy-2">В кошик</button>
                     </div>
                 </div>
 
-                <!-- Карточка товара 3 -->
-                <div class="product-card">
-                    <button class="fav-card-btn" id="card-fav-3" onclick="toggleFavorite(event, 3)">❤️</button>
-                    <div class="card-img-container">
+                <!-- Товар 3 -->
+                <div class="product-card" onclick="openProductDetail()">
+                    <button class="card-fav-btn" id="fav-btn-3" onclick="toggleFavorite(event, 3)">❤️</button>
+                    <div class="card-img-box">
                         <img src="Белая мышка.jpg" alt="Wireless Headset">
                     </div>
-                    <div class="card-title">Wireless Gaming Headset</div>
-                    <div class="card-stock">🟢 В наявності: 8 шт.</div>
+                    <div class="card-name">Wireless Gaming Headset</div>
+                    <div class="card-spec">Low Latency • 7.1 Spatial</div>
                     <div class="card-bottom">
                         <span class="card-price">1 999 ₴</span>
-                        <button class="card-buy-btn" onclick="event.stopPropagation(); addToCart(event)">В кошик</button>
+                        <button class="card-btn" onclick="event.stopPropagation(); addToCart()" id="btn-buy-3">В кошик</button>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- 2. ДЕТАЛЬНАЯ СТРАНИЦА ТОВАРА -->
         <div id="view-product" class="view">
-            <button class="btn-outline" style="margin-bottom: 24px;" onclick="switchView('catalog')">← Назад до каталогу</button>
+            <button class="btn-secondary" style="margin-bottom: 24px;" onclick="switchView('catalog')" id="back-catalog-btn">← Назад до каталогу</button>
             
-            <div class="product-detail-layout">
+            <div class="detail-layout">
                 <div class="detail-gallery">
-                    <img id="active-detail-img" class="detail-main-img" src="Белая мышка.jpg" alt="MCHOSE A7 V2 PRO">
+                    <img id="detail-main-img" class="detail-main-img" src="Белая мышка.jpg" alt="Product">
+                    
+                    <!-- Миниатюры -->
+                    <div class="detail-thumbs">
+                        <div class="thumb active" onclick="setDetailImage('Белая мышка.jpg', this)"><img src="Белая мышка.jpg"></div>
+                        <div class="thumb" onclick="setDetailImage('Черная мышка.jpg', this)"><img src="Черная мышка.jpg"></div>
+                        <div class="thumb" onclick="setDetailImage('Розовая мышка.jpg', this)"><img src="Розовая мышка.jpg"></div>
+                    </div>
+
+                    <!-- Выбор цветов -->
                     <div class="color-selector">
                         <div class="color-dot active" style="background: #ffffff;" onclick="setProductColor('Белая мышка.jpg', this)"></div>
-                        <div class="color-dot" style="background: #121212;" onclick="setProductColor('Черная мышка.jpg', this)"></div>
+                        <div class="color-dot" style="background: #111111;" onclick="setProductColor('Черная мышка.jpg', this)"></div>
                         <div class="color-dot" style="background: #ff007f;" onclick="setProductColor('Розовая мышка.jpg', this)"></div>
                     </div>
                 </div>
 
-                <div class="detail-info">
-                    <h2>MCHOSE A7 V2 PRO</h2>
-                    <div class="card-stock">🟢 В наявності: 5 шт.</div>
+                <div>
+                    <h2 id="detail-title">MCHOSE A7 V2 PRO</h2>
+                    <div class="stock-tag" id="detail-stock">🟢 В наявності (5 шт)</div>
                     <div class="detail-price">2 449 ₴</div>
 
-                    <div class="info-box">
-                        <b>Комплектація:</b>
-                        Мишка MCHOSE A7 V2 PRO • Кабель Type-C • Приймач 2.4 ГГц • Інструкція • Комплект гріпсів.
+                    <div class="spec-box">
+                        <b id="spec-kit-title">Комплектація</b>
+                        <span id="spec-kit-text">Мишка MCHOSE A7 V2 PRO • Кабель Type-C • Приймач 2.4 ГГц • Інструкція • Гріпси</span>
                     </div>
 
-                    <div class="info-box">
-                        <b>Характеристики:</b>
-                        Сенсор PAW3395 • DPI до 26 000 • Опитування 8000 Гц • Вага 59 г • Акумулятор 500 mAh.
+                    <div class="spec-box">
+                        <b id="spec-tech-title">Характеристики</b>
+                        <span id="spec-tech-text">Сенсор: PAW3395 • DPI: 50–26 000 • Опитування: 8000 Гц • Вага: 59 г • Батарея: 500 mAh</span>
                     </div>
 
                     <div class="detail-actions">
-                        <button class="btn-primary" onclick="addToCart()">Додати в кошик</button>
-                        <button class="btn-outline" onclick="toggleFavoriteDirect(1)">❤️ В обране</button>
+                        <button class="btn-primary" onclick="addToCart()" id="detail-buy-btn">Додати в кошик</button>
+                        <button class="btn-secondary" onclick="toggleFavoriteDirect(1)" id="detail-fav-btn">❤️ В обране</button>
                     </div>
                 </div>
             </div>
@@ -658,67 +759,79 @@
 
         <!-- 3. ИЗБРАННОЕ -->
         <div id="view-favorites" class="view">
-            <h2 class="section-title">Обрані товари</h2>
-            <div class="page-content-box">
+            <h2 class="section-title" id="fav-page-title">Обрані товари</h2>
+            <div class="page-box">
                 <p id="fav-empty-text">У вашому списку обраного поки нічого немає. Додавайте товари за допомогою іконки сердечка ❤️.</p>
-                <div id="fav-items-container"></div>
+                <div id="fav-content"></div>
             </div>
         </div>
 
         <!-- 4. КОРЗИНА -->
         <div id="view-cart" class="view">
-            <h2 class="section-title">Кошик</h2>
-            <div class="page-content-box">
+            <h2 class="section-title" id="cart-page-title">Кошик</h2>
+            <div class="page-box">
                 <p id="cart-empty-text">Ваш кошик порожній.</p>
-                <div id="cart-items-container"></div>
+                <div id="cart-content"></div>
             </div>
         </div>
 
         <!-- 5. ОТЗЫВЫ -->
         <div id="view-reviews" class="view">
-            <h2 class="section-title">Відгуки клієнтів</h2>
-            <div class="page-content-box">
-                <h2>⭐⭐⭐⭐⭐ 4.9 / 5.0</h2>
-                <p><b>Олександр (Київ):</b> «Замовляв мишку MCHOSE A7 V2 PRO. Відправили в день замовлення, все оригінаלне, упаковано на вищому рівні. Рекомендую!»</p>
-                <p><b>Максим (Львів):</b> «Дуже крутий сервіс і топова девайс-периферія. Дякую команді MILIPSTORE!»</p>
+            <h2 class="section-title" id="reviews-page-title">Відгуки покупців</h2>
+            <div class="page-box" style="max-width: 900px;">
+                <div style="margin-bottom: 24px; font-weight: 700; font-size: 18px;">⭐⭐⭐⭐⭐ 4.9 / 5.0 (Загальний рейтинг)</div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <span>Олександр (Київ)</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>«Замовляв мишку MCHOSE A7 V2 PRO. Дуже швидка доставка, оригінальний девайс, упаковано преміально. Окремий респект за сервіс!»</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span>Максим (Львів)</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p>«Магазин топ рівня. Зв'язалися швидко, допомогли підібрати кольори та килимки. Рекомендую всім киберспортсменам.»</p>
+                </div>
             </div>
         </div>
 
         <!-- 6. ПРАВИЛА -->
         <div id="view-rules" class="view">
-            <h2 class="section-title">Правила магазину</h2>
-            <div class="page-content-box">
-                <h2>Умови гарантії та доставки</h2>
-                <ul>
-                    <li>Доставка Новою Поштою по всій Україні (1-2 дні).</li>
-                    <li>Оплата при отриманні або на картку / IBAN.</li>
-                    <li>Офіційна гарантія на всі девайси — 12 місяців.</li>
-                    <li>Повернення та обмін протягом 14 днів з моменту покупки.</li>
-                </ul>
+            <h2 class="section-title" id="rules-page-title">Правила магазину</h2>
+            <div class="page-box">
+                <h2 id="rules-sub-1">Доставка та оплата</h2>
+                <p id="rules-text-1">Відправка замовлень здійснюється службою «Нова Пошта» по всій території України протягом 1-2 днів. Оплата можлива при отриманні (післяплата) або на офіційний рахунок.</p>
+                
+                <h2 id="rules-sub-2" style="margin-top: 20px;">Гарантія та повернення</h2>
+                <p id="rules-text-2">На всю периферію надається офіційна гарантія від виробника строком 12 місяців. Обмін або повернення товару можливі протягом 14 днів за умови збереження товарного вигляду.</p>
             </div>
         </div>
 
-        <!-- 7. СВЯЗЬ / КОНТАКТИ -->
+        <!-- 7. СВЯЗЬ -->
         <div id="view-contacts" class="view">
-            <h2 class="section-title">Зв'язок з нами</h2>
-            <div class="page-content-box">
-                <h2>Підтримка покупців 24/7</h2>
-                <p>Ви можете звернутися до нас з будь-яких питань через офіційні канали зв'язку:</p>
-                <p><b>Telegram:</b> @milipstore_support</p>
+            <h2 class="section-title" id="contacts-page-title">Контакти та зв'язок</h2>
+            <div class="page-box">
+                <h2 id="contacts-sub">Ми на зв'язку 24/7</h2>
+                <p><b>Telegram Support:</b> @milipstore_support</p>
                 <p><b>Instagram:</b> @milipstore.ua</p>
-                <p><b>Графік роботи:</b> Щодня з 10:00 до 20:00</p>
+                <p id="contacts-schedule"><b>Графік роботи:</b> Пн-Нд з 10:00 до 20:00</p>
             </div>
         </div>
 
     </div>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer>
         <div class="footer-brand">MILIPSTORE — PC DEVICES / GAMING</div>
         <div class="footer-nav">
-            <button class="footer-link" onclick="switchView('reviews')">Відгуки</button>
-            <button class="footer-link" onclick="switchView('rules')">Правила</button>
-            <button class="footer-link" onclick="switchView('contacts')">Зв'язок</button>
+            <button class="footer-link" onclick="switchView('catalog')" id="f-catalog">Каталог</button>
+            <button class="footer-link" onclick="switchView('reviews')" id="f-reviews">Відгуки</button>
+            <button class="footer-link" onclick="switchView('rules')" id="f-rules">Правила</button>
+            <button class="footer-link" onclick="switchView('contacts')" id="f-contacts">Зв'язок</button>
         </div>
     </footer>
 
@@ -734,32 +847,42 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Открытие детальной страницы товара
+        function scrollToCatalog() {
+            window.scrollTo({ top: 500, behavior: 'smooth' });
+        }
+
         function openProductDetail() {
             switchView('product');
         }
 
-        // Выбор цвета на странице товара
+        function setDetailImage(imagePath, element) {
+            document.getElementById('detail-main-img').src = imagePath;
+            document.querySelectorAll('.thumb').forEach(th => th.classList.remove('active'));
+            element.classList.add('active');
+        }
+
         function setProductColor(imagePath, element) {
-            document.getElementById('active-detail-img').src = imagePath;
+            document.getElementById('detail-main-img').src = imagePath;
             document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
             element.classList.add('active');
         }
 
-        // Работа с кошиком
-        function addToCart(event) {
-            if(event) event.stopPropagation();
+        // Корзина
+        function addToCart() {
             cartCount++;
-            document.getElementById('cart-counter').innerText = cartCount;
+            document.getElementById('cart-count').innerText = cartCount;
             document.getElementById('cart-empty-text').style.display = 'none';
-            document.getElementById('cart-items-container').innerHTML = `<p style="color:var(--text-main);"><b>Товар:</b> MCHOSE A7 V2 PRO — 2 449 ₴ (Кількість: ${cartCount})</p>`;
+            document.getElementById('cart-content').innerHTML = `
+                <p style="color:var(--text-main); font-weight:600;">MCHOSE A7 V2 PRO</p>
+                <p>Ціна: 2 449 ₴ | Кількість: ${cartCount}</p>
+            `;
             alert('Товар успішно додано до кошика!');
         }
 
-        // Работа с избранным из карточки
+        // Избранное
         function toggleFavorite(event, id) {
             event.stopPropagation();
-            const btn = document.getElementById('card-fav-' + id);
+            const btn = document.getElementById('fav-btn-' + id);
             
             if (favorites.includes(id)) {
                 favorites = favorites.filter(item => item !== id);
@@ -769,12 +892,12 @@
                 btn.classList.add('active');
             }
             
-            document.getElementById('fav-counter').innerText = favorites.length;
-            updateFavoritesView();
+            document.getElementById('fav-count').innerText = favorites.length;
+            updateFavoritesContent();
         }
 
         function toggleFavoriteDirect(id) {
-            const btn = document.getElementById('card-fav-' + id);
+            const btn = document.getElementById('fav-btn-' + id);
             if (favorites.includes(id)) {
                 favorites = favorites.filter(item => item !== id);
                 if(btn) btn.classList.remove('active');
@@ -782,13 +905,13 @@
                 favorites.push(id);
                 if(btn) btn.classList.add('active');
             }
-            document.getElementById('fav-counter').innerText = favorites.length;
-            updateFavoritesView();
-            alert('Список обраного оновлено!');
+            document.getElementById('fav-count').innerText = favorites.length;
+            updateFavoritesContent();
+            alert('Обране оновлено!');
         }
 
-        function updateFavoritesView() {
-            const container = document.getElementById('fav-items-container');
+        function updateFavoritesContent() {
+            const container = document.getElementById('fav-content');
             const emptyText = document.getElementById('fav-empty-text');
             
             if (favorites.length === 0) {
@@ -796,8 +919,137 @@
                 container.innerHTML = '';
             } else {
                 emptyText.style.display = 'none';
-                container.innerHTML = `<p style="color:var(--text-main);">У вас в обраному товари: MCHOSE A7 V2 PRO (ID: ${favorites.join(', ')})</p>`;
+                container.innerHTML = `<p style="color:var(--text-main); font-weight:600;">В обраному товари (ID: ${favorites.join(', ')})</p>`;
             }
+        }
+
+        // Локализация (UA / RU / EN)
+        const dict = {
+            ua: {
+                heroTitle: "NEXT-GEN <span>GAMING GEAR</span>",
+                heroDesc: "Профессиональные беспроводные девайсы, созданные для киберспорта, максимальной скорости и безупречного контроля.",
+                heroBtn: "Смотреть каталог",
+                catalogHeading: "Каталог товаров",
+                btnBuy: "В кошик",
+                backBtn: "← Назад до каталогу",
+                stock: "🟢 В наявності (5 шт)",
+                kitTitle: "Комплектація",
+                kitText: "Мишка MCHOSE A7 V2 PRO • Кабель Type-C • Приймач 2.4 ГГц • Інструкція • Гріпси",
+                techTitle: "Характеристики",
+                techText: "Сенсор: PAW3395 • DPI: 50–26 000 • Опитування: 8000 Гц • Вага: 59 г • Батарея: 500 mAh",
+                addCart: "Додати в кошик",
+                addFav: "❤️ В обране",
+                favTitle: "Обрані товари",
+                favEmpty: "У вашому списку обраного поки нічого немає. Додавайте товари за допомогою іконки сердечка ❤️.",
+                cartTitle: "Кошик",
+                cartEmpty: "Ваш кошик порожній.",
+                reviewsTitle: "Відгуки покупців",
+                rulesTitle: "Правила магазину",
+                rulesSub1: "Доставка та оплата",
+                rulesText1: "Відправка замовлень здійснюється службою «Нова Пошта» по всій території України протягом 1-2 днів. Оплата можлива при отриманні або на рахунок.",
+                rulesSub2: "Гарантія та повернення",
+                rulesText2: "На всю периферію надається офіційна гарантія виробника 12 місяців. Обмін або повернення протягом 14 днів.",
+                contactsTitle: "Контакти та зв'язок",
+                contactsSub: "Ми на зв'язку 24/7",
+                contactsSchedule: "Графік роботи: Пн-Нд з 10:00 до 20:00",
+                fCat: "Каталог", fRev: "Відгуки", fRul: "Правила", fCont: "Зв'язок"
+            },
+            ru: {
+                heroTitle: "NEXT-GEN <span>GAMING GEAR</span>",
+                heroDesc: "Профессиональные беспроводные девайсы, созданные для киберспорта, максимальной скорости и безупречного контроля.",
+                heroBtn: "Смотреть каталог",
+                catalogHeading: "Каталог товаров",
+                btnBuy: "В корзину",
+                backBtn: "← Назад в каталог",
+                stock: "🟢 В наличии (5 шт)",
+                kitTitle: "Комплектация",
+                kitText: "Мышь MCHOSE A7 V2 PRO • Кабель Type-C • Приемник 2.4 ГГц • Инструкция • Грипсы",
+                techTitle: "Характеристики",
+                techText: "Сенсор: PAW3395 • DPI: 50–26 000 • Опрос: 8000 Гц • Вес: 59 г • Батарея: 500 mAh",
+                addCart: "Добавить в корзину",
+                addFav: "❤️ В избранное",
+                favTitle: "Избранные товары",
+                favEmpty: "В вашем списке избранного пока ничего нет. Добавляйте товары с помощью иконки сердечка ❤️.",
+                cartTitle: "Корзина",
+                cartEmpty: "Ваша корзина пуста.",
+                reviewsTitle: "Отзывы покупателей",
+                rulesTitle: "Правила магазина",
+                rulesSub1: "Доставка и оплата",
+                rulesText1: "Отправка заказов осуществляется службой «Новая Почта» по всей территории Украины в течение 1-2 дней. Оплата при получении или на расчетный счет.",
+                rulesSub2: "Гарантия и возврат",
+                rulesText2: "На всю периферию предоставляется официальная гарантия 12 месяцев. Обмен или возврат в течение 14 дней.",
+                contactsTitle: "Контакты и связь",
+                contactsSub: "Мы на связи 24/7",
+                contactsSchedule: "График работы: Пн-Вс с 10:00 до 20:00",
+                fCat: "Каталог", fRev: "Отзывы", fRul: "Правила", fCont: "Контакты"
+            },
+            en: {
+                heroTitle: "NEXT-GEN <span>GAMING GEAR</span>",
+                heroDesc: "Professional wireless devices built for esports, maximum speed, and flawless control.",
+                heroBtn: "View Catalog",
+                catalogHeading: "Products Catalog",
+                btnBuy: "Add to Cart",
+                backBtn: "← Back to Catalog",
+                stock: "🟢 In Stock (5 pcs)",
+                kitTitle: "Package Contents",
+                kitText: "MCHOSE A7 V2 PRO Mouse • Type-C Cable • 2.4 GHz Receiver • Manual • Grips",
+                techTitle: "Specifications",
+                techText: "Sensor: PAW3395 • DPI: 50–26,000 • Polling: 8000 Hz • Weight: 59g • Battery: 500 mAh",
+                addCart: "Add to Cart",
+                addFav: "❤️ Favorite",
+                favTitle: "Favorite Products",
+                favEmpty: "Your favorites list is empty. Add items using the heart icon ❤️.",
+                cartTitle: "Shopping Cart",
+                cartEmpty: "Your cart is empty.",
+                reviewsTitle: "Customer Reviews",
+                rulesTitle: "Store Policies",
+                rulesSub1: "Shipping & Payment",
+                rulesText1: "Orders are shipped via Nova Poshta across Ukraine within 1-2 days. Payment upon receipt or via bank transfer.",
+                rulesSub2: "Warranty & Returns",
+                rulesText2: "All peripherals come with an official 12-month manufacturer warranty. Exchange or return within 14 days.",
+                contactsTitle: "Contact & Support",
+                contactsSub: "We are online 24/7",
+                contactsSchedule: "Working hours: Mon-Sun from 10:00 to 20:00",
+                fCat: "Catalog", fRev: "Reviews", fRul: "Rules", fCont: "Contacts"
+            }
+        };
+
+        function changeLanguage(lang) {
+            const t = dict[lang];
+            if(!t) return;
+            
+            document.getElementById('hero-title').innerHTML = t.heroTitle;
+            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.getElementById('hero-btn-text').innerText = t.heroBtn;
+            document.getElementById('catalog-heading').innerText = t.catalogHeading;
+            document.getElementById('btn-buy-1').innerText = t.btnBuy;
+            document.getElementById('btn-buy-2').innerText = t.btnBuy;
+            document.getElementById('btn-buy-3').innerText = t.btnBuy;
+            document.getElementById('back-catalog-btn').innerText = t.backBtn;
+            document.getElementById('detail-stock').innerText = t.stock;
+            document.getElementById('spec-kit-title').innerText = t.kitTitle;
+            document.getElementById('spec-kit-text').innerText = t.kitText;
+            document.getElementById('spec-tech-title').innerText = t.techTitle;
+            document.getElementById('spec-tech-text').innerText = t.techText;
+            document.getElementById('detail-buy-btn').innerText = t.addCart;
+            document.getElementById('detail-fav-btn').innerText = t.addFav;
+            document.getElementById('fav-page-title').innerText = t.favTitle;
+            document.getElementById('fav-empty-text').innerText = t.favEmpty;
+            document.getElementById('cart-page-title').innerText = t.cartTitle;
+            document.getElementById('cart-empty-text').innerText = t.cartEmpty;
+            document.getElementById('reviews-page-title').innerText = t.reviewsTitle;
+            document.getElementById('rules-page-title').innerText = t.rulesTitle;
+            document.getElementById('rules-sub-1').innerText = t.rulesSub1;
+            document.getElementById('rules-text-1').innerText = t.rulesText1;
+            document.getElementById('rules-sub-2').innerText = t.rulesSub2;
+            document.getElementById('rules-text-2').innerText = t.rulesText2;
+            document.getElementById('contacts-page-title').innerText = t.contactsTitle;
+            document.getElementById('contacts-sub').innerText = t.contactsSub;
+            document.getElementById('contacts-schedule').innerHTML = t.contactsSchedule;
+            document.getElementById('f-catalog').innerText = t.fCat;
+            document.getElementById('f-reviews').innerText = t.fRev;
+            document.getElementById('f-rules').innerText = t.fRul;
+            document.getElementById('f-contacts').innerText = t.fCont;
         }
     </script>
 </body>
