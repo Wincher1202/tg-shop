@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE — MCHOSE A7 V2 PRO | Precision Hardware</title>
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -64,12 +64,12 @@
 </head>
 <body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
+    <!-- TOAST CONTAINER -->
     <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none"></div>
 
-    <!-- HEADER -->
+    <!-- HEADER SECTION -->
     <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/85 dark:bg-[#040B14]/85 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full">
-        <div class="w-full px-3 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div class="w-full px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-4 sm:space-x-6">
                 <a href="#" onclick="switchView('catalog')" class="flex items-center space-x-3 group">
                     <svg class="w-8 h-8 text-[#00C2FF] group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(0,194,255,0.4)]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,10 +91,12 @@
             </div>
 
             <div class="flex items-center space-x-2 sm:space-x-4">
-                <div class="hidden sm:flex items-center space-x-1 bg-[#C6CCDF] dark:bg-[#07101B] p-1 rounded-xl border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold">
-                    <button onclick="setLanguage('ua')" id="langBtnUa" class="px-2 py-1 rounded-lg bg-[#00C2FF] text-black transition-all">UA</button>
-                    <button onclick="setLanguage('ru')" id="langBtnRu" class="px-2 py-1 rounded-lg text-gray-500 hover:text-[#00C2FF] transition-all">RU</button>
-                    <button onclick="setLanguage('en')" id="langBtnEn" class="px-2 py-1 rounded-lg text-gray-500 hover:text-[#00C2FF] transition-all">EN</button>
+                <!-- USER PROFILE BUTTON / AUTH TRIGGER -->
+                <div id="userProfileArea">
+                    <button onclick="openAuthModal()" class="px-3.5 py-2 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-extrabold flex items-center space-x-2 hover:border-[#00C2FF] transition-all">
+                        <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span id="authBtnText">Увійти</span>
+                    </button>
                 </div>
 
                 <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2 sm:p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm">
@@ -115,22 +117,21 @@
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
+    <!-- MAIN DYNAMIC CONTENT -->
     <main class="flex-grow w-full">
-        
         <!-- CATALOG VIEW -->
         <div id="catalogView" class="view-section animate-fade-in w-full">
-            <section class="relative overflow-hidden py-12 lg:py-20 px-3 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto">
+            <section class="relative overflow-hidden py-12 lg:py-20 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     <div class="lg:col-span-7 space-y-6">
                         <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]">
-                          <span>MILIP / 001</span><span>•</span><span>PRECISION HARDWARE</span>
+                          <span>MILIP / 001</span><span>•</span><span>ULTIMATE HARDWARE</span>
                         </div>
                         <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none">
                             MCHOSE <br><span class="text-[#00C2FF] drop-shadow-[0_0_20px_rgba(0,194,255,0.3)]">A7 V2 PRO</span>
                         </h1>
                         <p class="text-gray-600 dark:text-gray-400 max-w-xl text-base sm:text-lg font-light leading-relaxed">
-                            Високоточна бездротова ігрова миша нового покоління. Безкомпромісна ергономіка, сенсор PixArt PAW3395 та підтримка 8K частоти опитування.
+                            Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.
                         </p>
                         <div class="pt-4 flex items-center space-x-4">
                             <button onclick="openProductPage()" class="w-full sm:w-auto px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl flex items-center justify-center">
@@ -146,14 +147,14 @@
                 </div>
             </section>
 
-            <!-- Grid -->
-            <section class="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pb-24">
+            <!-- Product Grid -->
+            <section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
                 <div class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end">
                     <div>
                         <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold">Ексклюзивний реліз</span>
-                        <h2 class="text-2xl font-extrabold mt-1">Каталог MILIPSTORE</h2>
+                        <h2 class="text-2xl font-extrabold mt-1">Каталог обладнання</h2>
                     </div>
-                    <span class="text-sm text-gray-500 font-medium">1 модель у наявності</span>
+                    <span class="text-sm text-gray-500 font-medium">У наявності</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -171,7 +172,7 @@
                             </div>
                             <div class="text-2xl font-extrabold mb-4">2 449 ₴</div>
                         </div>
-                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor)" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md">
+                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Белая мышка.jpg')" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md">
                             ДОДАТИ В КОШИК
                         </button>
                     </div>
@@ -180,7 +181,7 @@
         </div>
 
         <!-- PRODUCT VIEW -->
-        <div id="productView" class="view-section hidden py-8 sm:py-12 px-3 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto animate-fade-in">
+        <div id="productView" class="view-section hidden py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-7xl mx-auto animate-fade-in">
             <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                 <span>Назад до каталогу</span>
@@ -192,9 +193,9 @@
                         <img id="mainProductImage" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-cover rounded-2xl shadow-md">
                     </div>
                     <div class="flex space-x-3 overflow-x-auto pb-2">
-                        <button onclick="changeColor('White')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#00C2FF] bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
-                        <button onclick="changeColor('Black')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Черная мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
-                        <button onclick="changeColor('Pink')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Розовая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
+                        <button onclick="changeColor('White', 'Белая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#00C2FF] bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
+                        <button onclick="changeColor('Black', 'Черная мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Черная мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
+                        <button onclick="changeColor('Pink', 'Розовая мышка.jpg')" class="flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B]"><img src="Розовая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover"></button>
                     </div>
                 </div>
 
@@ -208,9 +209,9 @@
                     <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
                         <span class="text-xs font-mono text-gray-500 uppercase font-bold">Колір: <span id="selectedColorName" class="font-extrabold text-gray-900 dark:text-white">White</span></span>
                         <div class="flex items-center space-x-4">
-                            <button onclick="changeColor('White')" class="w-10 h-10 rounded-full bg-white border-2 border-[#00C2FF] shadow-md"></button>
-                            <button onclick="changeColor('Black')" class="w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md"></button>
-                            <button onclick="changeColor('Pink')" class="w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md"></button>
+                            <button onclick="changeColor('White', 'Белая мышка.jpg')" class="w-10 h-10 rounded-full bg-white border-2 border-[#00C2FF] shadow-md"></button>
+                            <button onclick="changeColor('Black', 'Черная мышка.jpg')" class="w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md"></button>
+                            <button onclick="changeColor('Pink', 'Розовая мышка.jpg')" class="w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md"></button>
                         </div>
                     </div>
 
@@ -223,7 +224,7 @@
                         <button onclick="addCurrentProductToCart()" class="flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm">
                             ДОДАТИ В КОШИК
                         </button>
-                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Белая мышка.jpg')" class="h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3366] shadow-md">
+                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg)" class="h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3366] shadow-md">
                             <svg class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </button>
                     </div>
@@ -236,6 +237,38 @@
     <footer class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500">
         <p>© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.</p>
     </footer>
+
+    <!-- MODAL: AUTH & SMS REGISTRATION (WOW-MECHANIC) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-md rounded-3xl p-6 shadow-2xl animate-modal relative">
+            <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-gray-500 hover:text-black dark:hover:text-white font-bold">✕</button>
+            <div id="authStepPhone" class="space-y-4">
+                <div class="text-center space-y-1">
+                    <div class="w-12 h-12 bg-[#00C2FF]/10 text-[#00C2FF] rounded-2xl mx-auto flex items-center justify-center font-bold text-xl">📱</div>
+                    <h3 class="font-extrabold text-xl text-gray-900 dark:text-white">Вхід у MILIPSTORE</h3>
+                    <p class="text-xs text-gray-500">Введіть номер телефону для надсилання коду підтвердження</p>
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Номер телефону</label>
+                    <input type="tel" id="authPhoneInput" placeholder="+380 99 000 00 00" class="w-full mt-1 p-3.5 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm font-mono focus:outline-none focus:border-[#00C2FF]">
+                </div>
+                <button onclick="requestAuthSms()" class="w-full h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl hover:opacity-90 text-sm">Отримати SMS-код</button>
+            </div>
+
+            <div id="authStepCode" class="space-y-4 hidden">
+                <div class="text-center space-y-1">
+                    <div class="w-12 h-12 bg-[#FF3366]/10 text-[#FF3366] rounded-2xl mx-auto flex items-center justify-center font-bold text-xl">🔒</div>
+                    <h3 class="font-extrabold text-xl text-gray-900 dark:text-white">Підтвердження входу</h3>
+                    <p class="text-xs text-gray-500">Введіть 4-значний код із SMS (Тест-код: <span id="authSmsHint" class="font-mono font-bold text-[#00C2FF] underline"></span>)</p>
+                </div>
+                <div>
+                    <input type="text" id="authCodeInput" maxlength="4" placeholder="••••" class="w-full p-4 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#00C2FF] text-center text-2xl font-mono tracking-[1em] focus:outline-none">
+                </div>
+                <button onclick="verifyAuthSms()" class="w-full h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl hover:opacity-90 text-sm">Підтвердити та увійти</button>
+                <button onclick="backToAuthPhone()" class="w-full text-xs text-gray-500 hover:text-[#00C2FF] text-center pt-1 font-bold">Змінити номер телефону</button>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL: FAVORITES -->
     <div id="favoritesModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
@@ -251,7 +284,7 @@
         </div>
     </div>
 
-    <!-- DRAWER: CART & MULTI-STEP CHECKOUT -->
+    <!-- DRAWER: CART & CHECKOUT -->
     <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden justify-end">
         <div class="bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg h-full flex flex-col justify-between p-6 shadow-2xl overflow-y-auto">
             <div>
@@ -263,7 +296,7 @@
                     <button onclick="closeCartDrawer()" class="p-2 text-gray-500 hover:text-black dark:hover:text-white font-bold">✕</button>
                 </div>
 
-                <!-- КРОК 1: КОШИК -->
+                <!-- STEP 1: CART LIST -->
                 <div id="stepCart" class="space-y-4">
                     <div id="cartContainer" class="max-h-[50vh] overflow-y-auto space-y-3 pr-1"></div>
                     <div class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A]">
@@ -277,9 +310,9 @@
                     </div>
                 </div>
 
-                <!-- КРОК 2: ДАНІ КОРИСТУВАЧА + SMS -->
+                <!-- STEP 2: USER DATA -->
                 <div id="stepUser" class="space-y-4 hidden">
-                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 1 із 3: Контактні дані</div>
+                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 1 із 3: Контактні дані користувача</div>
                     <div class="space-y-3">
                         <div>
                             <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Ім'я</label>
@@ -291,18 +324,11 @@
                         </div>
                         <div>
                             <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Номер телефону</label>
-                            <div class="flex space-x-2 mt-1">
-                                <input type="tel" id="orderPhone" placeholder="+380 99 123 45 67" class="w-full p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
-                                <button onclick="sendSmsCode()" id="sendSmsBtn" class="px-4 bg-[#00C2FF] text-black font-bold text-xs rounded-xl whitespace-nowrap">SMS-код</button>
-                            </div>
-                        </div>
-                        <div id="smsBox" class="hidden space-y-2 pt-2">
-                            <label class="text-xs font-semibold text-[#FF3366]">Введіть 4-значний код з SMS (підказка: <span id="smsHint" class="font-mono font-bold"></span>)</label>
-                            <input type="text" id="orderSmsInput" maxlength="4" placeholder="1234" class="w-full p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#FF3366] text-sm text-center font-mono tracking-widest focus:outline-none">
+                            <input type="tel" id="orderPhone" placeholder="+380 99 123 45 67" class="w-full mt-1 p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
                         </div>
                         <div>
                             <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Електронна пошта (Email)</label>
-                            <input type="email" id="orderEmail" placeholder="milip@gmail.com" class="w-full mt-1 p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
+                            <input type="email" id="orderEmail" placeholder="milipstore@gmail.com" class="w-full mt-1 p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
                         </div>
                     </div>
                     <div class="flex space-x-3 pt-4">
@@ -311,9 +337,9 @@
                     </div>
                 </div>
 
-                <!-- КРОК 3: ВИБІР ДОСТАВКИ -->
+                <!-- STEP 3: DELIVERY METHOD -->
                 <div id="stepDelivery" class="space-y-4 hidden">
-                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 2 із 3: Служба доставки</div>
+                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 2 із 3: Вибір служби доставки</div>
                     <div class="space-y-3">
                         <label class="flex items-center space-x-3 p-3.5 rounded-2xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#00C2FF] cursor-pointer">
                             <input type="radio" name="delivery" value="NovaPoshta" checked class="accent-[#00C2FF]">
@@ -321,14 +347,10 @@
                         </label>
                         <label class="flex items-center space-x-3 p-3.5 rounded-2xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] cursor-pointer">
                             <input type="radio" name="delivery" value="Meest" class="accent-[#00C2FF]">
-                            <div><div class="font-bold text-sm">Meest Express</div><div class="text-xs text-gray-500">Пункт видачі</div></div>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3.5 rounded-2xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] cursor-pointer">
-                            <input type="radio" name="delivery" value="UkrPoshta" class="accent-[#00C2FF]">
-                            <div><div class="font-bold text-sm">Укрпошта Експрес</div><div class="text-xs text-gray-500">До відділення</div></div>
+                            <div><div class="font-bold text-sm">Meest Express</div><div class="text-xs text-gray-500">Пункт видачі / поштомат</div></div>
                         </label>
                         <div>
-                            <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Місто та номер відділення</label>
+                            <label class="text-xs font-semibold text-gray-600 dark:text-gray-400">Населений пункт та номер відділення</label>
                             <input type="text" id="orderBranch" placeholder="Київ, відділення №12" class="w-full mt-1 p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#B5BCD5] dark:border-[#11223A] text-sm focus:outline-none focus:border-[#00C2FF]">
                         </div>
                     </div>
@@ -338,9 +360,9 @@
                     </div>
                 </div>
 
-                <!-- КРОК 4: СПОСІБ ОПЛАТИ -->
+                <!-- STEP 4: PAYMENT METHOD -->
                 <div id="stepPayment" class="space-y-4 hidden">
-                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 3 із 3: Спосіб оплати</div>
+                    <div class="text-xs font-mono text-[#00C2FF] font-bold">КРОК 3 із 3: Вибір способу оплати</div>
                     <div class="space-y-3">
                         <label class="flex items-center space-x-3 p-3.5 rounded-2xl bg-[#C6CCDF] dark:bg-[#040B14] border border-[#00C2FF] cursor-pointer">
                             <input type="radio" name="payment" value="OneClick" checked class="accent-[#00C2FF]">
@@ -352,7 +374,7 @@
                         </label>
                     </div>
                     <div class="bg-[#C6CCDF] dark:bg-[#040B14] p-4 rounded-2xl space-y-2 text-xs border border-[#B5BCD5] dark:border-[#11223A]">
-                        <div class="flex justify-between font-bold text-sm"><span>До сплати:</span><span id="finalOrderSum" class="text-[#00C2FF]">0 ₴</span></div>
+                        <div class="flex justify-between font-bold text-sm"><span>До сплати:</span><span id="finalOrderSum" class="text-[#00C2FF] font-extrabold">0 ₴</span></div>
                     </div>
                     <div class="flex space-x-3 pt-4">
                         <button onclick="goToCheckoutStep3()" class="w-1/3 h-12 bg-[#C6CCDF] dark:bg-[#07101B] font-bold rounded-xl text-xs">Назад</button>
@@ -380,13 +402,16 @@
         </div>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         let currentSelectedColor = 'White';
+        let currentSelectedImg = 'Белая мышка.jpg';
         let productQuantity = 1;
         let favorites = JSON.parse(localStorage.getItem('milip_favorites')) || [];
         let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
-        let generatedSmsCode = '';
+        let currentUser = JSON.parse(localStorage.getItem('milip_user')) || null;
+        let generatedAuthSms = '';
+        let tempAuthPhone = '';
 
         function showToast(text) {
             const container = document.getElementById('toastContainer');
@@ -424,11 +449,11 @@
             document.getElementById('moonIcon').classList.add('hidden');
         }
 
-        function changeColor(color) {
+        function changeColor(color, imgFile) {
             currentSelectedColor = color;
+            currentSelectedImg = imgFile;
             document.getElementById('selectedColorName').textContent = color;
-            const imgMap = { 'White': 'Белая мышка.jpg', 'Black': 'Черная мышка.jpg', 'Pink': 'Розовая мышка.jpg' };
-            document.getElementById('mainProductImage').src = imgMap[color] || 'Белая мышка.jpg';
+            document.getElementById('mainProductImage').src = imgFile;
         }
 
         function updateQty(change) {
@@ -443,7 +468,7 @@
                 favorites.splice(index, 1);
                 showToast("Видалено з обраного");
             } else {
-                favorites.push({ name, price, img });
+                favorites.push({ name, price, img: img || 'Белая мышка.jpg' });
                 showToast("Додано в обране ❤️");
             }
             localStorage.setItem('milip_favorites', JSON.stringify(favorites));
@@ -465,10 +490,10 @@
             });
         }
 
-        function addToCart(name, price, color) {
+        function addToCart(name, price, color, img) {
             const item = cart.find(i => i.name === name && i.color === color);
             if (item) item.qty += productQuantity;
-            else cart.push({ name, price, color: color || 'White', qty: productQuantity });
+            else cart.push({ name, price, color: color || 'White', qty: productQuantity, img: img || currentSelectedImg });
             localStorage.setItem('milip_cart', JSON.stringify(cart));
             updateBadges();
             openCartDrawer();
@@ -477,7 +502,7 @@
             showToast("Товар додано в кошик 🛒");
         }
 
-        function addCurrentProductToCart() { addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor); }
+        function addCurrentProductToCart() { addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, currentSelectedImg); }
 
         function updateBadges() {
             const favBadge = document.getElementById('favoritesBadge');
@@ -488,6 +513,66 @@
             const cartBadge = document.getElementById('cartBadge');
             if (totalCartCount > 0) { cartBadge.textContent = totalCartCount; cartBadge.classList.remove('hidden'); }
             else { cartBadge.classList.add('hidden'); }
+
+            // User Profile UI update
+            const area = document.getElementById('userProfileArea');
+            if (currentUser) {
+                area.innerHTML = `
+                    <div class="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#00C2FF] text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-gray-900 dark:text-white font-mono">${currentUser.phone}</span>
+                        <button onclick="logoutUser()" class="text-red-500 hover:text-red-700 ml-1">Вихід</button>
+                    </div>
+                `;
+            } else {
+                area.innerHTML = `
+                    <button onclick="openAuthModal()" class="px-3.5 py-2 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-extrabold flex items-center space-x-2 hover:border-[#00C2FF] transition-all">
+                        <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span>Увійти</span>
+                    </button>
+                `;
+            }
+        }
+
+        // AUTH MODAL LOGIC
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('authModal').classList.add('flex');
+            document.getElementById('authStepPhone').classList.remove('hidden');
+            document.getElementById('authStepCode').classList.add('hidden');
+        }
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+            document.getElementById('authModal').classList.remove('flex');
+        }
+        function requestAuthSms() {
+            const phone = document.getElementById('authPhoneInput').value.trim();
+            if (!phone || phone.length < 10) return alert('Введіть коректний номер телефону!');
+            tempAuthPhone = phone;
+            generatedAuthSms = Math.floor(1000 + Math.random() * 9000).toString();
+            document.getElementById('authSmsHint').textContent = generatedAuthSms;
+            document.getElementById('authStepPhone').classList.add('hidden');
+            document.getElementById('authStepCode').classList.remove('hidden');
+            showToast("SMS-код надіслано на ваш телефон!");
+        }
+        function verifyAuthSms() {
+            const code = document.getElementById('authCodeInput').value.trim();
+            if (code !== generatedAuthSms) return alert('Невірний код з SMS!');
+            currentUser = { phone: tempAuthPhone };
+            localStorage.setItem('milip_user', JSON.stringify(currentUser));
+            closeAuthModal();
+            updateBadges();
+            showToast("Ви успішно авторизувалися в профілі! 🎉");
+        }
+        function backToAuthPhone() {
+            document.getElementById('authStepCode').classList.add('hidden');
+            document.getElementById('authStepPhone').classList.remove('hidden');
+        }
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('milip_user');
+            updateBadges();
+            showToast("Ви вийшли з профілю");
         }
 
         function openFavoritesModal() {
@@ -508,7 +593,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <button onclick="addToCart('${fav.name}', ${fav.price}, 'White'); closeFavoritesModal();" class="px-3 py-2 bg-[#00C2FF] text-black font-bold text-xs rounded-xl">В кошик</button>
+                                <button onclick="addToCart('${fav.name}', ${fav.price}, 'White', '${fav.img}'); closeFavoritesModal();" class="px-3 py-2 bg-[#00C2FF] text-black font-bold text-xs rounded-xl">В кошик</button>
                                 <button onclick="toggleFavorite('${fav.name}'); openFavoritesModal();" class="px-3 py-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white font-bold text-xs rounded-xl">Видалити</button>
                             </div>
                         </div>
@@ -541,11 +626,19 @@
                     totalPrice += item.price * item.qty;
                     container.innerHTML += `
                         <div class="flex items-center justify-between p-3 bg-[#C6CCDF] dark:bg-[#040B14] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A]">
-                            <div>
-                                <div class="font-bold text-sm text-gray-900 dark:text-white">${item.name} (${item.color})</div>
-                                <div class="text-xs text-gray-500">${item.price} ₴ × ${item.qty}</div>
+                            <div class="flex items-center space-x-3">
+                                <img src="${item.img}" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-12 h-12 object-cover rounded-xl">
+                                <div>
+                                    <div class="font-bold text-sm text-gray-900 dark:text-white">${item.name} (${item.color})</div>
+                                    <div class="text-xs text-gray-500">${item.price} ₴ × ${item.qty} = <span class="font-bold text-[#00C2FF]">${item.price * item.qty} ₴</span></div>
+                                </div>
                             </div>
-                            <button onclick="removeFromCart(${index})" class="px-3 py-1.5 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-xs font-bold transition-all">Видалити</button>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="changeCartQty(${index}, -1)" class="w-7 h-7 bg-[#C6CCDF] dark:bg-[#07101B] font-bold rounded-lg text-xs">-</button>
+                                <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                                <button onclick="changeCartQty(${index}, 1)" class="w-7 h-7 bg-[#C6CCDF] dark:bg-[#07101B] font-bold rounded-lg text-xs">+</button>
+                                <button onclick="removeFromCart(${index})" class="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-xs font-bold transition-all">✕</button>
+                            </div>
                         </div>
                     `;
                 });
@@ -553,12 +646,20 @@
             document.getElementById('cartTotalPrice').textContent = totalPrice + ' ₴';
         }
 
+        function changeCartQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            localStorage.setItem('milip_cart', JSON.stringify(cart));
+            updateBadges();
+            renderCartItems();
+        }
+
         function removeFromCart(index) {
             cart.splice(index, 1);
             localStorage.setItem('milip_cart', JSON.stringify(cart));
             updateBadges();
             renderCartItems();
-            showToast("Товар видалено з кошика");
+            showToast("Товар успішно видалено з кошика");
         }
 
         function showStep(stepId, title) {
@@ -570,36 +671,29 @@
         }
 
         function goToCheckoutStep2() {
-            if (cart.length === 0) return alert('Кошик порожній!');
-            showStep('stepUser', 'Контактні дані');
-        }
-
-        function sendSmsCode() {
-            const phone = document.getElementById('orderPhone').value;
-            if (!phone || phone.length < 10) return alert('Введіть коректний номер телефону!');
-            generatedSmsCode = Math.floor(1000 + Math.random() * 9000).toString();
-            document.getElementById('smsHint').textContent = generatedSmsCode;
-            document.getElementById('smsBox').classList.remove('hidden');
-            showToast("SMS-код надіслано на ваш телефон!");
+            if (cart.length === 0) return alert('Ваш кошик порожній!');
+            showStep('stepUser', 'Контактні дані користувача');
+            if (currentUser) {
+                document.getElementById('orderPhone').value = currentUser.phone;
+            }
         }
 
         function validateUserStep() {
-            const name = document.getElementById('orderName').value;
-            const surname = document.getElementById('orderSurname').value;
-            const phone = document.getElementById('orderPhone').value;
-            const email = document.getElementById('orderEmail').value;
-            const smsInput = document.getElementById('orderSmsInput').value;
+            const name = document.getElementById('orderName').value.trim();
+            const surname = document.getElementById('orderSurname').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const email = document.getElementById('orderEmail').value.trim();
 
-            if (!name || !surname || !phone || !email) return alert('Заповніть усі поля!');
-            if (generatedSmsCode && smsInput !== generatedSmsCode) return alert('Невірний SMS-код підтвердження!');
-            showStep('stepDelivery', 'Вибір доставки');
+            if (!name || !surname || !phone || !email) return alert('Будь ласка, заповніть усі обов’язкові поля!');
+            showStep('stepDelivery', 'Вибір служби доставки');
         }
 
         function backToCart() { openCartDrawer(); }
-        function goToCheckoutStep3() { showStep('stepUser', 'Контактні дані'); }
+        function goToCheckoutStep3() { showStep('stepUser', 'Контактні дані користувача'); }
+        
         function goToCheckoutStep4() {
-            const branch = document.getElementById('orderBranch').value;
-            if (!branch) return alert('Вкажіть місто та відділення доставки!');
+            const branch = document.getElementById('orderBranch').value.trim();
+            if (!branch) return alert('Будь ласка, вкажіть місто та номер відділення/поштомату!');
             
             let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
             document.getElementById('finalOrderSum').textContent = total + ' ₴';
@@ -616,8 +710,8 @@
             switchView('catalog');
         }
 
-        function openSearchModal() { document.getElementById('searchModal').classList.remove('hidden'); document.getElementById('searchModal').classList.add('flex'); document.getElementById('searchInput').focus(); }
-        function closeSearchModal() { document.getElementById('searchModal').classList.add('hidden'); document.getElementById('searchModal').classList.remove('flex'); }
+        function openSearchModal() { document.getElementById('searchModal').classList.add('flex'); document.getElementById('searchModal').classList.remove('hidden'); document.getElementById('searchInput').focus(); }
+        function closeSearchModal() { document.getElementById('searchModal').classList.remove('flex'); document.getElementById('searchModal').classList.add('hidden'); }
 
         document.addEventListener('DOMContentLoaded', () => {
             updateBadges();
