@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk" class="scroll-smooth">
+<html lang="uk" class="scroll-smooth" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
+    <title id="metaTitle">MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
     <meta name="description" content="Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом у MILIPSTORE.">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -87,7 +87,7 @@
             animation: heartPulse 0.3s ease-in-out;
         }
 
-        /* Прелоадер на весь экран с логотипом MILIPSTORE */
+        /* Прелоадер на весь экран */
         #milip-intro-overlay {
             position: fixed;
             top: 0;
@@ -96,7 +96,6 @@
             height: 100vh;
             background: #ffffff;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 99999;
@@ -111,55 +110,53 @@
             pointer-events: none;
         }
 
-        /* Анимация появления логотипа на старте */
-        @keyframes logoIntroAppear {
-            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
-            50% { opacity: 1; transform: scale(1.05) translateY(0); }
+        @keyframes textAppear {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
-        .intro-logo-container {
-            display: flex;
-            align-items: center;
-            space-x: 12px;
-            animation: logoIntroAppear 1s ease forwards;
+        .intro-text-only {
+            font-extrabold;
+            letter-spacing: 0.15em;
+            animation: textAppear 0.8s ease forwards;
         }
 
-        /* 3-секундная бомбезная леташка, улетающая в левый верхний угол к логотипу */
+        /* Анимация бабочки: появляется снизу, летит на место иконки логотипа в шапке, затем улетает */
         @keyframes introFlyaround {
             0% {
-                transform: translate(0, 70px) scale(2.2) rotate(0deg);
+                transform: translate(0, 120px) scale(1.8) rotate(15deg);
                 opacity: 0;
             }
-            10% {
+            15% {
                 opacity: 1;
-                transform: translate(25vw, -15vh) scale(2) rotate(45deg);
+                transform: translate(-10vw, 20vh) scale(1.4) rotate(-20deg);
             }
-            35% {
-                transform: translate(-25vw, -30vh) scale(1.6) rotate(140deg);
+            45% {
+                transform: translate(15vw, -5vh) scale(1.1) rotate(25deg);
             }
-            65% {
-                transform: translate(15vw, 15vh) scale(1.2) rotate(240deg);
+            75% {
+                /* Точное попадание на место иконки логотипа в шапке */
+                transform: translate(var(--dest-x), var(--dest-y)) scale(0.85) rotate(0deg);
+                opacity: 1;
             }
-            85% {
-                transform: translate(-10vw, -10vh) scale(0.8) rotate(310deg);
+            88% {
+                transform: translate(var(--dest-x), var(--dest-y)) scale(0.9) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translate(-42vw, -42vh) scale(0.25) rotate(360deg);
+                transform: translate(-45vw, -45vh) scale(0.2) rotate(360deg);
                 opacity: 0;
             }
         }
 
         .intro-flying-butterfly {
             position: fixed;
-            top: 55%;
+            top: 50%;
             left: 50%;
             z-index: 100000;
             pointer-events: none;
             animation: introFlyaround 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        /* Анимация полета бабочки в кошик */
         @keyframes butterflyFlight {
             0% {
                 transform: translate(0, 0) scale(0.4) rotate(0deg);
@@ -194,21 +191,13 @@
 </head>
 <body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
 
-    <!-- Статовый экран с логотипом MILIPSTORE и летающей бабочкой -->
+    <!-- Прелоадер с идеальной надписью и бабочкой -->
     <div id="milip-intro-overlay">
-        <div class="intro-logo-container flex items-center space-x-3">
-            <svg class="w-12 h-12 text-[#00C2FF]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
-                <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
-                <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
-                <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
-                <circle cx="16" cy="16" r="3" class="text-white dark:text-[#040B14]" fill="currentColor"/>
-            </svg>
-            <span class="font-extrabold tracking-widest text-2xl sm:text-3xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
+        <div class="intro-text-only font-extrabold tracking-widest text-3xl sm:text-4xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">
+            MILIPSTORE
         </div>
-        <!-- Бомбезная бабочка, которая летает 3 секунды и уходит в левый угол к шапке -->
-        <div class="intro-flying-butterfly">
-            <svg width="75" height="75" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 18px rgba(0,194,255,0.9));">
+        <div class="intro-flying-butterfly" id="introButterfly">
+            <svg width="70" height="70" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 16px rgba(0,194,255,0.9));">
                 <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
             </svg>
         </div>
@@ -221,7 +210,7 @@
         <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-6 sm:space-x-10 min-w-0">
                 <a href="#" onclick="switchView('catalog'); return false;" class="flex items-center space-x-3 group min-w-0">
-                    <svg class="w-8 h-8 text-[#00C2FF] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="headerLogoIcon" class="w-8 h-8 text-[#00C2FF] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
                         <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
                         <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
@@ -231,14 +220,20 @@
                     <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
                 </a>
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                    <a href="#" onclick="scrollToCatalog(); return false;" class="hover:text-[#00C2FF] transition-colors">Каталог</a>
+                    <a href="#" onclick="scrollToCatalog(); return false;" class="hover:text-[#00C2FF] transition-colors" data-i18n="nav_catalog">Каталог</a>
                     <button onclick="openSearchModal()" class="flex items-center space-x-1.5 hover:text-[#00C2FF] transition-colors">
-                        <span>Пошук</span>
+                        <span data-i18n="nav_search">Пошук</span>
                     </button>
                 </nav>
             </div>
 
             <div class="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (UA / RU) -->
+                <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold">
+                    <button id="langBtnUa" onclick="setLanguage('ua')" class="px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm">UA</button>
+                    <button id="langBtnRu" onclick="setLanguage('ru')" class="px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]">RU</button>
+                </div>
+
                 <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm">
                     <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                     <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -265,17 +260,17 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-7 space-y-6 text-left">
                         <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]">
-                          <span>MILIP / 001</span><span>•</span><span>ULTIMATE HARDWARE</span>
+                          <span>MILIP / 001</span><span>•</span><span data-i18n="hero_badge">ULTIMATE HARDWARE</span>
                         </div>
                         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
                             MCHOSE <br><span class="text-[#00C2FF]">A7 V2 PRO</span>
                         </h1>
-                        <p class="text-gray-600 dark:text-gray-400 max-w-2xl text-base sm:text-lg font-light leading-relaxed">
+                        <p id="heroDesc" class="text-gray-600 dark:text-gray-400 max-w-2xl text-base sm:text-lg font-light leading-relaxed">
                             Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.
                         </p>
                         <div class="pt-4 flex items-center">
                             <button onclick="openProductPage()" class="w-full sm:w-auto px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl flex items-center justify-center">
-                                <span>Детальніше про продукт</span>
+                                <span data-i18n="hero_btn">Детальніше про продукт</span>
                             </button>
                         </div>
                     </div>
@@ -290,10 +285,10 @@
             <section id="catalogSection" class="w-full px-6 sm:px-10 lg:px-16 pb-24">
                 <div class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end">
                     <div>
-                        <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold">Ексклюзивний реліз</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Каталог обладнання</h2>
+                        <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold" data-i18n="cat_sub">Ексклюзивний реліз</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1" data-i18n="cat_title">Каталог обладнання</h2>
                     </div>
-                    <span class="text-sm text-gray-500 font-medium">У наявності</span>
+                    <span class="text-sm text-gray-500 font-medium" data-i18n="cat_stock">У наявності</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -306,13 +301,13 @@
                         <div onclick="openProductPage()" class="cursor-pointer">
                             <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">MILIP / 001</div>
                             <h3 class="font-bold text-lg mb-2">MCHOSE A7 V2 PRO</h3>
-                            <p class="text-xs text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.</p>
+                            <p id="cardDesc" class="text-xs text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.</p>
                             <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2">
                                 <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             </div>
                             <div class="text-2xl font-extrabold mb-4">2 449 ₴</div>
                         </div>
-                        <button onclick="addToCartWithAnimation(event, 'MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Главная фото для каталога.jpg')" class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm">
+                        <button onclick="addToCartWithAnimation(event, 'MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Главная фото для каталога.jpg')" class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm" data-i18n="btn_add_cart">
                             ДОДАТИ В КОШИК
                         </button>
                     </div>
@@ -324,7 +319,7 @@
         <div id="productView" class="view-section hidden py-12 px-6 sm:px-10 lg:px-16 w-full animate-fade-in" data-product-id="MCHOSE A7 V2 PRO">
             <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                <span>Назад до каталогу</span>
+                <span data-i18n="prod_back">Назад до каталогу</span>
             </button>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
@@ -348,7 +343,7 @@
                     </div>
 
                     <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
-                        <span class="text-xs font-mono text-gray-500 uppercase font-bold">Колір: <span id="selectedColorName" class="font-extrabold text-[#00C2FF]">Не вибрано</span></span>
+                        <span class="text-xs font-mono text-gray-500 uppercase font-bold"><span data-i18n="prod_color_label">Колір:</span> <span id="selectedColorName" class="font-extrabold text-[#00C2FF]" data-i18n="prod_color_none">Не вибрано</span></span>
                         <div class="flex items-center space-x-4">
                             <button id="colorBtnWhite" onclick="changePhotoAndColor('Белая мышка.jpg', 'White')" class="color-picker-btn w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
                             <button id="colorBtnBlack" onclick="changePhotoAndColor('Черная мышка.jpg', 'Black')" class="color-picker-btn w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
@@ -362,7 +357,7 @@
                             <span id="productQty" class="w-8 text-center font-extrabold text-lg">1</span>
                             <button onclick="updateQty(1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">+</button>
                         </div>
-                        <button onclick="addCurrentProductToCartWithAnimation(event)" class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm">
+                        <button onclick="addCurrentProductToCartWithAnimation(event)" class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm" data-i18n="btn_add_cart">
                             ДОДАТИ В КОШИК
                         </button>
                         <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg, currentSelectedColor)" class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md">
@@ -375,11 +370,11 @@
                             <button onclick="toggleAccordion('specsAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                                    <span>Технічні характеристики</span>
+                                    <span data-i18n="acc_specs">Технічні характеристики</span>
                                 </span>
                                 <span id="specsAccordionArrow" class="transition-transform duration-300 rotate-180">▼</span>
                             </button>
-                            <div id="specsAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3">
+                            <div id="specsAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-specs="specs_content">
                                 <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
                                 <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
                                 <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
@@ -394,11 +389,11 @@
                             <button onclick="toggleAccordion('bundleAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                                    <span>Комплектація</span>
+                                    <span data-i18n="acc_bundle">Комплектація</span>
                                 </span>
                                 <span id="bundleAccordionArrow" class="transition-transform duration-300 rotate-180">▼</span>
                             </button>
-                            <div id="bundleAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3">
+                            <div id="bundleAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-bundle="bundle_content">
                                 <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
                                 <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
                                 <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
@@ -411,11 +406,11 @@
                             <button onclick="toggleAccordion('shippingAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                    <span>Доставка</span>
+                                    <span data-i18n="acc_shipping">Доставка</span>
                                 </span>
                                 <span id="shippingAccordionArrow" class="transition-transform duration-300">▼</span>
                             </button>
-                            <div id="shippingAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3">
+                            <div id="shippingAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-shipping="shipping_content">
                                 <p>Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.</p>
                             </div>
                         </div>
@@ -424,11 +419,11 @@
                             <button onclick="toggleAccordion('warrantyAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
                                     <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                                    <span>Гарантія</span>
+                                    <span data-i18n="acc_warranty">Гарантія</span>
                                 </span>
                                 <span id="warrantyAccordionArrow" class="transition-transform duration-300">▼</span>
                             </button>
-                            <div id="warrantyAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3">
+                            <div id="warrantyAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-warranty="warranty_content">
                                 <p>Офіційна гарантія від виробника та магазину складає 12 місяців.</p>
                             </div>
                         </div>
@@ -439,25 +434,173 @@
     </main>
 
     <footer class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500 px-6">
-        <p>© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.</p>
+        <p data-i18n="footer_text">© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.</p>
     </footer>
 
     <script>
         let currentSelectedColor = null; 
         let currentSelectedImg = 'Главная фото для каталога.jpg';
         let currentProductQty = 1;
+        let currentLang = 'ua';
+
+        const translations = {
+            ua: {
+                nav_catalog: "Каталог",
+                nav_search: "Пошук",
+                hero_badge: "ULTIMATE HARDWARE",
+                hero_desc: "Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.",
+                hero_btn: "Детальніше про продукт",
+                cat_sub: "Ексклюзивний реліз",
+                cat_title: "Каталог обладнання",
+                cat_stock: "У наявності",
+                card_desc: "PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.",
+                btn_add_cart: "ДОДАТИ В КОШИК",
+                prod_back: "Назад до каталогу",
+                prod_color_label: "Колір:",
+                prod_color_none: "Не вибрано",
+                prod_color_white: "Білий",
+                prod_color_black: "Чорний",
+                prod_color_pink: "Рожевий",
+                acc_specs: "Технічні характеристики",
+                acc_bundle: "Комплектація",
+                acc_shipping: "Доставка",
+                acc_warranty: "Гарантія",
+                footer_text: "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
+                specs_content: `
+                    <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
+                    <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
+                    <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
+                    <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
+                    <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
+                    <p>• <b>Акумулятор:</b> Енергоефективний, автономність до кількох тижнів активного використання</p>
+                    <p>• <b>Сумісність:</b> Windows, macOS, Linux, фірмове ПЗ для налаштування макросів і DPI</p>
+                `,
+                bundle_content: `
+                    <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
+                    <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
+                    <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
+                    <p>4. Комплект фірмових тефлонових глайдів (ніжок)</p>
+                    <p>5. Інструкція користувача та гарантійний талон</p>
+                `,
+                shipping_content: `<p>Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.</p>`,
+                warranty_content: `<p>Офіційна гарантія від виробника та магазину складає 12 місяців.</p>`
+            },
+            ru: {
+                nav_catalog: "Каталог",
+                nav_search: "Поиск",
+                hero_badge: "ULTIMATE HARDWARE",
+                hero_desc: "Флагманская беспроводная игровая мышь с поддержкой 8K HyperPolling, сенсором PixArt PAW3395 и ультралегким корпусом.",
+                hero_btn: "Подробнее о продукте",
+                cat_sub: "Эксклюзивный релиз",
+                cat_title: "Каталог оборудования",
+                cat_stock: "В наличии",
+                card_desc: "PixArt PAW3395, 8K HyperPolling, 54г, три режима подключения.",
+                btn_add_cart: "ДОБАВИТЬ В КОРЗИНУ",
+                prod_back: "Назад в каталог",
+                prod_color_label: "Цвет:",
+                prod_color_none: "Не выбрано",
+                prod_color_white: "Белый",
+                prod_color_black: "Черный",
+                prod_color_pink: "Розовый",
+                acc_specs: "Технические характеристики",
+                acc_bundle: "Комплектация",
+                acc_shipping: "Доставка",
+                acc_warranty: "Гарантия",
+                footer_text: "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
+                specs_content: `
+                    <p>• <b>Сенсор:</b> Оптический PixArt PAW3395 (до 26 000 DPI, 650 IPS, ускорение 50G)</p>
+                    <p>• <b>Частота опроса:</b> Поддержка до 8000 Hz (8K HyperPolling ресивер в комплекте)</p>
+                    <p>• <b>Переключатели (Свичи):</b> Долговечные механические переключатели с четким кликом</p>
+                    <p>• <b>Режимы подключения:</b> Проводной (Type-C), беспроводной 2.4 GHz и Bluetooth</p>
+                    <p>• <b>Вес:</b> Ультралегкий корпус — всего ~54 грамма</p>
+                    <p>• <b>Аккумулятор:</b> Энергоэффективный, автономность до нескольких недель активного использования</p>
+                    <p>• <b>Совместимость:</b> Windows, macOS, Linux, фирменное ПО для настройки макросов и DPI</p>
+                `,
+                bundle_content: `
+                    <p>1. Игровая мышь MCHOSE A7 V2 PRO</p>
+                    <p>2. Высокоскоростной 8K беспроводной ресивер (донгл)</p>
+                    <p>3. Съемный кабель USB Type-C в ультрамягкой паракордовой оплетке</p>
+                    <p>4. Комплект фирменных тефлоновых глайдов (ножек)</p>
+                    <p>5. Инструкция пользователя и гарантийный талон</p>
+                `,
+                shipping_content: `<p>Доставка Новой Почтой по всей Украине в течение 1–2 дней. Возможна оплата при получении (наложенный платеж) или онлайн-оплата.</p>`,
+                warranty_content: `<p>Официальная гарантия от производителя и магазина составляет 12 месяцев.</p>`
+            }
+        };
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Принудительный скролл на самый верх при заходе
+            // Динамический расчёт траектории бабочки точно к логотипу в шапке
+            const headerLogo = document.getElementById('headerLogoIcon');
+            const butterfly = document.getElementById('introButterfly');
+            if (headerLogo && butterfly) {
+                const headerRect = headerLogo.getBoundingClientRect();
+                const targetX = headerRect.left + headerRect.width / 2 - window.innerWidth / 2;
+                const targetY = headerRect.top + headerRect.height / 2 - window.innerHeight / 2;
+                butterfly.style.setProperty('--dest-x', targetX + 'px');
+                butterfly.style.setProperty('--dest-y', targetY + 'px');
+            }
+
+            // Принудительный скролл на самый верх
             window.scrollTo({ top: 0, behavior: 'instant' });
 
             setTimeout(() => {
                 const overlay = document.getElementById('milip-intro-overlay');
                 if (overlay) overlay.classList.add('hidden-intro');
             }, 3000);
+
             updateFavoritesUI();
             updateCartUI();
         });
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.getElementById('htmlRoot').setAttribute('lang', lang);
+
+            const btnUa = document.getElementById('langBtnUa');
+            const btnRu = document.getElementById('langBtnRu');
+            if (lang === 'ua') {
+                btnUa.className = "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                btnRu.className = "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+            } else {
+                btnRu.className = "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                btnUa.className = "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerText = t[key];
+            });
+
+            document.getElementById('heroDesc').innerText = t.hero_desc;
+            document.getElementById('cardDesc').innerText = t.card_desc;
+            document.getElementById('specsAccordion').innerHTML = t.specs_content;
+            document.getElementById('bundleAccordion').innerHTML = t.bundle_content;
+            document.getElementById('shippingAccordion').innerHTML = t.shipping_content;
+            document.getElementById('warrantyAccordion').innerHTML = t.warranty_content;
+
+            if (!currentSelectedColor) {
+                document.getElementById('selectedColorName').innerText = t.prod_color_none;
+            } else {
+                updateSelectedColorDisplay();
+            }
+        }
+
+        function updateSelectedColorDisplay() {
+            if (!currentSelectedColor) return;
+            const t = translations[currentLang];
+            let colorLocalized = currentSelectedColor;
+            if (currentSelectedColor === 'White') colorLocalized = t.prod_color_white;
+            if (currentSelectedColor === 'Black') colorLocalized = t.prod_color_black;
+            if (currentSelectedColor === 'Pink') colorLocalized = t.prod_color_pink;
+            
+            const colorElem = document.getElementById('selectedColorName');
+            if (colorElem) {
+                colorElem.innerText = colorLocalized;
+                colorElem.className = "font-extrabold text-gray-900 dark:text-white";
+            }
+        }
 
         function scrollToCatalog() {
             const catalogElem = document.getElementById('catalogSection');
@@ -486,10 +629,10 @@
             currentSelectedImg = imgPath;
             
             if (colorName) {
-                document.getElementById('selectedColorName').innerText = colorName;
-                document.getElementById('selectedColorName').className = "font-extrabold text-gray-900 dark:text-white";
+                updateSelectedColorDisplay();
             } else {
-                document.getElementById('selectedColorName').innerText = "Не вибрано";
+                const t = translations[currentLang];
+                document.getElementById('selectedColorName').innerText = t.prod_color_none;
                 document.getElementById('selectedColorName').className = "font-extrabold text-[#00C2FF]";
             }
             
@@ -546,10 +689,10 @@
             
             if (index > -1) {
                 favs.splice(index, 1);
-                showToast('Видалено з обраного');
+                showToast(currentLang === 'ua' ? 'Видалено з обраного' : 'Удалено из избранного');
             } else {
                 favs.push({ id, price: price || 2449, img: img || 'Главная фото для каталога.jpg', color: color || 'White', qty: currentProductQty });
-                showToast('Додано в обране ❤️');
+                showToast(currentLang === 'ua' ? 'Додано в обране ❤️' : 'Добавлено в избранное ❤️');
             }
             
             localStorage.setItem('milip_favorites', JSON.stringify(favs));
@@ -631,7 +774,7 @@
             }
             localStorage.setItem('milip_cart', JSON.stringify(cart));
             updateCartUI();
-            showToast('Товар додано в кошик 🛒');
+            showToast(currentLang === 'ua' ? 'Товар додано в кошик 🛒' : 'Товар добавлен в корзину 🛒');
         }
 
         function addToCartWithAnimation(event, id, price, color, img) {
@@ -641,7 +784,7 @@
 
         function addCurrentProductToCartWithAnimation(event) {
             if (!currentSelectedColor) {
-                showToast('⚠️ Будь ласка, оберіть колір товару!');
+                showToast(currentLang === 'ua' ? '⚠️ Будь ласка, оберіть колір товару!' : '⚠️ Пожалуйста, выберите цвет товара!');
                 return;
             }
             playButterflyAnimation(event);
@@ -695,35 +838,46 @@
             modal.id = 'favoritesModal';
             modal.className = 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4';
             
+            let titleText = currentLang === 'ua' ? 'Обране ❤️' : 'Избранное ❤️';
+            let emptyText = currentLang === 'ua' ? 'Список обраного порожній' : 'Список избранного пуст';
+            let btnCartText = currentLang === 'ua' ? 'Додати у кошик' : 'Добавить в корзину';
+            let btnDelText = currentLang === 'ua' ? 'Видалити' : 'Удалить';
+
             let contentHtml = `
                 <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[80vh] flex flex-col">
                     <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
-                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">Обране ❤️</h3>
+                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">${titleText}</h3>
                         <button onclick="document.getElementById('favoritesModal').remove()" class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg">✕</button>
                     </div>
                     <div class="overflow-y-auto py-4 space-y-3 flex-grow">
             `;
 
             if (favs.length === 0) {
-                contentHtml += `<p class="text-center text-gray-500 py-8 text-sm">Список обраного порожній</p>`;
+                contentHtml += `<p class="text-center text-gray-500 py-8 text-sm">${emptyText}</p>`;
             } else {
                 favs.forEach(item => {
+                    let colorNameLocal = item.color || 'White';
+                    if (currentLang === 'ru') {
+                        if (colorNameLocal === 'White') colorNameLocal = 'Белый';
+                        if (colorNameLocal === 'Black') colorNameLocal = 'Черный';
+                        if (colorNameLocal === 'Pink') colorNameLocal = 'Розовый';
+                    }
                     contentHtml += `
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
                             <div class="flex items-center space-x-3 cursor-pointer" onclick="document.getElementById('favoritesModal').remove(); openProductPage();">
                                 <img src="${item.img}" class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1">
                                 <div>
                                     <h4 class="font-bold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">${item.id}</h4>
-                                    <div class="text-[11px] text-gray-500">Колір: <span class="font-semibold text-gray-800 dark:text-gray-200">${item.color || 'White'}</span> | Кількість: <span class="font-semibold text-gray-800 dark:text-gray-200">${item.qty || 1}</span></div>
+                                    <div class="text-[11px] text-gray-500">${currentLang === 'ua' ? 'Колір' : 'Цвет'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${colorNameLocal}</span> | ${currentLang === 'ua' ? 'Кількість' : 'Количество'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${item.qty || 1}</span></div>
                                     <div class="text-xs font-extrabold text-[#00C2FF]">${item.price} ₴</div>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between sm:justify-end space-x-3 border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-300 dark:border-gray-800">
                                 <button onclick="addToCart('${item.id}', ${item.price}, '${item.color || 'White'}', '${item.img}', ${item.qty || 1});" class="px-3 py-2 bg-white text-black dark:bg-[#0F172A] dark:text-white text-xs font-extrabold rounded-xl shadow hover:opacity-90 transition-all">
-                                    Додати у кошик
+                                    ${btnCartText}
                                 </button>
                                 <button onclick="toggleFavorite('${item.id}'); openFavoritesModal();" class="text-xs font-extrabold text-red-500 hover:underline px-2 py-1">
-                                    Видалити
+                                    ${btnDelText}
                                 </button>
                             </div>
                         </div>
@@ -747,20 +901,32 @@
             
             let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
+            let titleText = currentLang === 'ua' ? 'Кошик 🛒' : 'Корзина 🛒';
+            let emptyText = currentLang === 'ua' ? 'Кошик порожній 🛒' : 'Корзина пуста 🛒';
+            let totalText = currentLang === 'ua' ? 'Загалом:' : 'Итого:';
+            let btnOrderText = currentLang === 'ua' ? 'ОФОРМИТИ ЗАМОВЛЕННЯ' : 'ОФОРМИТЬ ЗАКАЗ';
+            let btnDelText = currentLang === 'ua' ? 'Видалити' : 'Удалить';
+
             let itemsHtml = '';
             if (cart.length === 0) {
-                itemsHtml = `<p class="text-center text-gray-500 py-12 text-sm">Кошик порожній 🛒</p>`;
+                itemsHtml = `<p class="text-center text-gray-500 py-12 text-sm">${emptyText}</p>`;
             } else {
                 cart.forEach((item, index) => {
+                    let colorNameLocal = item.color;
+                    if (currentLang === 'ru') {
+                        if (colorNameLocal === 'White') colorNameLocal = 'Белый';
+                        if (colorNameLocal === 'Black') colorNameLocal = 'Черный';
+                        if (colorNameLocal === 'Pink') colorNameLocal = 'Розовый';
+                    }
                     itemsHtml += `
                         <div class="flex items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
                             <img src="${item.img}" class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1 flex-shrink-0">
                             <div class="flex-grow min-w-0">
                                 <h4 class="font-bold text-xs text-gray-900 dark:text-white truncate">${item.id}</h4>
-                                <div class="text-[10px] text-gray-500">Колір: <span class="font-semibold text-gray-800 dark:text-gray-200">${item.color}</span></div>
+                                <div class="text-[10px] text-gray-500">${currentLang === 'ua' ? 'Колір' : 'Цвет'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${colorNameLocal}</span></div>
                                 <div class="text-xs font-extrabold text-[#00C2FF] mt-0.5">${item.price} ₴ × ${item.qty}</div>
                             </div>
-                            <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 p-2 text-xs font-bold">Видалити</button>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 p-2 text-xs font-bold">${btnDelText}</button>
                         </div>
                     `;
                 });
@@ -771,7 +937,7 @@
                 <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
                     <div class="w-screen max-w-md bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex flex-col p-6 animate-fade-in">
                         <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
-                            <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">Кошик 🛒</h3>
+                            <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">${titleText}</h3>
                             <button onclick="document.getElementById('cartDrawer').remove()" class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg">✕</button>
                         </div>
                         <div class="overflow-y-auto py-4 space-y-3 flex-grow">
@@ -779,11 +945,11 @@
                         </div>
                         <div class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4">
                             <div class="flex items-center justify-between font-extrabold text-base">
-                                <span>Загалом:</span>
+                                <span>${totalText}</span>
                                 <span class="text-[#00C2FF]">${totalPrice} ₴</span>
                             </div>
-                            <button onclick="showToast('Оформлення замовлення успішне!'); localStorage.removeItem('milip_cart'); updateCartUI(); document.getElementById('cartDrawer').remove();" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90 transition-opacity">
-                                ОФОРМИТИ ЗАМОВЛЕННЯ
+                            <button onclick="showToast('${currentLang === 'ua' ? 'Оформлення замовлення успішне!' : 'Оформление заказа успешно!'}'); localStorage.removeItem('milip_cart'); updateCartUI(); document.getElementById('cartDrawer').remove();" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90 transition-opacity">
+                                ${btnOrderText}
                             </button>
                         </div>
                     </div>
@@ -800,7 +966,9 @@
             openCartDrawer();
         }
 
-        function openSearchModal() { showToast('Пошук активний'); }
+        function openSearchModal() { 
+            showToast(currentLang === 'ua' ? 'Пошук активний' : 'Поиск активен'); 
+        }
         
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
