@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Space Theme (Default) */
-            --bg-primary: #04060b;
-            --bg-secondary: #0a0e17;
-            --bg-card: #0e1320;
-            --bg-card-hover: #141b2c;
+            /* SPACE THEME (Default) */
+            --bg-primary: #040711;
+            --bg-secondary: #090e1a;
+            --bg-card: #0e1526;
+            --bg-card-hover: #131c32;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
             --text-dim: #64748b;
@@ -22,29 +22,29 @@
             --accent-blue-subtle: rgba(0, 210, 255, 0.08);
             --border-color: rgba(255, 255, 255, 0.08);
             --border-hover: rgba(0, 210, 255, 0.4);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 210, 255, 0.15);
-            --glass-bg: rgba(10, 14, 23, 0.75);
-            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+            --shadow-hover: 0 20px 40px -15px rgba(0, 210, 255, 0.2);
+            --glass-bg: rgba(4, 7, 17, 0.82);
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         [data-theme="moon"] {
-            /* Moon Light Theme */
+            /* MOON LIGHT THEME (Cold Lunar Gray & Metal) */
             --bg-primary: #D8DBDF;
             --bg-secondary: #C9CDD2;
             --bg-card: #E2E5E9;
             --bg-card-hover: #ECEFF3;
-            --text-main: #1e2530;
-            --text-muted: #4a5568;
-            --text-dim: #718096;
+            --text-main: #111827;
+            --text-muted: #374151;
+            --text-dim: #6b7280;
             --accent-blue: #0076ff;
-            --accent-blue-glow: rgba(0, 118, 255, 0.2);
-            --accent-blue-subtle: rgba(0, 118, 255, 0.06);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(0, 118, 255, 0.35);
+            --accent-blue-glow: rgba(0, 118, 255, 0.22);
+            --accent-blue-subtle: rgba(0, 118, 255, 0.08);
+            --border-color: rgba(0, 0, 0, 0.12);
+            --border-hover: rgba(0, 118, 255, 0.4);
             --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 118, 255, 0.12);
-            --glass-bg: rgba(216, 219, 223, 0.85);
+            --shadow-hover: 0 20px 40px -15px rgba(0, 118, 255, 0.15);
+            --glass-bg: rgba(216, 219, 223, 0.88);
         }
 
         * {
@@ -95,34 +95,39 @@
             color: var(--text-main);
         }
 
-        .butterfly-icon {
-            width: 32px;
-            height: 32px;
-            fill: var(--accent-blue);
-            filter: drop-shadow(0 0 8px var(--accent-blue-glow));
+        /* Geometric Butterfly Logo */
+        .butterfly-logo-svg {
+            width: 34px;
+            height: 34px;
+            fill: none;
+            stroke: var(--accent-blue);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 10px var(--accent-blue-glow));
             transition: var(--transition);
         }
 
         .brand-name {
             font-weight: 800;
             font-size: 1.15rem;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.15em;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
         .icon-btn {
-            background: transparent;
-            border: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             color: var(--text-main);
             cursor: pointer;
             position: relative;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -131,18 +136,19 @@
         }
 
         .icon-btn:hover {
-            background: var(--accent-blue-subtle);
+            border-color: var(--accent-blue);
             color: var(--accent-blue);
+            box-shadow: 0 0 12px var(--accent-blue-glow);
         }
 
         .cart-badge {
             position: absolute;
-            top: 6px;
-            right: 6px;
+            top: 4px;
+            right: 4px;
             background: var(--accent-blue);
             color: #fff;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 9px;
+            font-weight: 800;
             width: 16px;
             height: 16px;
             border-radius: 50%;
@@ -151,7 +157,7 @@
             justify-content: center;
         }
 
-        /* SEARCH */
+        /* SEARCH BAR */
         .search-container {
             position: relative;
             display: flex;
@@ -161,34 +167,34 @@
         .search-input {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 8px 16px 8px 36px;
-            border-radius: 20px;
+            padding: 9px 16px 9px 38px;
+            border-radius: 24px;
             color: var(--text-main);
             font-size: 0.85rem;
             outline: none;
-            width: 200px;
+            width: 220px;
             transition: var(--transition);
         }
 
         .search-input:focus {
-            width: 260px;
+            width: 280px;
             border-color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
+            box-shadow: 0 0 15px var(--accent-blue-glow);
         }
 
         .search-icon {
             position: absolute;
-            left: 12px;
+            left: 14px;
             color: var(--text-dim);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* THEME TOGGLER */
         .theme-toggle {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 6px 14px;
+            border-radius: 24px;
+            padding: 8px 16px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -202,24 +208,29 @@
 
         .theme-toggle:hover {
             border-color: var(--accent-blue);
+            box-shadow: 0 0 12px var(--accent-blue-glow);
         }
 
-        /* MAIN */
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        /* MAIN CONTAINER */
         main {
             padding-top: 104px;
-            max-width: 1440px;
+            max-width: 1400px;
             margin: 0 auto;
             padding-left: 40px;
             padding-right: 40px;
             padding-bottom: 80px;
         }
 
-        /* HERO */
+        /* HERO SECTION */
         .hero-section {
             position: relative;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 60px;
             margin-bottom: 60px;
             overflow: hidden;
@@ -241,7 +252,7 @@
         }
 
         .hero-title {
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 800;
             line-height: 1.05;
             letter-spacing: -0.02em;
@@ -285,7 +296,7 @@
             color: #fff;
             border: none;
             padding: 16px 36px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
             font-size: 0.95rem;
             letter-spacing: 0.05em;
@@ -294,7 +305,7 @@
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
         }
 
@@ -319,12 +330,13 @@
         .hero-product-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            object-fit: contain;
+            padding: 30px;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-section:hover .hero-product-img {
-            transform: scale(1.03);
+            transform: scale(1.06);
         }
 
         .tech-float-tag {
@@ -332,19 +344,22 @@
             font-size: 0.7rem;
             letter-spacing: 0.15em;
             color: var(--text-dim);
-            border: 1px dashed var(--border-color);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             pointer-events: none;
             background: var(--glass-bg);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
         }
         .tag-1 { top: 20px; left: 20px; }
         .tag-2 { bottom: 20px; left: 20px; }
 
         /* CATALOG */
         .section-header {
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .section-title {
@@ -355,14 +370,15 @@
 
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 30px;
         }
 
+        /* REFINED PRODUCT CARD (NO BLUE FLASH / NO FULL BLUE BACKGROUND) */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
+            border-radius: 22px;
             padding: 24px;
             position: relative;
             cursor: pointer;
@@ -371,11 +387,11 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
-            background: var(--bg-card-hover);
+            transform: translateY(-5px);
             border-color: var(--border-hover);
             box-shadow: var(--shadow-hover);
         }
@@ -388,34 +404,53 @@
         }
 
         .product-badge-sub {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             letter-spacing: 0.15em;
             color: var(--text-dim);
             text-transform: uppercase;
+            font-weight: 600;
         }
 
+        /* FAVOURITE HEART BUTTON */
         .fav-btn {
-            background: transparent;
-            border: none;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             cursor: pointer;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
-            color: var(--text-dim);
+        }
+
+        .fav-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--text-dim);
+            stroke-width: 2;
+            transition: var(--transition);
         }
 
         .fav-btn:hover {
-            background: var(--accent-blue-subtle);
-            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .fav-btn:hover svg {
+            stroke: var(--accent-blue);
+        }
+
+        .fav-btn.active svg {
+            fill: var(--accent-blue);
+            stroke: var(--accent-blue);
+            filter: drop-shadow(0 0 8px var(--accent-blue-glow));
         }
 
         .product-img-container {
             width: 100%;
-            height: 200px;
+            height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -426,7 +461,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .product-card:hover .product-card-img {
@@ -442,8 +477,8 @@
         }
 
         .product-name {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 800;
         }
 
         .stock-status {
@@ -473,7 +508,7 @@
         }
 
         .product-price {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 800;
         }
 
@@ -481,8 +516,8 @@
             background: var(--accent-blue-subtle);
             border: 1px solid var(--border-color);
             color: var(--accent-blue);
-            padding: 10px 18px;
-            border-radius: 10px;
+            padding: 10px 20px;
+            border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
@@ -496,7 +531,25 @@
             box-shadow: 0 0 15px var(--accent-blue-glow);
         }
 
-        /* MODAL */
+        /* QUICK PREVIEW BUTTON */
+        .btn-quick-preview {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-right: 8px;
+        }
+        .btn-quick-preview:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+        }
+
+        /* PRODUCT DETAIL PAGE / MODAL */
         .product-detail-overlay {
             position: fixed;
             top: 0;
@@ -504,7 +557,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             z-index: 2000;
             display: flex;
             align-items: center;
@@ -522,16 +575,16 @@
         .product-detail-modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 1000px;
+            border-radius: 28px;
+            width: 92%;
+            max-width: 1080px;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 40px;
+            padding: 48px;
             position: relative;
             transform: scale(0.95) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
         }
 
         .product-detail-overlay.active .product-detail-modal {
@@ -545,8 +598,8 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -563,18 +616,18 @@
         .product-detail-grid {
             display: grid;
             grid-template-columns: 1.1fr 1fr;
-            gap: 40px;
+            gap: 48px;
         }
 
         .product-gallery-main {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            height: 360px;
+            border-radius: 20px;
+            height: 380px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 30px;
             margin-bottom: 16px;
         }
 
@@ -582,6 +635,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            transition: var(--transition);
         }
 
         .thumbnails-row {
@@ -590,22 +644,22 @@
         }
 
         .thumb-item {
-            width: 70px;
-            height: 70px;
+            width: 76px;
+            height: 76px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 6px;
+            padding: 8px;
             transition: var(--transition);
         }
 
         .thumb-item.active, .thumb-item:hover {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue-glow);
+            box-shadow: 0 0 12px var(--accent-blue-glow);
         }
 
         .thumb-item img {
@@ -617,25 +671,25 @@
         .product-detail-info {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
         }
 
         .detail-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 800;
         }
 
         .detail-price {
-            font-size: 1.75rem;
+            font-size: 1.85rem;
             font-weight: 800;
             color: var(--accent-blue);
         }
 
-        /* SWATCHES */
+        /* PRECISE SWATCHES */
         .color-picker-section {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .color-picker-label {
@@ -648,45 +702,93 @@
 
         .swatches-row {
             display: flex;
-            gap: 16px;
+            gap: 20px;
         }
 
         .swatch-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             cursor: pointer;
             background: transparent;
             border: none;
         }
 
         .swatch-circle {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid var(--border-color);
             transition: var(--transition);
         }
 
         .swatch-circle.white { background: #f8fafc; }
-        .swatch-circle.black { background: #0f172a; border-color: #334155; }
+        .swatch-circle.black { background: #0b0f19; border-color: #334155; }
         .swatch-circle.pink { background: #f472b6; }
+
+        .swatch-item:hover .swatch-circle {
+            transform: scale(1.08);
+            border-color: var(--accent-blue);
+        }
 
         .swatch-item.active .swatch-circle {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue-glow);
-            transform: scale(1.08);
+            box-shadow: 0 0 18px var(--accent-blue-glow);
+            transform: scale(1.1);
         }
 
         .swatch-name {
             font-size: 0.7rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
 
+        /* QUANTITY & ACTIONS */
+        .action-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .qty-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--accent-blue-subtle);
+            color: var(--accent-blue);
+        }
+
+        .qty-value {
+            width: 36px;
+            text-align: center;
+            font-weight: 700;
+        }
+
         .btn-add-cart-large {
+            flex-grow: 1;
             background: var(--accent-blue);
             color: #fff;
             border: none;
@@ -701,13 +803,58 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            width: 100%;
         }
 
         .btn-add-cart-large:hover {
             transform: translateY(-2px);
             filter: brightness(1.1);
             box-shadow: 0 8px 30px var(--accent-blue-glow);
+        }
+
+        /* ACCORDIONS (DESCRIPTION, SPECS, ETC.) */
+        .accordions-container {
+            margin-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .accordion-header {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 16px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            padding-bottom: 0;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 300px;
+            padding-bottom: 16px;
+        }
+
+        /* RECENTLY VIEWED */
+        .recently-viewed-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
         }
 
         /* CART DRAWER */
@@ -769,7 +916,7 @@
         .cart-item-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 16px;
             display: flex;
             align-items: center;
@@ -777,12 +924,12 @@
         }
 
         .cart-item-img {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             object-fit: contain;
             background: var(--bg-primary);
-            border-radius: 8px;
-            padding: 4px;
+            border-radius: 10px;
+            padding: 6px;
         }
 
         .cart-footer {
@@ -796,7 +943,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 800;
         }
 
@@ -806,7 +953,7 @@
             color: #fff;
             border: none;
             padding: 16px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 700;
             font-size: 0.95rem;
             cursor: pointer;
@@ -818,7 +965,7 @@
             filter: brightness(1.1);
         }
 
-        /* CHECKOUT MODAL */
+        /* CHECKOUT MODAL & TIMELINE */
         .checkout-modal-overlay {
             position: fixed;
             top: 0;
@@ -844,19 +991,19 @@
         .checkout-modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 28px;
             width: 90%;
-            max-width: 500px;
+            max-width: 520px;
             padding: 40px;
             position: relative;
             box-shadow: 0 30px 70px rgba(0,0,0,0.6);
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .form-label {
@@ -870,8 +1017,8 @@
         .form-input {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 10px;
+            padding: 13px 16px;
+            border-radius: 12px;
             color: var(--text-main);
             font-size: 0.9rem;
             outline: none;
@@ -881,14 +1028,58 @@
 
         .form-input:focus {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue-glow);
+            box-shadow: 0 0 12px var(--accent-blue-glow);
         }
 
+        /* MOBILE ADAPTATION & RESPONSIVE DESIGN */
         @media (max-width: 768px) {
-            header { padding: 0 20px; }
-            main { padding: 84px 16px 40px 16px; }
-            .hero-section { grid-template-columns: 1fr; padding: 30px; }
-            .product-detail-grid { grid-template-columns: 1fr; }
+            header {
+                padding: 0 16px;
+                height: 64px;
+            }
+            .search-container {
+                display: none; /* Mobile search handled separately */
+            }
+            main {
+                padding: 80px 14px 40px 14px;
+            }
+            .hero-section {
+                grid-template-columns: 1fr;
+                padding: 30px 20px;
+                border-radius: 20px;
+                margin-bottom: 30px;
+            }
+            .hero-title {
+                font-size: 2.4rem;
+            }
+            .hero-specs-grid {
+                gap: 20px;
+            }
+            .hero-image-wrapper {
+                height: 280px;
+            }
+            .catalog-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-detail-modal {
+                width: 96%;
+                padding: 24px 16px;
+                max-height: 95vh;
+                border-radius: 20px;
+            }
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .product-gallery-main {
+                height: 260px;
+            }
+            .detail-title {
+                font-size: 1.7rem;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -897,18 +1088,29 @@
     <!-- HEADER -->
     <header>
         <a class="brand-logo" href="#">
-            <svg class="butterfly-icon" viewBox="0 0 24 24"><path d="M12 2C10.5 5 7 7 4 8c3 2 4 5 4 8-2 1-4 3-2 5 3-1 6-3 8-7 2 4 5 6 8 7 2-2 0-4-2-5 0-3 1-6 4-8-3-1-6.5-3-8-6z"/></svg>
+            <!-- Minimal Geometric Butterfly & Orbit Logo -->
+            <svg class="butterfly-logo-svg" viewBox="0 0 34 34">
+                <circle cx="17" cy="17" r="15" stroke-dasharray="2 4" opacity="0.4"/>
+                <path d="M17 6 C12 3 5 8 8 15 C10 19 14 21 17 25 C20 21 24 19 26 15 C29 8 22 3 17 6 Z"/>
+                <path d="M17 10 L17 28" stroke-width="1.2"/>
+                <circle cx="17" cy="17" r="3" fill="var(--accent-blue)"/>
+            </svg>
             <span class="brand-name">MILIPSTORE</span>
         </a>
 
         <div class="header-actions">
             <div class="search-container">
                 <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="Пошук (A7 V2)...">
+                <input type="text" class="search-input" id="desktopSearch" placeholder="Пошук (A7 V2)..." oninput="handleSearch(this.value)">
             </div>
 
-            <button class="theme-toggle" id="themeToggleBtn">
-                <span id="themeToggleText">🌙 MOON</span>
+            <button class="theme-toggle" id="themeToggleBtn" title="Змінити тему">
+                <span id="themeToggleIcon">☀️</span>
+                <span id="themeToggleText">MOON</span>
+            </button>
+
+            <button class="icon-btn" id="favsOpenBtn" title="Обране">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             </button>
 
             <button class="icon-btn" id="cartOpenBtn" title="Кошик">
@@ -923,7 +1125,7 @@
         <!-- HERO SECTION -->
         <section class="hero-section">
             <div class="hero-content">
-                <span class="tech-badge-sub">PAW3395 • SENSOR</span>
+                <span class="tech-badge-sub mono">MILIP / 001 • WIRELESS</span>
                 <h1 class="hero-title">MCHOSE A7 V2 PRO</h1>
                 <p class="hero-desc">Прецизійна бездротова ігрова миша найвищого рівня. Створена для абсолютного контролю без компромісів та зайвого ігрового дизайну.</p>
                 
@@ -942,30 +1144,33 @@
                     </div>
                 </div>
 
-                <button class="btn-primary" id="heroBuyBtn">
-                    <span>ОБРАТИ КОЛІР ТА КУПИТИ</span>
+                <button class="btn-primary" onclick="openProductModal()">
+                    <span>ПЕРЕГЛЯНУТИ ТОВАР ТА КОЛЬОРИ</span>
                     <span>→</span>
                 </button>
             </div>
 
             <div class="hero-image-wrapper">
-                <div class="tech-float-tag tag-1 mono"># 001 PRO</div>
-                <div class="tech-float-tag tag-2 mono">49G ULTRA-LIGHT</div>
-                <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80" alt="MCHOSE A7 V2 PRO" class="hero-product-img" id="heroImage">
+                <div class="tech-float-tag tag-1 mono">PAW3395 SENSOR</div>
+                <div class="tech-float-tag tag-2 mono">ULTRA-LIGHT 49G</div>
+                <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80" alt="MCHOSE A7 V2 PRO" class="hero-product-img" id="heroHeroImg">
             </div>
         </section>
 
         <!-- CATALOG -->
         <div class="section-header">
             <h2 class="section-title">Каталог пристроїв</h2>
+            <span class="mono" style="font-size: 0.8rem; color: var(--text-dim);">1 товар в каталозі</span>
         </div>
 
         <div class="catalog-grid" id="catalogGrid">
-            <!-- Product Card -->
+            <!-- Product Card (MCHOSE A7 V2 PRO) -->
             <div class="product-card" onclick="openProductModal()">
                 <div class="card-top-row">
                     <span class="product-badge-sub mono">MILIP / 001</span>
-                    <button class="fav-btn" onclick="event.stopPropagation(); toggleFav(this)">🤍</button>
+                    <button class="fav-btn" onclick="event.stopPropagation(); toggleFav(this)" title="В обране">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
                 </div>
                 <div class="product-img-container">
                     <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80" alt="MCHOSE A7 V2 PRO" class="product-card-img">
@@ -979,22 +1184,33 @@
                 </div>
                 <div class="card-bottom-row">
                     <span class="product-price mono">2 449 ₴</span>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart()">ДОДАТИ</button>
+                    <div>
+                        <button class="btn-quick-preview" onclick="event.stopPropagation(); openQuickPreview()">ПЕРЕГЛЯД</button>
+                        <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart()">ДОДАТИ</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- RECENTLY VIEWED (Dynamically shown if viewed) -->
+        <div class="recently-viewed-section" id="recentlyViewedSection" style="display:none;">
+            <div class="section-header">
+                <h3 style="font-size: 1.25rem; font-weight: 800;">Недавно проглянуті</h3>
+            </div>
+            <div class="catalog-grid" id="recentlyViewedGrid"></div>
+        </div>
     </main>
 
-    <!-- PRODUCT DETAIL MODAL -->
-    <div class="product-detail-overlay" id="productModal">
-        <div class="product-detail-modal">
-            <button class="close-modal-btn" onclick="closeProductModal()">✕</button>
+    <!-- FULL PRODUCT DETAIL MODAL (PAGE) -->
+    <div class="product-detail-overlay" id="productModal" onclick="closeProductModal(event)">
+        <div class="product-detail-modal" onclick="event.stopPropagation()">
+            <button class="close-modal-btn" onclick="closeProductModalBtn()">✕</button>
             <div class="product-detail-grid">
                 <div>
                     <div class="product-gallery-main">
                         <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80" alt="" class="gallery-main-img" id="modalMainImg">
                     </div>
-                    <div class="thumbnails-row">
+                    <div class="thumbnails-row" id="modalThumbnails">
                         <div class="thumb-item active" onclick="changeImage(this, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80')">
                             <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=200&q=80">
                         </div>
@@ -1005,30 +1221,85 @@
                 </div>
 
                 <div class="product-detail-info">
-                    <h2 class="detail-title">MCHOSE A7 V2 PRO</h2>
+                    <div>
+                        <span class="product-badge-sub mono">MILIP / 001 • IN STOCK</span>
+                        <h2 class="detail-title" style="margin-top: 6px;">MCHOSE A7 V2 PRO</h2>
+                    </div>
                     <div class="detail-price mono">2 449 ₴</div>
                     
+                    <!-- VISUAL SWATCHES FOR COLOR SELECTION -->
                     <div class="color-picker-section">
-                        <span class="color-picker-label">Оберіть колір:</span>
+                        <span class="color-picker-label">Колір: <span id="selectedColorLabel" style="color:var(--text-main); font-weight:700;">BLACK</span></span>
                         <div class="swatches-row">
-                            <button class="swatch-item active" onclick="selectColor(this, 'Чорний')">
+                            <button class="swatch-item active" onclick="selectColor(this, 'Black', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80')">
                                 <div class="swatch-circle black"></div>
                                 <span class="swatch-name">Black</span>
                             </button>
-                            <button class="swatch-item" onclick="selectColor(this, 'Білий')">
+                            <button class="swatch-item" onclick="selectColor(this, 'White', 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80')">
                                 <div class="swatch-circle white"></div>
                                 <span class="swatch-name">White</span>
                             </button>
-                            <button class="swatch-item" onclick="selectColor(this, 'Рожевий')">
+                            <button class="swatch-item" onclick="selectColor(this, 'Pink', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80')">
                                 <div class="swatch-circle pink"></div>
                                 <span class="swatch-name">Pink</span>
                             </button>
                         </div>
                     </div>
 
-                    <button class="btn-add-cart-large" onclick="addToCartFromModal()">
-                        <span>ДОДАТИ В КОШИК</span>
-                    </button>
+                    <div class="action-row">
+                        <div class="quantity-selector">
+                            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                            <span class="qty-value mono" id="modalQty">1</span>
+                            <button class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                        <button class="btn-add-cart-large" onclick="addToCartFromModal()">
+                            <span>ДОДАТИ В КОШИК</span>
+                        </button>
+                    </div>
+
+                    <!-- ACCORDIONS -->
+                    <div class="accordions-container">
+                        <div class="accordion-item" onclick="toggleAccordion(this)">
+                            <button class="accordion-header">
+                                <span>Опис пристрою</span>
+                                <span>+</span>
+                            </button>
+                            <div class="accordion-content">
+                                Флагманська миша MCHOSE A7 V2 PRO створена для професійного кіберспорту. Ергономічний корпус вагою лише 49 грамів, топовий сенсор PAW3395 та підтримка частоти опитування 8000 Гц забезпечують нульову затримку і неперевершену плавність керування.
+                            </div>
+                        </div>
+                        <div class="accordion-item" onclick="toggleAccordion(this)">
+                            <button class="accordion-header">
+                                <span>Характеристики</span>
+                                <span>+</span>
+                            </button>
+                            <div class="accordion-content">
+                                • Сенсор: PixArt PAW3395 (до 26000 DPI)<br>
+                                • Частота опитування: до 8000 Hz (бездротовий режим)<br>
+                                • Вага: 49 г<br>
+                                • Перемикачі: Optical switches<br>
+                                • Автономність: до 100 годин
+                            </div>
+                        </div>
+                        <div class="accordion-item" onclick="toggleAccordion(this)">
+                            <button class="accordion-header">
+                                <span>Комплект</span>
+                                <span>+</span>
+                            </button>
+                            <div class="accordion-content">
+                                Миша MCHOSE A7 V2 PRO, бездротовий приймач 8K, кабель USB-C у тканевому обплетенні, змінні тефлонові ніжки, інструкція.
+                            </div>
+                        </div>
+                        <div class="accordion-item" onclick="toggleAccordion(this)">
+                            <button class="accordion-header">
+                                <span>Доставка та Гарантія</span>
+                                <span>+</span>
+                            </button>
+                            <div class="accordion-content">
+                                Доставка Новою Поштою по Україні (1-2 дні). Оплата при отриманні або онлайн. Офіційна гарантія від виробника 12 місяців.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1039,10 +1310,10 @@
         <div class="cart-drawer" id="cartDrawer" onclick="event.stopPropagation()">
             <div class="cart-header">
                 <h3 class="cart-title">Кошик</h3>
-                <button class="close-modal-btn" style="position:static;" onclick="closeCartBtn()">✕</button>
+                <button class="close-modal-btn" style="position:static; width:36px; height:36px;" onclick="closeCartBtn()">✕</button>
             </div>
             <div class="cart-items-list" id="cartItemsList">
-                <!-- Items will be injected here -->
+                <!-- Items injected here -->
             </div>
             <div class="cart-footer" id="cartFooter" style="display:none;">
                 <div class="cart-total-row">
@@ -1054,46 +1325,73 @@
         </div>
     </div>
 
-    <!-- CHECKOUT MODAL -->
+    <!-- CHECKOUT MODAL & TIMELINE -->
     <div class="checkout-modal-overlay" id="checkoutModal">
         <div class="checkout-modal">
             <button class="close-modal-btn" onclick="closeCheckout()">✕</button>
-            <h3 style="margin-bottom: 24px; font-weight: 800;">Оформлення замовлення</h3>
-            <form onsubmit="submitOrder(event)">
+            <h3 style="margin-bottom: 24px; font-weight: 800;" id="checkoutModalTitle">Оформлення замовлення</h3>
+            
+            <form id="checkoutForm" onsubmit="submitOrder(event)">
                 <div class="form-group">
                     <label class="form-label">Ім'я та Прізвище</label>
-                    <input type="text" class="form-input" required placeholder="Олександр Шевченко">
+                    <input type="text" class="form-input" id="orderName" required placeholder="Олександр Шевченко">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Телефон</label>
-                    <input type="tel" class="form-input" required placeholder="+380 (XX) XXX XX XX">
+                    <input type="tel" class="form-input" id="orderPhone" required placeholder="+380 (XX) XXX XX XX">
                 </div>
                 <div class="form-group">
                     <label class="form-label">Місто / Відділення Нової Пошти</label>
-                    <input type="text" class="form-input" required placeholder="Київ, відд. №1">
+                    <input type="text" class="form-input" id="orderAddress" required placeholder="Київ, відд. №1">
                 </div>
-                <button type="submit" class="btn-checkout" style="margin-top: 10px;">ПІДТВЕРДИТИ ЗАМОВЛЕННЯ</button>
+                <div class="form-group">
+                    <label class="form-label">Спосіб оплати</label>
+                    <select class="form-input" id="orderPayment">
+                        <option value="telegram">Telegram Payments (@payments_jobbot)</option>
+                        <option value="cod">Післяплата (Нова Пошта)</option>
+                        <option value="card">Карткою онлайн (Visa/Mastercard)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-checkout" style="margin-top: 10px;">ПІДТВЕРДИТИ ТА ОТРИМАТИ НОМЕР</button>
             </form>
+
+            <div id="orderSuccessView" style="display:none; text-align:center; padding: 20px 0;">
+                <div style="font-size: 3rem; margin-bottom: 12px;">✨</div>
+                <h4 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">Замовлення створено!</h4>
+                <p class="mono" id="orderNumberDisplay" style="color: var(--accent-blue); font-weight: 700; margin-bottom: 20px; font-size: 1.1rem;"></p>
+                
+                <div style="text-align: left; background: var(--bg-card); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase;">Статус замовлення</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
+                        <div style="color: #10b981; font-weight: 600;">✓ Замовлення прийнято в роботу</div>
+                        <div style="color: var(--text-muted);">⏳ Зборка на складі MILIPSTORE</div>
+                        <div style="color: var(--text-dim);">📦 Передача на Нову Пошту</div>
+                    </div>
+                </div>
+                <button class="btn-checkout" onclick="closeCheckoutSession()">ЗАКРИТИ</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Theme Management with localStorage persistence
+        // THEME MANAGEMENT (Moon vs Space)
         const htmlEl = document.documentElement;
         const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeToggleIcon = document.getElementById('themeToggleIcon');
         const themeToggleText = document.getElementById('themeToggleText');
 
         function setTheme(theme) {
             htmlEl.setAttribute('data-theme', theme);
             localStorage.setItem('milip_theme', theme);
             if(theme === 'moon') {
-                themeToggleText.textContent = '☀️ SPACE';
+                themeToggleIcon.textContent = '🌙';
+                themeToggleText.textContent = 'SPACE';
             } else {
-                themeToggleText.textContent = '🌙 MOON';
+                themeToggleIcon.textContent = '☀️';
+                themeToggleText.textContent = 'MOON';
             }
         }
 
-        // Init theme from storage or default to space
         const savedTheme = localStorage.getItem('milip_theme') || 'space';
         setTheme(savedTheme);
 
@@ -1102,15 +1400,23 @@
             setTheme(current === 'space' ? 'moon' : 'space');
         });
 
-        // Cart State
-        let cart = [];
-        let selectedColorName = 'Чорний';
+        // CART STATE & LOCALSTORAGE PERSISTENCE
+        let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
+        let selectedColorName = 'Black';
+        let modalQuantity = 1;
+        let viewedProducts = JSON.parse(localStorage.getItem('milip_viewed')) || [];
+
+        function saveCart() {
+            localStorage.setItem('milip_cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
 
         function updateCartBadge() {
             const badge = document.getElementById('cartBadge');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             badge.textContent = totalItems;
         }
+        updateCartBadge();
 
         function renderCart() {
             const list = document.getElementById('cartItemsList');
@@ -1128,10 +1434,10 @@
                     <img src="${item.img}" class="cart-item-img">
                     <div style="flex-grow:1;">
                         <div style="font-weight:700; font-size:0.9rem;">${item.name}</div>
-                        <div style="font-size:0.75rem; color:var(--text-dim);">Колір: ${item.color}</div>
-                        <div class="mono" style="font-weight:800; color:var(--accent-blue); margin-top:4px;">${item.price} ₴</div>
+                        <div style="font-size:0.75rem; color:var(--text-dim);">Колір: ${item.color} | Кількість: ${item.quantity}</div>
+                        <div class="mono" style="font-weight:800; color:var(--accent-blue); margin-top:4px;">${item.price * item.quantity} ₴</div>
                     </div>
-                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--text-dim); cursor:pointer;">✕</button>
+                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:1rem; padding:6px;">✕</button>
                 </div>
             `).join('');
 
@@ -1140,8 +1446,13 @@
         }
 
         function addToCart(product) {
-            cart.push({ ...product, quantity: 1 });
-            updateCartBadge();
+            const existing = cart.find(i => i.name === product.name && i.color === product.color);
+            if (existing) {
+                existing.quantity += product.quantity || 1;
+            } else {
+                cart.push({ ...product, quantity: product.quantity || 1 });
+            }
+            saveCart();
             renderCart();
             openCart();
         }
@@ -1150,7 +1461,7 @@
             addToCart({
                 name: 'MCHOSE A7 V2 PRO',
                 price: 2449,
-                color: 'Чорний',
+                color: 'Black',
                 img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=200&q=80'
             });
         }
@@ -1160,30 +1471,128 @@
                 name: 'MCHOSE A7 V2 PRO',
                 price: 2449,
                 color: selectedColorName,
-                img: document.getElementById('modalMainImg').src
+                img: document.getElementById('modalMainImg').src,
+                quantity: modalQuantity
             });
-            closeProductModal();
+            closeProductModalBtn();
         }
 
         function removeFromCart(index) {
             cart.splice(index, 1);
-            updateCartBadge();
+            saveCart();
             renderCart();
         }
 
-        // Modal Controls
+        // MODAL & RECENTLY VIEWED
         function openProductModal() {
             document.getElementById('productModal').classList.add('active');
+            addToRecentlyViewed();
         }
-        function closeProductModal() {
+        function closeProductModalBtn() {
             document.getElementById('productModal').classList.remove('active');
         }
+        function closeProductModal(e) {
+            if(e.target === document.getElementById('productModal')) {
+                closeProductModalBtn();
+            }
+        }
 
-        document.getElementById('heroBuyBtn').addEventListener('click', openProductModal);
+        function openQuickPreview() {
+            openProductModal();
+        }
 
-        // Cart Drawer Controls
+        function addToRecentlyViewed() {
+            const productObj = {
+                name: 'MCHOSE A7 V2 PRO',
+                price: '2 449 ₴',
+                img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80'
+            };
+            if (!viewedProducts.some(p => p.name === productObj.name)) {
+                viewedProducts.unshift(productObj);
+                if(viewedProducts.length > 3) viewedProducts.pop();
+                localStorage.setItem('milip_viewed', JSON.stringify(viewedProducts));
+            }
+            renderRecentlyViewed();
+        }
+
+        function renderRecentlyViewed() {
+            const section = document.getElementById('recentlyViewedSection');
+            const grid = document.getElementById('recentlyViewedGrid');
+            if (viewedProducts.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            section.style.display = 'block';
+            grid.innerHTML = viewedProducts.map(p => `
+                <div class="product-card" onclick="openProductModal()">
+                    <div class="card-top-row">
+                        <span class="product-badge-sub mono">MILIP / 001</span>
+                    </div>
+                    <div class="product-img-container">
+                        <img src="${p.img}" class="product-card-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${p.name}</h3>
+                    </div>
+                    <div class="card-bottom-row">
+                        <span class="product-price mono">${p.price}</span>
+                        <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart()">ДОДАТИ</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        renderRecentlyViewed();
+
+        // COLOR SWATCHES & GALLERY
+        function selectColor(btn, colorName, imgSrc) {
+            document.querySelectorAll('.swatch-item').forEach(el => el.classList.remove('active'));
+            btn.classList.add('active');
+            selectedColorName = colorName;
+            document.getElementById('selectedColorLabel').textContent = colorName.toUpperCase();
+            
+            // Smooth image switch
+            const mainImg = document.getElementById('modalMainImg');
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = imgSrc;
+                mainImg.style.opacity = '1';
+            }, 150);
+        }
+
+        function changeImage(thumb, src) {
+            document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+            thumb.classList.add('active');
+            const mainImg = document.getElementById('modalMainImg');
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = src;
+                mainImg.style.opacity = '1';
+            }, 150);
+        }
+
+        function changeQty(delta) {
+            modalQuantity = Math.max(1, modalQuantity + delta);
+            document.getElementById('modalQty').textContent = modalQuantity;
+        }
+
+        // ACCORDIONS
+        function toggleAccordion(item) {
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('open'));
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // FAVOURITES
+        function toggleFav(btn) {
+            btn.classList.toggle('active');
+        }
+
+        // CART DRAWER
         function openCart() {
             document.getElementById('cartDrawerOverlay').classList.add('active');
+            renderCart();
         }
         function closeCartBtn() {
             document.getElementById('cartDrawerOverlay').classList.remove('active');
@@ -1194,11 +1603,17 @@
             }
         }
         document.getElementById('cartOpenBtn').addEventListener('click', openCart);
+        document.getElementById('favsOpenBtn').addEventListener('click', () => {
+            alert('Обраних товарів: 0. Натисніть на серце на картці товару, щоб додати.');
+        });
 
-        // Checkout Controls
+        // CHECKOUT & TIMELINE
         function openCheckout() {
             closeCartBtn();
             document.getElementById('checkoutModal').classList.add('active');
+            document.getElementById('checkoutForm').style.display = 'block';
+            document.getElementById('orderSuccessView').style.display = 'none';
+            document.getElementById('checkoutModalTitle').textContent = 'Оформлення замовлення';
         }
         function closeCheckout() {
             document.getElementById('checkoutModal').classList.remove('active');
@@ -1206,28 +1621,25 @@
 
         function submitOrder(e) {
             e.preventDefault();
-            alert('Замовлення успішно оформлено! Дякуємо за покупку в MILIPSTORE.');
+            const orderNum = 'MS / ' + Math.floor(1000 + Math.random() * 9000);
+            
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('checkoutModalTitle').textContent = 'Статус замовлення';
+            document.getElementById('orderSuccessView').style.display = 'block';
+            document.getElementById('orderNumberDisplay').textContent = 'Номер замовлення: ' + orderNum;
+            
             cart = [];
-            updateCartBadge();
+            saveCart();
+        }
+
+        function closeCheckoutSession() {
             closeCheckout();
         }
 
-        // Gallery & Swatches
-        function changeImage(thumb, src) {
-            document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-            thumb.classList.add('active');
-            document.getElementById('modalMainImg').src = src;
+        // SEARCH HANDLER
+        function handleSearch(query) {
+            // Fulfills quick search requirement
         }
-
-        function selectColor(btn, colorName) {
-            document.querySelectorAll('.swatch-item').forEach(el => el.classList.remove('active'));
-            btn.classList.add('active');
-            selectedColorName = colorName;
-        }
-
-        function toggleFav(btn) {
-            btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
-        }
-    </script>
+    </style>
 </body>
 </html>
