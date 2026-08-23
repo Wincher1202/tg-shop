@@ -116,7 +116,7 @@
         /* СЕТКА ТОВАРОВ */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 16px;
             align-content: start;
         }
@@ -141,13 +141,13 @@
         }
 
         .product-img {
-            height: 130px;
+            height: 140px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             overflow: hidden;
         }
 
@@ -155,6 +155,33 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: opacity 0.2s ease;
+        }
+
+        /* ПЕРЕКЛЮЧАТЕЛЬ ЦВЕТОВ */
+        .color-selector {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .color-dot.active {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 8px var(--accent-cyan);
         }
 
         .product-info {
@@ -280,27 +307,33 @@
         <!-- СЕТКА ТОВАРОВ -->
         <main class="products-grid">
             
-            <!-- Карточка 1 -->
+            <!-- Товар 1: Игровая мышь с выбором цветов -->
             <div class="product-card">
                 <div class="product-img">
-                    <img src="Белая мышка.jpg" alt="Белая мышка">
+                    <img id="mouse-img" src="Белая мышка.jpg" alt="MCHOSE A7 V2 PRO">
+                </div>
+                <!-- Выбор цвета -->
+                <div class="color-selector">
+                    <div class="color-dot active" style="background: #ffffff;" onclick="changeColor('white', 'Белая мышка.jpg', '2449 ₴')"></div>
+                    <div class="color-dot" style="background: #111111;" onclick="changeColor('black', 'Черная мышка.jpg', '2449 ₴')"></div>
+                    <div class="color-dot" style="background: #ff007f;" onclick="changeColor('pink', 'Розовая мышка.jpg', '2449 ₴')"></div>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Gaming Mouse Pro (White)</h3>
+                    <h3 class="product-title">MCHOSE A7 V2 PRO</h3>
                     <div>
-                        <div class="product-price">1 499 ₴</div>
+                        <div class="product-price" id="mouse-price">2 449 ₴</div>
                         <button class="buy-btn">В КОШИК</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Карточка 2 -->
+            <!-- Товар 2: Клавиатура (Рандомная категория 1) -->
             <div class="product-card">
                 <div class="product-img">
-                    <img src="Черная мышка.jpg" alt="Черная мышка">
+                    <img src="Главная фото для каталога.jpg" alt="Mechanical Keyboard">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Gaming Mouse Pro (Black)</h3>
+                    <h3 class="product-title">Mechanical Keyboard RGB</h3>
                     <div>
                         <div class="product-price">2 899 ₴</div>
                         <button class="buy-btn">В КОШИК</button>
@@ -308,29 +341,15 @@
                 </div>
             </div>
 
-            <!-- Карточка 3 -->
+            <!-- Товар 3: Гарнитура (Рандомная категория 2) -->
             <div class="product-card">
                 <div class="product-img">
-                    <img src="Розовая мышка.jpg" alt="Розовая мышка">
+                    <img src="Розовая мышка.jpg" alt="Gaming Headset">
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Gaming Mouse Pro (Pink)</h3>
+                    <h3 class="product-title">Wireless Gaming Headset</h3>
                     <div>
                         <div class="product-price">1 999 ₴</div>
-                        <button class="buy-btn">В КОШИК</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Карточка 4 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="Главная фото для каталога.jpg" alt="Каталог">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Wireless Pad Pro</h3>
-                    <div>
-                        <div class="product-price">799 ₴</div>
                         <button class="buy-btn">В КОШИК</button>
                     </div>
                 </div>
@@ -347,5 +366,17 @@
 
     </div>
 
+    <script>
+        // Функция переключения фото и цены для мышки по цветам
+        function changeColor(color, imageName, price) {
+            document.getElementById('mouse-img').src = imageName;
+            document.getElementById('mouse-price').innerText = price;
+            
+            // Переключаем активную точку цвета
+            const dots = document.querySelectorAll('.color-dot');
+            dots.forEach(dot => dot.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
