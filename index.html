@@ -1,71 +1,55 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="space">
+<html lang="uk" data-theme="moon">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE — Precision Without Limits / MCHOSE A7 V2 PRO</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Space Theme (Default) */
-            --bg-primary: #04060b;
-            --bg-secondary: #0a0e17;
-            --bg-card: #0e1320;
-            --bg-card-hover: #141b2c;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --text-dim: #64748b;
-            --accent-blue: #00d2ff;
-            --accent-blue-glow: rgba(0, 210, 255, 0.25);
-            --accent-blue-subtle: rgba(0, 210, 255, 0.08);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(0, 210, 255, 0.4);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 210, 255, 0.15);
-            --glass-bg: rgba(10, 14, 23, 0.75);
-            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            /* 🌙 MOON THEME (Светлая лунная палитра) */
+            --bg-main: #F2F4F7;
+            --bg-card: #FFFFFF;
+            --bg-card-hover: #FAFBFC;
+            --text-main: #111318;
+            --text-muted: #64748B;
+            --accent: #0072FF;
+            --accent-glow: rgba(0, 114, 255, 0.15);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 114, 255, 0.4);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 40px rgba(0, 114, 255, 0.12);
         }
 
-        [data-theme="moon"] {
-            /* Moon Light Theme */
-            --bg-primary: #D8DBDF;
-            --bg-secondary: #C9CDD2;
-            --bg-card: #E2E5E9;
-            --bg-card-hover: #ECEFF3;
-            --text-main: #1e2530;
-            --text-muted: #4a5568;
-            --text-dim: #718096;
-            --accent-blue: #0076ff;
-            --accent-blue-glow: rgba(0, 118, 255, 0.2);
-            --accent-blue-subtle: rgba(0, 118, 255, 0.06);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(0, 118, 255, 0.35);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 118, 255, 0.12);
-            --glass-bg: rgba(216, 219, 223, 0.85);
+        [data-theme="sun"] {
+            /* ☀️ SUN / LIGHT ALTERNATIVE (Яркая чистая луна) */
+            --bg-main: #FFFFFF;
+            --bg-card: #F8FAFC;
+            --bg-card-hover: #F1F5F9;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --accent: #0284C7;
+            --accent-glow: rgba(2, 132, 199, 0.18);
+            --border-color: rgba(15, 23, 42, 0.08);
+            --border-hover: rgba(2, 132, 199, 0.4);
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 20px 40px rgba(2, 132, 199, 0.1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-primary);
+            background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
+            transition: background 0.4s ease, color 0.4s ease;
             overflow-x: hidden;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        /* Utility classes */
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
         }
 
         /* HEADER */
@@ -74,617 +58,402 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 72px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            height: 70px;
+            background: rgba(var(--bg-main), 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 40px;
+            padding: 0 5%;
             z-index: 1000;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            cursor: pointer;
+            gap: 10px;
             text-decoration: none;
             color: var(--text-main);
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
         }
 
-        /* Butterfly SVG Icon */
         .butterfly-icon {
-            width: 32px;
-            height: 32px;
-            filter: drop-shadow(0 0 8px var(--accent-blue-glow));
-            transition: var(--transition);
+            width: 24px;
+            height: 24px;
+            fill: var(--accent);
+            transition: transform 0.3s ease;
         }
 
-        .brand-name {
-            font-weight: 800;
-            font-size: 1.15rem;
-            letter-spacing: 0.12em;
+        .brand-logo:hover .butterfly-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
         }
 
         .icon-btn {
-            background: transparent;
+            background: none;
             border: none;
-            color: var(--text-main);
             cursor: pointer;
+            color: var(--text-main);
             position: relative;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
         }
 
         .icon-btn:hover {
-            background: var(--accent-blue-subtle);
-            color: var(--accent-blue);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .cart-badge {
             position: absolute;
             top: 6px;
             right: 6px;
-            background: var(--accent-blue);
+            background: var(--accent);
             color: #fff;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 0.65rem;
             width: 16px;
             height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Search Bar Header */
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px 8px 36px;
-            border-radius: 20px;
-            color: var(--text-main);
-            font-size: 0.85rem;
-            outline: none;
-            width: 200px;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            width: 260px;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            color: var(--text-dim);
-            font-size: 14px;
-        }
-
-        /* THEME TOGGLER */
-        .theme-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--text-main);
-            transition: var(--transition);
         }
 
-        .theme-toggle:hover {
-            border-color: var(--accent-blue);
-        }
-
-        /* MAIN CONTAINER */
-        main {
-            padding-top: 104px;
-            max-width: 1440px;
-            margin: 0 auto;
-            padding-left: 40px;
-            padding-right: 40px;
-            padding-bottom: 80px;
-        }
-
-        /* HERO SECTION */
-        .hero-section {
-            position: relative;
-            background: var(--bg-secondary);
+        /* THEME TOGGLER (Sun/Moon) */
+        .theme-switch {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 60px;
-            margin-bottom: 60px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            border-radius: 30px;
+            width: 56px;
+            height: 28px;
+            display: flex;
             align-items: center;
-            gap: 40px;
-            box-shadow: var(--shadow-card);
+            padding: 2px;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.3s;
         }
 
-        .hero-content {
-            z-index: 2;
+        .theme-switch:hover {
+            border-color: var(--accent);
         }
 
-        .tech-badge-sub {
+        .theme-switch-thumb {
+            width: 22px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
             font-size: 0.75rem;
-            letter-spacing: 0.25em;
-            color: var(--accent-blue);
-            font-weight: 700;
+        }
+
+        [data-theme="sun"] .theme-switch-thumb {
+            transform: translateX(28px);
+        }
+
+        /* MAIN LAYOUT & HERO */
+        main {
+            padding-top: 100px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 16px;
-            display: block;
+            margin-bottom: 10px;
         }
 
         .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 32px;
-            max-width: 480px;
-        }
-
-        .hero-specs-grid {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 36px;
-        }
-
-        .hero-spec-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero-spec-value {
-            font-size: 1.25rem;
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .hero-spec-label {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px 36px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--accent-blue-glow);
-            filter: brightness(1.1);
-        }
-
-        .hero-image-wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-product-img {
-            width: 100%;
-            max-width: 520px;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
-            transition: transform 0.5s ease;
-        }
-
-        .hero-section:hover .hero-product-img {
-            transform: scale(1.03) translateY(-5px);
-        }
-
-        /* FLOATING TECHNICAL LABELS AROUND HERO */
-        .tech-float-tag {
-            position: absolute;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            border: 1px dashed var(--border-color);
-            padding: 6px 12px;
-            border-radius: 6px;
-            pointer-events: none;
-            background: var(--glass-bg);
-            backdrop-filter: blur(4px);
-        }
-        .tag-1 { top: 10%; left: 5%; }
-        .tag-2 { bottom: 15%; left: 10%; }
-        .tag-3 { top: 20%; right: 10%; }
-
-        /* CATALOG SECTION */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            letter-spacing: -0.5px;
             margin-bottom: 30px;
         }
 
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-        }
-
+        /* CATALOG PRODUCT CARD */
         .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 60px;
         }
 
-        /* PREMIUM PRODUCT CARD (NO BLUE FLASH / CLEAN HOVER) */
         .product-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            padding: 24px;
+            width: 100%;
+            max-width: 440px;
+            padding: 30px;
             position: relative;
             cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            user-select: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow);
         }
 
         .product-card:hover {
             transform: translateY(-6px);
-            background: var(--bg-card-hover);
             border-color: var(--border-hover);
             box-shadow: var(--shadow-hover);
         }
 
-        .card-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .product-badge-sub {
-            font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
-
-        .fav-btn {
-            background: transparent;
+        .card-fav {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
             border: none;
             cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            color: var(--text-dim);
+            z-index: 10;
+            padding: 8px;
+            transition: transform 0.2s;
         }
 
-        .fav-btn:hover {
-            background: var(--accent-blue-subtle);
-            color: var(--accent-blue);
+        .card-fav svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--text-muted);
+            fill: none;
+            transition: all 0.3s ease;
         }
 
-        .fav-btn.active svg {
-            fill: var(--accent-blue);
-            stroke: var(--accent-blue);
-            filter: drop-shadow(0 0 6px var(--accent-blue));
+        .card-fav.active svg {
+            stroke: var(--accent);
+            fill: var(--accent);
+            filter: drop-shadow(0 0 8px var(--accent-glow));
         }
 
-        .product-img-container {
+        .card-fav:hover svg {
+            stroke: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .product-image-container {
             width: 100%;
-            height: 220px;
+            height: 260px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
         }
 
-        .product-card-img {
+        .product-image-container img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .product-card:hover .product-card-img {
+        .product-card:hover .product-image-container img {
             transform: scale(1.06);
         }
 
-        .product-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-grow: 1;
+        .product-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
         }
 
         .product-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-        }
-
-        .stock-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: #10b981;
+            font-size: 1.3rem;
             font-weight: 600;
+            margin-bottom: 12px;
         }
 
-        .stock-dot {
-            width: 6px;
-            height: 6px;
-            background: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
-        }
-
-        .card-bottom-row {
+        .product-status-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .in-stock {
+            font-size: 0.8rem;
+            color: #10B981;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .in-stock::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
         }
 
         .product-price {
             font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .btn-add-cart {
-            background: var(--accent-blue-subtle);
-            border: 1px solid var(--border-color);
-            color: var(--accent-blue);
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-size: 0.8rem;
             font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
         }
 
-        .btn-add-cart:hover {
-            background: var(--accent-blue);
-            color: #fff;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue-glow);
-        }
-
-        /* RECENTLY VIEWED */
-        .recently-viewed-section {
-            margin-top: 60px;
-            display: none;
-        }
-
-        .recently-viewed-section.visible {
-            display: block;
-        }
-
-        /* PRODUCT DETAIL PAGE / MODAL */
-        .product-detail-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .btn-primary {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 2000;
-            display: flex;
+            background: var(--text-main);
+            color: var(--bg-main);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        /* PRODUCT DETAILS PAGE (HIDDEN BY DEFAULT) */
+        .product-page {
+            display: none;
+            padding-bottom: 80px;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-catalog {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            transition: color 0.2s;
         }
 
-        .product-detail-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .back-catalog:hover {
+            color: var(--accent);
         }
 
-        .product-detail-modal {
-            background: var(--bg-secondary);
+        .product-details-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        @media(max-width: 900px) {
+            .product-details-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .gallery-main {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            width: 90%;
-            max-width: 1100px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 40px;
-            position: relative;
-            transform: scale(0.95) translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
-        }
-
-        .product-detail-overlay.active .product-detail-modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
+            height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition);
+            padding: 30px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
         }
 
-        .close-modal-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .product-detail-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .product-gallery-main {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .gallery-main-img {
+        .gallery-main img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             transition: opacity 0.3s ease;
         }
 
-        .thumbnails-row {
+        .thumbnails {
             display: flex;
             gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 4px;
         }
 
-        .thumb-item {
+        .thumb {
             width: 70px;
             height: 70px;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            padding: 6px;
-            transition: var(--transition);
-            flex-shrink: 0;
+            padding: 8px;
+            transition: all 0.2s;
         }
 
-        .thumb-item.active, .thumb-item:hover {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue-glow);
+        .thumb.active, .thumb:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .thumb-item img {
+        .thumb img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
         }
 
-        .product-detail-info {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .detail-title {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .detail-price {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-        }
-
         /* COLOR SWATCHES */
         .color-picker-section {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            margin: 25px 0;
         }
 
-        .color-picker-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
             text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
         }
 
-        .swatches-row {
+        .swatches {
             display: flex;
             gap: 16px;
+            align-items: center;
         }
 
         .swatch-item {
@@ -693,99 +462,48 @@
             align-items: center;
             gap: 6px;
             cursor: pointer;
-            background: transparent;
+            background: none;
             border: none;
         }
 
         .swatch-circle {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-            position: relative;
+            border: 2px solid transparent;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
         }
 
-        .swatch-circle.white { background: #f8fafc; }
-        .swatch-circle.black { background: #0f172a; border-color: #334155; }
-        .swatch-circle.pink { background: #f472b6; }
+        .swatch-circle.white { background: #FFFFFF; border-color: #E2E8F0; }
+        .swatch-circle.black { background: #1E293B; }
+        .swatch-circle.pink { background: #F472B6; }
 
         .swatch-item:hover .swatch-circle {
             transform: scale(1.1);
-            border-color: var(--accent-blue);
         }
 
         .swatch-item.active .swatch-circle {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue-glow);
-            transform: scale(1.08);
+            border-color: var(--accent);
+            transform: scale(1.12);
+            box-shadow: 0 0 12px var(--accent-glow);
         }
 
-        .swatch-name {
+        .swatch-label {
             font-size: 0.7rem;
-            font-weight: 600;
             color: var(--text-muted);
-            letter-spacing: 0.05em;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
-        .swatch-item.active .swatch-name {
-            color: var(--accent-blue);
-        }
-
-        .detail-actions-row {
-            display: flex;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .btn-add-cart-large {
-            flex-grow: 1;
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-add-cart-large:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-            box-shadow: 0 8px 30px var(--accent-blue-glow);
-        }
-
-        .btn-fav-large {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+        .swatch-item.active .swatch-label {
             color: var(--text-main);
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
+            font-weight: 600;
         }
 
-        .btn-fav-large:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        /* ACCORDIONS FOR SPECS / DESC */
+        /* ACCORDIONS FOR SPECS/DESCRIPTION */
         .accordion-group {
-            border-top: 1px solid var(--border-color);
             margin-top: 30px;
+            border-top: 1px solid var(--border-color);
         }
 
         .accordion-item {
@@ -794,412 +512,52 @@
 
         .accordion-header {
             width: 100%;
-            background: transparent;
+            background: none;
             border: none;
-            padding: 18px 0;
+            padding: 16px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             font-size: 0.95rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-main);
             text-align: left;
-            transition: var(--transition);
-        }
-
-        .accordion-header:hover {
-            color: var(--accent-blue);
-        }
-
-        .accordion-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-item.active .accordion-icon {
-            transform: rotate(45deg);
         }
 
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
+            transition: max-height 0.3s ease;
             font-size: 0.85rem;
+            color: var(--text-muted);
             line-height: 1.6;
-            color: var(--text-muted);
+            padding-bottom: 0;
         }
 
-        .accordion-item.active .accordion-content {
-            max-height: 300px;
-            padding-bottom: 18px;
-        }
-
-        /* CART & CHECKOUT SLIDER DRAWER */
-        .cart-drawer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 3000;
-            display: flex;
-            justify-content: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .cart-drawer-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .cart-drawer {
-            background: var(--bg-secondary);
-            border-left: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 440px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 30px;
-        }
-
-        .cart-drawer-overlay.active .cart-drawer {
-            transform: translateX(0);
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+        .accordion-item.open .accordion-content {
+            max-height: 200px;
             padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        .cart-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-        }
-
-        .cart-items-list {
-            flex-grow: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding-right: 4px;
-        }
-
-        .cart-item-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .cart-item-img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            background: var(--bg-primary);
-            border-radius: 8px;
-            padding: 4px;
-        }
-
-        .cart-item-info {
-            flex-grow: 1;
-        }
-
-        .cart-item-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .cart-item-meta {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 6px;
-        }
-
-        .cart-item-price {
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-        }
-
-        .cart-item-remove {
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .cart-item-remove:hover {
-            color: #ef4444;
-        }
-
-        .cart-footer {
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-            margin-top: 20px;
-        }
-
-        .cart-total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
-        .btn-checkout {
-            width: 100%;
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-        }
-
-        .btn-checkout:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-        }
-
-        /* CHECKOUT MODAL & ORDER TIMELINE */
-        .checkout-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 4000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .checkout-modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .checkout-modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 540px;
-            padding: 40px;
-            position: relative;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
-
-        .form-input {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 10px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .form-input:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px var(--accent-blue-glow);
-        }
-
-        /* ORDER SUCCESS / TIMELINE */
-        .order-success-box {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .order-id-badge {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--accent-blue-subtle);
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 1rem;
-            display: inline-block;
-            margin: 0 auto;
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 20px;
-            text-align: left;
-            position: relative;
-            padding-left: 20px;
-            border-left: 2px solid var(--border-color);
-        }
-
-        .timeline-step {
-            position: relative;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .timeline-step.active {
-            color: var(--text-main);
-            font-weight: 700;
-        }
-
-        .timeline-step.active::before {
-            content: '';
-            position: absolute;
-            left: -25px;
-            top: 4px;
-            width: 8px;
-            height: 8px;
-            background: var(--accent-blue);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-blue);
-        }
-
-        /* MOBILE BOTTOM NAVIGATION / MENU */
-        .mobile-nav-drawer {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 280px;
-            height: 100%;
-            background: var(--bg-secondary);
-            border-left: 1px solid var(--border-color);
-            z-index: 3500;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mobile-nav-drawer.active {
-            transform: translateX(0);
-        }
-
-        .mobile-menu-link {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .mobile-menu-link:hover {
-            color: var(--accent-blue);
-        }
-
-        /* RESPONSIVE DESIGN FOR TELEPHONE */
-        @media (max-width: 768px) {
+        /* RESPONSIVE ADAPTATION FOR PHONES */
+        @media(max-width: 600px) {
             header {
-                padding: 0 20px;
-                height: 64px;
+                padding: 0 4%;
+                height: 60px;
             }
-
             main {
-                padding-top: 84px;
-                padding-left: 16px;
-                padding-right: 16px;
+                padding-top: 80px;
             }
-
-            .hero-section {
-                grid-template-columns: 1fr;
-                padding: 30px 20px;
-                text-align: center;
-                gap: 20px;
-            }
-
-            .hero-title {
-                font-size: 2.2rem;
-            }
-
-            .hero-desc {
-                margin: 0 auto 24px auto;
-                font-size: 0.95rem;
-            }
-
-            .hero-specs-grid {
-                justify-content: center;
-            }
-
-            .search-container {
-                display: none; /* Handled via separate mobile search or hidden to keep header minimal */
-            }
-
-            .catalog-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .product-detail-modal {
-                width: 95%;
+            .product-card {
                 padding: 20px;
-                max-height: 95vh;
             }
-
-            .product-detail-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            .product-image-container {
+                height: 220px;
             }
-
-            .product-gallery-main {
+            .gallery-main {
                 height: 280px;
-            }
-
-            .detail-title {
-                font-size: 1.5rem;
-            }
-
-            .detail-price {
-                font-size: 1.4rem;
+                padding: 15px;
             }
         }
     </style>
@@ -1208,590 +566,217 @@
 
     <!-- HEADER -->
     <header>
-        <a class="brand-logo" href="#" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-            <!-- Geometric Tech Butterfly + Orbit + M -->
-            <svg class="butterfly-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 50L20 20M50 50L80 20M50 50L20 80M50 50L80 80" stroke="var(--accent-blue)" stroke-width="3" stroke-linecap="round"/>
-                <path d="M20 20C10 35 15 65 35 75L50 50L35 25C25 22 21 20 20 20Z" fill="var(--accent-blue-subtle)" stroke="var(--accent-blue)" stroke-width="2"/>
-                <path d="M80 20C90 35 85 65 65 75L50 50L65 25C75 22 79 20 80 20Z" fill="var(--accent-blue-subtle)" stroke="var(--accent-blue)" stroke-width="2"/>
-                <circle cx="50" cy="50" r="6" fill="var(--accent-blue)"/>
+        <a href="#" class="brand-logo" onclick="showCatalog()">
+            <svg class="butterfly-icon" viewBox="0 0 24 24">
+                <path d="M12 2L15 8L21 6L17 12L21 18L15 16L12 22L9 16L3 18L7 12L3 6L9 8L12 2Z"/>
             </svg>
-            <span class="brand-name">MILIPSTORE</span>
+            MILIPSTORE
         </a>
-
         <div class="header-actions">
-            <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" id="searchInput" placeholder="Пошук (A7 V2)..." oninput="filterProducts(this.value)">
-            </div>
-
-            <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Змінити тему">
-                <span id="themeIcon">🌌</span>
-                <span id="themeText" class="mono">SPACE</span>
-            </button>
-
-            <button class="icon-btn" onclick="openFavorites()" title="Обране">
-                ♡
-            </button>
-
-            <button class="icon-btn" onclick="openCart()" title="Кошик">
+            <button class="icon-btn" title="Вибране" id="favHeaderBtn">♡</button>
+            <button class="icon-btn" title="Кошик" id="cartHeaderBtn">
                 🛒
-                <span class="cart-badge" id="cartBadge">0</span>
+                <span class="cart-badge" id="cartCount">0</span>
             </button>
-
-            <button class="icon-btn" onclick="toggleMobileMenu()" title="Меню">
-                ☰
-            </button>
+            <div class="theme-switch" id="themeSwitch" title="Змінити тему (Луна / Сонце)">
+                <div class="theme-switch-thumb" id="themeThumb">🌙</div>
+            </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
     <main>
-        <!-- HERO SECTION -->
-        <section class="hero-section">
-            <div class="tech-float-tag tag-1 mono">PAW3395 • SENSOR</div>
-            <div class="tech-float-tag tag-2 mono">49G • ULTRA-LIGHT</div>
-            <div class="tech-float-tag tag-3 mono">WIRELESS 8K</div>
+        <!-- CATALOG VIEW -->
+        <div id="catalogView">
+            <section class="hero-section">
+                <p class="hero-subtitle">MILIP / PC DEVICES / 001</p>
+                <h1 class="hero-title">PRECISION WITHOUT LIMITS</h1>
+            </section>
 
-            <div class="hero-content">
-                <span class="tech-badge-sub mono">MILIP / 001 • PC DEVICES</span>
-                <h1 class="hero-title">MCHOSE<br>A7 V2 PRO</h1>
-                <p class="hero-desc">Прецизійна бездротова ігрова миша найвищого рівня. Створена для абсолютного контролю без компромісів та зайвого ігрового дизайну.</p>
-                <div class="hero-specs-grid">
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">8K Hz</span>
-                        <span class="hero-spec-label">Polling Rate</span>
-                    </div>
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">26000 DPI</span>
-                        <span class="hero-spec-label">Precision</span>
-                    </div>
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">49g</span>
-                        <span class="hero-spec-label">Weight</span>
-                    </div>
-                </div>
-                <button class="btn-primary" onclick="openProductDetail('mchose-a7-v2')">
-                    ОБРАТИ КОЛІР ТА КУПИТИ
-                </button>
-            </div>
-
-            <div class="hero-image-wrapper">
-                <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" alt="MCHOSE A7 V2 PRO" class="hero-product-img" id="heroImg">
-            </div>
-        </section>
-
-        <!-- CATALOG SECTION -->
-        <div class="section-header">
-            <h2 class="section-title">Каталог обладнання</h2>
-            <span class="mono" style="color: var(--text-dim); font-size: 0.85rem;">EXCLUSIVELY MCHOSE / 001</span>
-        </div>
-
-        <div class="catalog-grid" id="catalogGrid">
-            <!-- MCHOSE A7 V2 PRO Product Card -->
-            <div class="product-card" onclick="openProductDetail('mchose-a7-v2')">
-                <div class="card-top-row">
-                    <span class="product-badge-sub mono">MILIP / 001</span>
-                    <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('mchose-a7-v2', this);" title="В обране">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <div class="catalog-grid">
+                <div class="product-card" onclick="openProductPage()">
+                    <button class="card-fav" onclick="event.stopPropagation(); toggleFavorite(this)">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
                     </button>
-                </div>
-                <div class="product-img-container">
-                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=600&auto=format&fit=crop" alt="MCHOSE A7 V2 PRO" class="product-card-img" id="cardImgMain">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">MCHOSE A7 V2 PRO</h3>
-                    <div class="stock-status">
-                        <span class="stock-dot"></span> В наявності
+                    <div class="product-image-container">
+                        <img id="cardImage" src="https://mchose.store/cdn/shop/files/A7V2PRO_white_1.png" alt="MCHOSE A7 V2 PRO">
                     </div>
-                </div>
-                <div class="card-bottom-row">
-                    <span class="product-price mono">2 449 ₴</span>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart('mchose-a7-v2')">ДОДАТИ</button>
+                    <div class="product-meta">MILIP / 001</div>
+                    <div class="product-name">MCHOSE A7 V2 PRO</div>
+                    <div class="product-status-row">
+                        <span class="in-stock">В наявності</span>
+                        <span class="product-price">2 449 ₴</span>
+                    </div>
+                    <button class="btn-primary" onclick="event.stopPropagation(); addToCart()">ДОДАТИ В КОШИК</button>
                 </div>
             </div>
         </div>
 
-        <!-- RECENTLY VIEWED SECTION -->
-        <div class="recently-viewed-section" id="recentlyViewedSection">
-            <div class="section-header" style="margin-top: 40px;">
-                <h3 style="font-size: 1.25rem; font-weight: 700;">Нещодавно переглянуті</h3>
-            </div>
-            <div class="catalog-grid" id="recentlyViewedGrid"></div>
-        </div>
-    </main>
-
-    <!-- PRODUCT DETAIL MODAL -->
-    <div class="product-detail-overlay" id="productModalOverlay" onclick="closeProductDetail(event)">
-        <div class="product-detail-modal" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeProductDetailModal()">✕</button>
+        <!-- PRODUCT PAGE VIEW -->
+        <div id="productPageView" class="product-page">
+            <button class="back-catalog" onclick="showCatalog()">← Назад до каталогу</button>
             
-            <div class="product-detail-grid">
+            <div class="product-details-grid">
+                <!-- Gallery Section -->
                 <div>
-                    <div class="product-gallery-main">
-                        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" alt="MCHOSE A7 V2 PRO" class="gallery-main-img" id="modalMainImg">
+                    <div class="gallery-main">
+                        <img id="mainProductImg" src="https://mchose.store/cdn/shop/files/A7V2PRO_white_1.png" alt="MCHOSE A7 V2 PRO">
                     </div>
-                    <div class="thumbnails-row" id="thumbnailsRow">
-                        <div class="thumb-item active" onclick="switchImage(0, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop')">
-                            <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=200&auto=format&fit=crop" alt="Angle 1">
+                    <div class="thumbnails">
+                        <div class="thumb active" onclick="changeImage(this, 'https://mchose.store/cdn/shop/files/A7V2PRO_white_1.png')">
+                            <img src="https://mchose.store/cdn/shop/files/A7V2PRO_white_1.png" alt="">
                         </div>
-                        <div class="thumb-item" onclick="switchImage(1, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop')">
-                            <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=200&auto=format&fit=crop" alt="Angle 2">
-                        </div>
-                        <div class="thumb-item" onclick="switchImage(2, 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800&auto=format&fit=crop')">
-                            <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=200&auto=format&fit=crop" alt="Angle 3">
+                        <div class="thumb" onclick="changeImage(this, 'https://mchose.store/cdn/shop/files/A7V2PRO_white_2.png')">
+                            <img src="https://mchose.store/cdn/shop/files/A7V2PRO_white_2.png" alt="">
                         </div>
                     </div>
                 </div>
 
-                <div class="product-detail-info">
-                    <div>
-                        <span class="tech-badge-sub mono">MILIP / 001</span>
-                        <h2 class="detail-title">MCHOSE A7 V2 PRO</h2>
-                        <div class="stock-status" style="margin-top: 6px;">
-                            <span class="stock-dot"></span> В наявності • Готовий до відправки
-                        </div>
+                <!-- Info Section -->
+                <div>
+                    <div class="product-meta">MILIP / 001</div>
+                    <h1 class="product-name" style="font-size: 2rem; margin-bottom: 15px;">MCHOSE A7 V2 PRO</h1>
+                    <div class="product-status-row" style="margin-bottom: 20px;">
+                        <span class="in-stock">В наявності</span>
+                        <span class="product-price" style="font-size: 1.6rem;">2 449 ₴</span>
                     </div>
 
-                    <div class="detail-price mono">2 449 ₴</div>
-
-                    <!-- COLOR SWATCHES -->
+                    <!-- COLOR PICKER -->
                     <div class="color-picker-section">
-                        <span class="color-picker-label">КОЛІР: <span id="selectedColorName" class="mono" style="color:var(--text-main);">WHITE</span></span>
-                        <div class="swatches-row">
-                            <button class="swatch-item active" onclick="selectColor('White', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop', this)">
+                        <span class="section-label">Колір: <strong id="selectedColorName" style="color:var(--text-main)">White</strong></span>
+                        <div class="swatches">
+                            <button class="swatch-item active" onclick="selectColor('white', 'White', 'https://mchose.store/cdn/shop/files/A7V2PRO_white_1.png')">
                                 <div class="swatch-circle white"></div>
-                                <span class="swatch-name">White</span>
+                                <span class="swatch-label">White</span>
                             </button>
-                            <button class="swatch-item" onclick="selectColor('Black', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop', this)">
+                            <button class="swatch-item" onclick="selectColor('black', 'Black', 'https://mchose.store/cdn/shop/files/A7V2PRO_black_1.png')">
                                 <div class="swatch-circle black"></div>
-                                <span class="swatch-name">Black</span>
+                                <span class="swatch-label">Black</span>
                             </button>
-                            <button class="swatch-item" onclick="selectColor('Pink', 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800&auto=format&fit=crop', this)">
+                            <button class="swatch-item" onclick="selectColor('pink', 'Pink', 'https://mchose.store/cdn/shop/files/A7V2PRO_pink_1.png')">
                                 <div class="swatch-circle pink"></div>
-                                <span class="swatch-name">Pink</span>
+                                <span class="swatch-label">Pink</span>
                             </button>
                         </div>
                     </div>
 
-                    <div class="detail-actions-row">
-                        <button class="btn-add-cart-large" onclick="addToCartFromModal()">
-                            ДОДАТИ В КОШИК
-                        </button>
-                        <button class="btn-fav-large" onclick="toggleFavorite('mchose-a7-v2', this)" title="В обране">
-                            ♡
-                        </button>
-                    </div>
+                    <button class="btn-primary" style="margin-top: 20px;" onclick="addToCart()">ДОДАТИ В КОШИК</button>
 
                     <!-- ACCORDIONS -->
                     <div class="accordion-group">
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                Опис <span class="accordion-icon">+</span>
-                            </button>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Опис <span>+</span></button>
                             <div class="accordion-content">
-                                Флагманська ігрова миша MCHOSE A7 V2 PRO створена із застосуванням передових матеріалів корпусу. Неперевершена точність сенсора PAW3395 та підтримка справжньої частоти опитування 8K забезпечують миттєвий відгук у кіберспорті.
+                                Флагманська ігрова мишка MCHOSE A7 V2 PRO створена для максимальної точності та швидкості реагування. Ультралегкий корпус та бездоганний сенсор PAW3395 забезпечують професійний рівень геймінгу.
                             </div>
                         </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                Характеристики <span class="accordion-icon">+</span>
-                            </button>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Характеристики <span>+</span></button>
                             <div class="accordion-content">
-                                • Сенсор: PixArt PAW3395 (до 26000 DPI)<br>
-                                • Частота опитування: До 8000 Hz Wireless<br>
-                                • Вага: 49 грамів<br>
-                                • Перемикачі: Optical Micro-switches<br>
-                                • Автономність: До 100 годин
+                                Сенсор: PAW3395 • Частота опитування: 8K • Вага: 49г • Підключення: Wireless / Type-C • Доступні кольори: White, Black, Pink.
                             </div>
                         </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                Комплект <span class="accordion-icon">+</span>
-                            </button>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Комплект <span>+</span></button>
                             <div class="accordion-content">
-                                Миша MCHOSE A7 V2 PRO, бездротовий 8K приймач (dongle), кабель USB-C в нейлоновому обплетенні, комплект тефлонових ніжок (PTFE), інструкція.
+                                Мишка MCHOSE A7 V2 PRO, 8K ресивер, кабель USB Type-C в омега-плетенні, гайд користувача, фірмовий стікерпак MILIP.
                             </div>
                         </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                Доставка та гарантія <span class="accordion-icon">+</span>
-                            </button>
+                        <div class="accordion-item">
+                            <button class="accordion-header" onclick="toggleAccordion(this)">Доставка та гарантія <span>+</span></button>
                             <div class="accordion-content">
-                                Доставка Новою Поштою по Україні за 1-2 дні. Оплата при отриманні або через Telegram Bot. Офіційна гарантія MILIPSTORE — 12 місяців.
+                                Швидка доставка Новою Поштою по Україні (1-2 дні). Оплата при отриманні або через Telegram-бота @payments_jobbot. Офіційна гарантія 12 місяців.
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- CART DRAWER -->
-    <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCart(event)">
-        <div class="cart-drawer" onclick="event.stopPropagation()">
-            <div class="cart-header">
-                <h3 class="cart-title">Кошик</h3>
-                <button class="icon-btn" onclick="closeCart()">✕</button>
-            </div>
-            <div class="cart-items-list" id="cartItemsList">
-                <!-- Dynamically populated -->
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total-row">
-                    <span>Разом:</span>
-                    <span class="mono" id="cartTotalPrice">0 ₴</span>
                 </div>
-                <button class="btn-checkout" onclick="openCheckout()">ПЕРЕЙТИ ДО ОФОРМЛЕННЯ</button>
             </div>
         </div>
-    </div>
-
-    <!-- CHECKOUT MODAL -->
-    <div class="checkout-modal-overlay" id="checkoutModalOverlay">
-        <div class="checkout-modal" id="checkoutModalContent">
-            <button class="close-modal-btn" onclick="closeCheckout()">✕</button>
-            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 24px;">Оформлення замовлення</h3>
-            
-            <form id="checkoutForm" onsubmit="submitOrder(event)">
-                <div class="form-group">
-                    <label class="form-label">Ім'я та Прізвище</label>
-                    <input type="text" class="form-input" required placeholder="Олександр Шевченко" id="orderName">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Телефон</label>
-                    <input type="tel" class="form-input" required placeholder="+380 XX XXX XX XX" id="orderPhone">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Місто / Відділення Нової Пошти</label>
-                    <input type="text" class="form-input" required placeholder="Київ, відд. №1" id="orderAddress">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Спосіб оплати</label>
-                    <select class="form-input" id="orderPayment">
-                        <option value="telegram">Telegram Bot (@payments_jobbot)</option>
-                        <option value="card">Картка онлайн (Visa / Mastercard)</option>
-                        <option value="cod">Післяплата (НП)</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">ПІДТВЕРДИТИ ЗАМОВЛЕННЯ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MOBILE MENU DRAWER -->
-    <div class="mobile-nav-drawer" id="mobileNavDrawer">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <span class="brand-name">MENU</span>
-            <button class="icon-btn" onclick="toggleMobileMenu()">✕</button>
-        </div>
-        <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu()">Головна</a>
-        <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu(); openProductDetail('mchose-a7-v2')">MCHOSE A7 V2 PRO</a>
-        <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu(); openFavorites()">Обране</a>
-        <a href="#" class="mobile-menu-link" onclick="toggleMobileMenu(); openCart()">Кошик</a>
-        <div style="margin-top: auto; font-size: 0.75rem; color: var(--text-dim);" class="mono">MILIPSTORE // 2026</div>
-    </div>
+    </main>
 
     <script>
-        // State Management
-        let currentTheme = 'space';
-        let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
-        let favorites = JSON.parse(localStorage.getItem('milip_fav')) || [];
-        let selectedColor = 'White';
-        let currentImage = 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop';
-        let recentlyViewed = JSON.parse(localStorage.getItem('milip_recent')) || [];
+        // THEME SWITCHER LOGIC (Moon / Sun)
+        const themeSwitch = document.getElementById('themeSwitch');
+        const themeThumb = document.getElementById('themeThumb');
+        const htmlElement = document.documentElement;
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCartUI();
-            renderRecentlyViewed();
+        themeSwitch.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'moon') {
+                htmlElement.setAttribute('data-theme', 'sun');
+                themeThumb.textContent = '☀️';
+            } else {
+                htmlElement.setAttribute('data-theme', 'moon');
+                themeThumb.textContent = '🌙';
+            }
         });
 
-        // Theme Switcher MOON <-> SPACE
-        function toggleTheme() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('themeIcon');
-            const themeText = document.getElementById('themeText');
-
-            if (currentTheme === 'space') {
-                currentTheme = 'moon';
-                html.setAttribute('data-theme', 'moon');
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'MOON';
-            } else {
-                currentTheme = 'space';
-                html.setAttribute('data-theme', 'space');
-                themeIcon.textContent = '🌌';
-                themeText.textContent = 'SPACE';
-            }
+        // NAVIGATION LOGIC
+        function openProductPage() {
+            document.getElementById('catalogView').style.display = 'none';
+            document.getElementById('productPageView').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Product Detail Modal
-        function openProductDetail(productId) {
-            const overlay = document.getElementById('productModalOverlay');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Add to recently viewed
-            if (!recentlyViewed.includes(productId)) {
-                recentlyViewed.unshift(productId);
-                if (recentlyViewed.length > 3) recentlyViewed.pop();
-                localStorage.setItem('milip_recent', JSON.stringify(recentlyViewed));
-                renderRecentlyViewed();
-            }
+        function showCatalog() {
+            document.getElementById('productPageView').style.display = 'none';
+            document.getElementById('catalogView').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function closeProductDetailModal() {
-            const overlay = document.getElementById('productModalOverlay');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function closeProductDetail(e) {
-            if (e.target.id === 'productModalOverlay') {
-                closeProductDetailModal();
-            }
-        }
-
-        // Color Swatches Selection
-        function selectColor(colorName, imgUrl, btnElement) {
-            selectedColor = colorName;
-            document.getElementById('selectedColorName').textContent = colorName.toUpperCase();
-            
-            // Update active swatch
-            const swatches = document.querySelectorAll('.swatch-item');
-            swatches.forEach(s => s.classList.remove('active'));
-            btnElement.classList.add('active');
-
-            // Switch image smoothly
-            currentImage = imgUrl;
-            const mainImg = document.getElementById('modalMainImg');
-            mainImg.style.opacity = 0;
-            setTimeout(() => {
-                mainImg.src = imgUrl;
-                mainImg.style.opacity = 1;
-            }, 150);
-        }
-
-        // Thumbnails Switch
-        function switchImage(index, imgUrl) {
-            currentImage = imgUrl;
-            const mainImg = document.getElementById('modalMainImg');
-            mainImg.style.opacity = 0;
-            setTimeout(() => {
-                mainImg.src = imgUrl;
-                mainImg.style.opacity = 1;
-            }, 150);
-
-            const thumbs = document.querySelectorAll('.thumb-item');
-            thumbs.forEach((t, i) => {
-                if (i === index) t.classList.add('active');
-                else t.classList.remove('active');
-            });
-        }
-
-        // Accordion functionality
-        function toggleAccordion(item) {
-            const wasActive = item.classList.contains('active');
-            document.querySelectorAll('.accordion-item').forEach(acc => acc.classList.remove('active'));
-            if (!wasActive) {
-                item.classList.add('active');
-            }
-        }
-
-        // Cart Management
-        function quickAddToCart(productId) {
-            addToCart(productId, selectedColor, 2449, currentImage);
-        }
-
-        function addToCartFromModal() {
-            addToCart('mchose-a7-v2', selectedColor, 2449, currentImage);
-            closeProductDetailModal();
-            openCart();
-        }
-
-        function addToCart(id, color, price, img) {
-            const existingItem = cart.find(item => item.id === id && item.color === color);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({
-                    id: id,
-                    name: 'MCHOSE A7 V2 PRO',
-                    color: color,
-                    price: price,
-                    img: img,
-                    qty: 1
-                });
-            }
-            localStorage.setItem('milip_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('milip_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const badge = document.getElementById('cartBadge');
-            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-            badge.textContent = totalItems;
-
-            const listContainer = document.getElementById('cartItemsList');
-            const totalPriceEl = document.getElementById('cartTotalPrice');
-
-            if (cart.length === 0) {
-                listContainer.innerHTML = '<div style="color:var(--text-dim); text-align:center; padding: 40px 0; font-size:0.9rem;">Кошик порожній</div>';
-                totalPriceEl.textContent = '0 ₴';
-                return;
-            }
-
-            let html = '';
-            let totalSum = 0;
-
-            cart.forEach((item, index) => {
-                totalSum += item.price * item.qty;
-                html += `
-                    <div class="cart-item-card">
-                        <img src="${item.img}" alt="${item.name}" class="cart-item-img">
-                        <div class="cart-item-info">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-meta mono">Колір: ${item.color} | Кількість: ${item.qty}</div>
-                            <div class="cart-item-price mono">${item.price * item.qty} ₴</div>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeFromCart(${index})">✕</button>
-                    </div>
-                `;
-            });
-
-            listContainer.innerHTML = html;
-            totalPriceEl.textContent = totalSum.toLocaleString() + ' ₴';
-        }
-
-        function openCart() {
-            document.getElementById('cartDrawerOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeCart(e) {
-            if (!e || e.target.id === 'cartDrawerOverlay' || e.target.classList.contains('icon-btn')) {
-                document.getElementById('cartDrawerOverlay').classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Favorites Management
-        function toggleFavorite(id, btn) {
+        // FAVORITE TOGGLE
+        function toggleFavorite(btn) {
             btn.classList.toggle('active');
-            const index = favorites.indexOf(id);
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(id);
-            }
-            localStorage.setItem('milip_fav', JSON.stringify(favorites));
         }
 
-        function openFavorites() {
-            alert(favorites.length > 0 ? 'У вашому обраному: MCHOSE A7 V2 PRO' : 'Список обраного порожній');
+        // CART COUNTER
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').textContent = cartCount;
+            // Анимация добавления (микро-отклик)
+            const cartBtn = document.getElementById('cartHeaderBtn');
+            cartBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => { cartBtn.style.transform = 'scale(1)'; }, 200);
         }
 
-        // Recently Viewed Render
-        function renderRecentlyViewed() {
-            const section = document.getElementById('recentlyViewedSection');
-            const grid = document.getElementById('recentlyViewedGrid');
-
-            if (recentlyViewed.length === 0) {
-                section.classList.remove('visible');
-                return;
-            }
-
-            section.classList.add('visible');
-            grid.innerHTML = `
-                <div class="product-card" onclick="openProductDetail('mchose-a7-v2')">
-                    <div class="card-top-row">
-                        <span class="product-badge-sub mono">MILIP / 001</span>
-                        <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('mchose-a7-v2', this)">♡</button>
-                    </div>
-                    <div class="product-img-container">
-                        <img src="${currentImage}" alt="MCHOSE A7 V2 PRO" class="product-card-img">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">MCHOSE A7 V2 PRO</h3>
-                        <div class="stock-status"><span class="stock-dot"></span> В наявності</div>
-                    </div>
-                    <div class="card-bottom-row">
-                        <span class="product-price mono">2 449 ₴</span>
-                        <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart('mchose-a7-v2')">ДОДАТИ</button>
-                    </div>
-                </div>
-            `;
+        // COLOR SELECTOR LOGIC
+        function selectColor(colorKey, colorName, imgSrc) {
+            document.querySelectorAll('.swatch-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById('selectedColorName').textContent = colorName;
+            
+            // Плавная смена изображения
+            const mainImg = document.getElementById('mainProductImg');
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = imgSrc;
+                mainImg.style.opacity = '1';
+            }, 150);
         }
 
-        // Checkout & Order Timeline Simulation
-        function openCheckout() {
-            if (cart.length === 0) {
-                alert('Додайте товари до кошика!');
-                return;
-            }
-            closeCart();
-            document.getElementById('checkoutModalOverlay').classList.add('active');
+        // THUMBNAIL SWITCHER
+        function changeImage(thumbElement, src) {
+            document.querySelectorAll('.thumb').forEach(el => el.classList.remove('active'));
+            thumbElement.classList.add('active');
+            const mainImg = document.getElementById('mainProductImg');
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = src;
+                mainImg.style.opacity = '1';
+            }, 150);
         }
 
-        function closeCheckout() {
-            document.getElementById('checkoutModalOverlay').classList.remove('active');
-        }
-
-        function submitOrder(e) {
-            e.preventDefault();
-            const orderId = 'MS / ' + Math.floor(1000 + Math.random() * 9000);
-            const name = document.getElementById('orderName').value;
-            const paymentType = document.getElementById('orderPayment').value;
-
-            // Clear cart
-            cart = [];
-            localStorage.removeItem('milip_cart');
-            updateCartUI();
-
-            const modalContent = document.getElementById('checkoutModalContent');
-            modalContent.innerHTML = `
-                <div class="order-success-box">
-                    <div style="font-size: 2.5rem; margin-bottom: 10px;">✨</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 800;">Замовлення успішно створено!</h3>
-                    <p style="color:var(--text-muted); font-size:0.9rem;">Дякуємо, ${name}. Ваше замовлення прийняте в обробку.</p>
-                    <div class="order-id-badge">${orderId}</div>
-                    
-                    <div class="timeline">
-                        <div class="timeline-step active">Замовлення зареєстровано в системі MILIP</div>
-                        <div class="timeline-step">Підготовка та тестування 8K сенсора</div>
-                        <div class="timeline-step">Передано службі доставки (Нова Пошта)</div>
-                    </div>
-
-                    ${paymentType === 'telegram' ? '<p style="font-size:0.8rem; color:var(--accent-blue); margin-top:10px;" class="mono">Перенаправлення у @payments_jobbot...</p>' : ''}
-
-                    <button class="btn-primary" style="width:100%; justify-content:center; margin-top:20px;" onclick="closeCheckout()">ПОВЕРНУТИСЯ НА ГОЛОВНУ</button>
-                </div>
-            `;
-        }
-
-        // Mobile Menu Drawer
-        function toggleMobileMenu() {
-            const drawer = document.getElementById('mobileNavDrawer');
-            drawer.classList.toggle('active');
-        }
-
-        // Search Filter (stub for catalog)
-        function filterProducts(query) {
-            const q = query.toLowerCase();
-            const card = document.querySelector('.product-card');
-            if (card) {
-                if ('mchose a7 v2 pro'.includes(q) || q === '') {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+        // ACCORDION LOGIC
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('open'));
+            if (!isOpen) {
+                item.classList.add('open');
             }
         }
     </script>
