@@ -1,15 +1,11 @@
-Да. Ниже даю **цельный готовый HTML**, уже на основе твоего кода. Я сохранил существующую структуру и дизайн, а изменил только то, что ты просил: стартовую бабочку, её траекторию, движение крыльев, кружение вокруг логотипа, зависание возле `M`, вылет в левый верхний угол и поведение клика по логотипу.
-
-Просто замени свой текущий файл этим кодом:
-
-```html
 <!DOCTYPE html>
 <html lang="uk" class="scroll-smooth" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="metaTitle">MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
-    <meta name="description" content="Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом у MILIPSTORE.">
+
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO</title>
+    <meta name="description" content="MILIPSTORE — ігрова периферія та MCHOSE A7 V2 PRO.">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -31,15 +27,23 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                        sans: [
+                            'Inter',
+                            '-apple-system',
+                            'BlinkMacSystemFont',
+                            'Segoe UI',
+                            'Roboto',
+                            'sans-serif'
+                        ]
                     }
                 }
             }
-        }
+        };
     </script>
 
     <style>
-        html, body {
+        html,
+        body {
             width: 100%;
             max-width: 100vw;
             overflow-x: hidden !important;
@@ -48,23 +52,34 @@
             box-sizing: border-box;
         }
 
-        *, *:before, *:after {
+        *,
+        *::before,
+        *::after {
             box-sizing: inherit;
         }
 
-        img, video, picture, svg {
+        img,
+        video,
+        picture,
+        svg {
             max-width: 100%;
             height: auto;
             object-fit: contain;
         }
 
-        body, header, div, button, input, select, section {
+        body,
+        header,
+        div,
+        button,
+        input,
+        select,
+        section {
             transition:
-                background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                color 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease,
-                transform 0.25s ease;
+                background-color .35s cubic-bezier(.16, 1, .3, 1),
+                color .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease,
+                transform .25s ease;
         }
 
         * {
@@ -81,14 +96,18 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(0, 194, 255, 0.4);
+            background: rgba(0, 194, 255, .4);
             border-radius: 3px;
         }
+
+        /* =========================================================
+           BASIC ANIMATIONS
+        ========================================================= */
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(8px) scale(0.98);
+                transform: translateY(8px) scale(.98);
             }
 
             to {
@@ -100,7 +119,7 @@
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
-                transform: scale(0.95) translateY(10px);
+                transform: scale(.95) translateY(10px);
             }
 
             to {
@@ -124,12 +143,16 @@
         }
 
         .animate-fade-in {
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeIn .4s cubic-bezier(.16, 1, .3, 1) forwards;
         }
 
         .animate-modal {
-            animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: modalFadeIn .3s cubic-bezier(.16, 1, .3, 1) forwards;
         }
+
+        /* =========================================================
+           FAVORITE
+        ========================================================= */
 
         .wishlist-btn.active svg,
         .favorite-icon.active svg,
@@ -139,29 +162,27 @@
             stroke: #FF3B30 !important;
             color: #FF3B30 !important;
             transform: scale(1.12);
-            filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.35));
-            animation: heartPulse 0.3s ease-in-out;
+            filter: drop-shadow(0 0 6px rgba(255, 59, 48, .35));
+            animation: heartPulse .3s ease-in-out;
         }
 
-        /* =====================================================
-           INTRO
-           ===================================================== */
+        /* =========================================================
+           START SCREEN
+        ========================================================= */
 
         #milip-intro-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100vw;
             height: 100vh;
             background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
             overflow: hidden;
+            display: block;
+            z-index: 99999;
+            pointer-events: none;
             transition:
-                opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.8s ease;
+                opacity .55s ease,
+                visibility .55s ease;
         }
 
         html.dark #milip-intro-overlay {
@@ -171,261 +192,487 @@
         #milip-intro-overlay.hidden-intro {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
         }
 
-        @keyframes textAppear {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(10px);
-                filter: blur(5px);
-            }
+        /*
+            Главная бабочка.
 
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-                filter: blur(0);
-            }
-        }
+            --target-x / --target-y вычисляются JavaScript
+            относительно центра экрана.
 
-        .intro-text-only {
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            animation: textAppear 0.8s ease forwards;
-            position: relative;
-            z-index: 2;
-        }
+            В результате она всегда летит именно к логотипу,
+            независимо от размера монитора.
+        */
 
-        /* =====================================================
-           БАБОЧКА
-           ===================================================== */
+        #introButterfly {
+            --target-x: 0px;
+            --target-y: 0px;
 
-        .intro-flying-butterfly {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 70px;
-            height: 70px;
-            z-index: 100000;
+            left: 50%;
+            top: 50%;
+            width: 58px;
+            height: 58px;
+            z-index: 100001;
             pointer-events: none;
-            will-change: transform, opacity;
-            opacity: 0;
-            transform-origin: center center;
+
+            transform: translate(-50%, -50%);
+
+            animation:
+                introFlight 6.2s
+                cubic-bezier(.22, .61, .36, 1)
+                forwards;
         }
 
-        .intro-flying-butterfly svg {
-            width: 70px;
-            height: 70px;
-            display: block;
+        .intro-butterfly-svg {
+            width: 100%;
+            height: 100%;
             overflow: visible;
-        }
-
-        @keyframes butterflyWingFlap {
-            0%,
-            100% {
-                transform: scaleX(1) rotate(0deg);
-            }
-
-            25% {
-                transform: scaleX(0.84) rotate(-2deg);
-            }
-
-            50% {
-                transform: scaleX(1.04) rotate(1deg);
-            }
-
-            75% {
-                transform: scaleX(0.86) rotate(-1deg);
-            }
-        }
-
-        .intro-butterfly-wings {
-            transform-origin: center center;
-            animation: butterflyWingFlap 0.42s ease-in-out infinite;
-        }
-
-        @keyframes butterflyShimmer {
-            0% {
-                opacity: 0;
-                transform: translateX(-18px);
-            }
-
-            35% {
-                opacity: 0.45;
-            }
-
-            70% {
-                opacity: 0;
-                transform: translateX(18px);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateX(18px);
-            }
-        }
-
-        .intro-butterfly-shimmer {
-            opacity: 0;
-            animation: butterflyShimmer 2.1s ease-in-out infinite;
-        }
-
-        .intro-butterfly-glow {
+            fill: #00C2FF;
             filter:
-                drop-shadow(0 0 5px rgba(0, 194, 255, 0.35))
-                drop-shadow(0 0 13px rgba(0, 194, 255, 0.18));
+                drop-shadow(0 0 8px rgba(0, 194, 255, .45))
+                drop-shadow(0 0 18px rgba(0, 194, 255, .16));
+
+            transform-origin: center;
+            animation: wingBeat .19s ease-in-out infinite alternate;
         }
 
-        /* =====================================================
-           ОБЫЧНАЯ БАБОЧКА ДЛЯ КОРЗИНЫ
-           ===================================================== */
+        /*
+            Маленькая буква M.
+            Она появляется поверх бабочки в момент превращения.
+        */
 
-        @keyframes butterflyFlight {
+        .intro-morph-m {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 45px;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -.08em;
+
+            color: #00C2FF;
+
+            opacity: 0;
+            transform: scale(.2) rotate(-15deg);
+
+            text-shadow:
+                0 0 8px rgba(0, 194, 255, .35),
+                0 0 20px rgba(0, 194, 255, .18);
+
+            animation:
+                morphIntoM 6.2s
+                cubic-bezier(.22, .61, .36, 1)
+                forwards;
+        }
+
+        @keyframes wingBeat {
+            from {
+                transform: scaleX(1) rotate(-2deg);
+            }
+
+            to {
+                transform: scaleX(.76) rotate(2deg);
+            }
+        }
+
+        /*
+            0-42%
+            Красивый полёт из левого нижнего угла.
+
+            42-83%
+            Облёт логотипа.
+
+            83-92%
+            Подход к букве M.
+
+            92-100%
+            Улёт вверх-влево.
+        */
+
+        @keyframes introFlight {
+
             0% {
-                transform: translate(0, 0) scale(0.4) rotate(0deg);
+                transform:
+                    translate(calc(-50vw - 40px), calc(38vh + 30px))
+                    rotate(-28deg)
+                    scale(.45);
                 opacity: 0;
             }
 
-            15% {
+            7% {
                 opacity: 1;
-                transform: translate(-30px, -60px) scale(1) rotate(45deg);
             }
 
-            40% {
-                transform: translate(-120px, -140px) scale(1.2) rotate(160deg);
+            16% {
+                transform:
+                    translate(calc(-36vw), calc(20vh))
+                    rotate(22deg)
+                    scale(.68);
             }
 
-            70% {
-                transform: translate(40px, -220px) scale(0.9) rotate(260deg);
+            26% {
+                transform:
+                    translate(calc(-23vw), calc(27vh))
+                    rotate(48deg)
+                    scale(.78);
             }
 
-            90% {
+            36% {
+                transform:
+                    translate(calc(-14vw), calc(4vh))
+                    rotate(-18deg)
+                    scale(.86);
+            }
+
+            43% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 115px),
+                        calc(var(--target-y) + 5px)
+                    )
+                    rotate(18deg)
+                    scale(.72);
+            }
+
+            /* Первый круг */
+
+            49% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 60px),
+                        calc(var(--target-y) - 75px)
+                    )
+                    rotate(-12deg)
+                    scale(.66);
+            }
+
+            55% {
+                transform:
+                    translate(
+                        calc(var(--target-x) + 48px),
+                        calc(var(--target-y) - 54px)
+                    )
+                    rotate(30deg)
+                    scale(.65);
+            }
+
+            61% {
+                transform:
+                    translate(
+                        calc(var(--target-x) + 72px),
+                        calc(var(--target-y) + 22px)
+                    )
+                    rotate(75deg)
+                    scale(.64);
+            }
+
+            67% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 5px),
+                        calc(var(--target-y) + 78px)
+                    )
+                    rotate(150deg)
+                    scale(.64);
+            }
+
+            /* Второй круг */
+
+            72% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 76px),
+                        calc(var(--target-y) + 34px)
+                    )
+                    rotate(205deg)
+                    scale(.61);
+            }
+
+            77% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 65px),
+                        calc(var(--target-y) - 48px)
+                    )
+                    rotate(260deg)
+                    scale(.59);
+            }
+
+            82% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 95px),
+                        calc(var(--target-y) - 8px)
+                    )
+                    rotate(320deg)
+                    scale(.55);
+            }
+
+            /*
+                Подлетаем не на логотип,
+                а немного перед буквой M.
+            */
+
+            87% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 55px),
+                        calc(var(--target-y) + 2px)
+                    )
+                    rotate(0deg)
+                    scale(.48);
                 opacity: 1;
-                transform: translate(var(--target-x), var(--target-y)) scale(0.5) rotate(360deg);
+            }
+
+            92% {
+                transform:
+                    translate(
+                        calc(var(--target-x) - 55px),
+                        calc(var(--target-y) + 2px)
+                    )
+                    rotate(0deg)
+                    scale(.43);
+                opacity: 1;
+            }
+
+            /*
+                После превращения в M
+                улетаем далеко вверх-влево.
+            */
+
+            100% {
+                transform:
+                    translate(
+                        calc(-50vw - 60px),
+                        calc(-48vh - 50px)
+                    )
+                    rotate(-38deg)
+                    scale(.18);
+                opacity: 0;
+            }
+        }
+
+        @keyframes morphIntoM {
+
+            0%,
+            82% {
+                opacity: 0;
+                transform: scale(.2) rotate(-15deg);
+            }
+
+            85% {
+                opacity: .25;
+                transform: scale(.55) rotate(-5deg);
+            }
+
+            88% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+
+            92% {
+                opacity: 1;
+                transform: scale(1.04) rotate(0);
+            }
+
+            94% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+
+            97%,
+            100% {
+                opacity: 0;
+                transform: scale(.18) rotate(20deg);
+            }
+        }
+
+        /* =========================================================
+           CART BUTTERFLY
+        ========================================================= */
+
+        .cart-butterfly {
+            position: fixed;
+            z-index: 99998;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+
+            animation:
+                cartButterflyFlight
+                1.7s
+                cubic-bezier(.22, .61, .36, 1)
+                forwards;
+        }
+
+        .cart-butterfly svg {
+            width: 100%;
+            height: 100%;
+            fill: #00C2FF;
+            filter: drop-shadow(0 0 8px rgba(0, 194, 255, .65));
+
+            animation:
+                cartWingBeat .16s
+                ease-in-out
+                infinite
+                alternate;
+        }
+
+        @keyframes cartWingBeat {
+            from {
+                transform: scaleX(1);
+            }
+
+            to {
+                transform: scaleX(.7);
+            }
+        }
+
+        @keyframes cartButterflyFlight {
+
+            0% {
+                transform:
+                    translate(-50%, -50%)
+                    scale(.45)
+                    rotate(-20deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            30% {
+                transform:
+                    translate(
+                        calc(-50% + var(--target-x) * .28),
+                        calc(-50% + var(--target-y) * .20)
+                    )
+                    scale(.9)
+                    rotate(30deg);
+            }
+
+            52% {
+                transform:
+                    translate(
+                        calc(-50% + var(--target-x) * .58),
+                        calc(-50% + var(--target-y) * .72)
+                    )
+                    scale(.85)
+                    rotate(-15deg);
+            }
+
+            78% {
+                transform:
+                    translate(
+                        calc(-50% + var(--target-x)),
+                        calc(-50% + var(--target-y))
+                    )
+                    scale(.7)
+                    rotate(15deg);
+                opacity: 1;
             }
 
             100% {
+                transform:
+                    translate(
+                        calc(-50% + var(--target-x)),
+                        calc(-50% + var(--target-y))
+                    )
+                    scale(.2)
+                    rotate(360deg);
                 opacity: 0;
-                transform: translate(var(--target-x), var(--target-y)) scale(0.2) rotate(400deg);
             }
         }
 
-        .flying-butterfly {
-            position: fixed;
-            z-index: 99999;
-            pointer-events: none;
-            animation: butterflyFlight 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        /* =========================================================
+           RESPONSIVE START ANIMATION
+        ========================================================= */
+
+        @media (max-width: 640px) {
+
+            #introButterfly {
+                width: 48px;
+                height: 48px;
+            }
+
+            .intro-morph-m {
+                font-size: 37px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            #introButterfly,
+            .intro-morph-m,
+            .intro-butterfly-svg {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
         }
     </style>
 </head>
 
-<body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
+<body
+    class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden"
+>
 
-    <!-- =====================================================
-         INTRO
-         ===================================================== -->
+    <!-- =========================================================
+         START SCREEN
+    ========================================================== -->
 
     <div id="milip-intro-overlay">
 
-        <div class="intro-text-only font-extrabold tracking-widest text-3xl sm:text-4xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">
-            MILIPSTORE
-        </div>
-
-        <div class="intro-flying-butterfly" id="introButterfly">
+        <div id="introButterfly">
 
             <svg
-                class="intro-butterfly-glow"
-                width="70"
-                height="70"
+                class="intro-butterfly-svg"
                 viewBox="0 0 24 24"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-
-                <defs>
-
-                    <linearGradient id="butterflyGradient" x1="2" y1="2" x2="22" y2="22">
-                        <stop offset="0%" stop-color="#00E5FF"/>
-                        <stop offset="55%" stop-color="#00C2FF"/>
-                        <stop offset="100%" stop-color="#0099CC"/>
-                    </linearGradient>
-
-                    <linearGradient id="butterflyShine" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="white" stop-opacity="0"/>
-                        <stop offset="50%" stop-color="white" stop-opacity="0.65"/>
-                        <stop offset="100%" stop-color="white" stop-opacity="0"/>
-                    </linearGradient>
-
-                    <clipPath id="butterflyClip">
-                        <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
-                    </clipPath>
-
-                </defs>
-
-                <g class="intro-butterfly-wings">
-
-                    <path
-                        d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16Z"
-                        fill="url(#butterflyGradient)"
-                    />
-
-                    <path
-                        d="M12 12C14 9 18 7 20 9C22 11 21 14 18 15C20 17 22 20 19 22C16 24 13 20 12 16Z"
-                        fill="url(#butterflyGradient)"
-                    />
-
-                    <g clip-path="url(#butterflyClip)">
-                        <rect
-                            class="intro-butterfly-shimmer"
-                            x="-10"
-                            y="0"
-                            width="7"
-                            height="30"
-                            fill="url(#butterflyShine)"
-                            transform="rotate(18 12 12)"
-                        />
-                    </g>
-
-                    <ellipse
-                        cx="12"
-                        cy="13"
-                        rx="1.15"
-                        ry="4.2"
-                        fill="#E8FCFF"
-                        opacity="0.95"
-                    />
-
-                    <circle
-                        cx="12"
-                        cy="9.5"
-                        r="1.15"
-                        fill="#FFFFFF"
-                    />
-
-                </g>
-
+                <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
             </svg>
+
+            <span class="intro-morph-m">M</span>
+
         </div>
+
     </div>
 
-    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"></div>
+    <!-- =========================================================
+         TOASTS
+    ========================================================== -->
 
-    <!-- =====================================================
+    <div
+        id="toastContainer"
+        class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"
+    ></div>
+
+    <!-- =========================================================
          HEADER
-         ===================================================== -->
+    ========================================================== -->
 
-    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/90 dark:bg-[#040B14]/90 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full">
-
-        <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
+    <header
+        class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/90 dark:bg-[#040B14]/90 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full"
+    >
+        <div
+            class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between"
+        >
 
             <div class="flex items-center space-x-6 sm:space-x-10 min-w-0">
 
-                <!-- ЛОГОТИП -->
+                <!-- LOGO -->
+
                 <a
                     href="#"
-                    onclick="goHomeFromLogo(event);"
+                    onclick="goHome(); return false;"
                     class="flex items-center space-x-3 group min-w-0"
-                    aria-label="MILIPSTORE — На главную"
+                    aria-label="MILIPSTORE — на главную"
                 >
 
                     <svg
@@ -435,17 +682,16 @@
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
-
                         <path
                             d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z"
                             fill="currentColor"
-                            fill-opacity="0.9"
+                            fill-opacity=".9"
                         />
 
                         <path
                             d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z"
                             fill="currentColor"
-                            fill-opacity="0.9"
+                            fill-opacity=".9"
                         />
 
                         <path
@@ -465,14 +711,18 @@
                             class="text-[#D8DCF0] dark:text-[#040B14]"
                             fill="currentColor"
                         />
-
                     </svg>
 
-                    <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">
+                    <span
+                        id="headerLogoText"
+                        class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent"
+                    >
                         MILIPSTORE
                     </span>
 
                 </a>
+
+                <!-- NAV -->
 
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
 
@@ -496,11 +746,15 @@
 
             </div>
 
+            <!-- HEADER ACTIONS -->
+
             <div class="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
 
-                <!-- ЯЗЫК -->
+                <!-- LANGUAGE -->
 
-                <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold">
+                <div
+                    class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold"
+                >
 
                     <button
                         id="langBtnUa"
@@ -520,12 +774,13 @@
 
                 </div>
 
-                <!-- ТЕМА -->
+                <!-- THEME -->
 
                 <button
                     onclick="toggleTheme()"
                     id="themeToggleBtn"
                     class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm"
+                    aria-label="Переключити тему"
                 >
 
                     <svg
@@ -560,7 +815,7 @@
 
                 </button>
 
-                <!-- ИЗБРАННОЕ -->
+                <!-- FAVORITES -->
 
                 <button
                     onclick="openFavoritesModal()"
@@ -590,7 +845,7 @@
 
                 </button>
 
-                <!-- КОРЗИНА -->
+                <!-- CART -->
 
                 <button
                     id="cartIconButton"
@@ -625,29 +880,44 @@
         </div>
     </header>
 
-    <!-- =====================================================
+    <!-- =========================================================
          MAIN
-         ===================================================== -->
+    ========================================================== -->
 
     <main class="flex-grow w-full overflow-hidden">
 
         <!-- CATALOG -->
 
-        <div id="catalogView" class="view-section animate-fade-in w-full">
+        <div
+            id="catalogView"
+            class="view-section animate-fade-in w-full"
+        >
 
-            <section class="relative overflow-hidden py-12 lg:py-24 px-6 sm:px-10 lg:px-16 w-full">
+            <!-- HERO -->
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <section
+                class="relative overflow-hidden py-12 lg:py-24 px-6 sm:px-10 lg:px-16 w-full"
+            >
 
-                    <div class="lg:col-span-7 space-y-6 text-left">
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+                >
 
-                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]">
+                    <div
+                        class="lg:col-span-7 space-y-6 text-left"
+                    >
+
+                        <div
+                            class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]"
+                        >
                             <span>MILIP / 001</span>
                             <span>•</span>
                             <span data-i18n="hero_badge">ULTIMATE HARDWARE</span>
                         </div>
 
-                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+                        <h1
+                            class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight"
+                        >
                             MCHOSE
                             <br>
                             <span class="text-[#00C2FF]">A7 V2 PRO</span>
@@ -697,12 +967,16 @@
 
             </section>
 
+            <!-- CATALOG PRODUCTS -->
+
             <section
                 id="catalogSection"
                 class="w-full px-6 sm:px-10 lg:px-16 pb-24"
             >
 
-                <div class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end">
+                <div
+                    class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end"
+                >
 
                     <div>
 
@@ -731,14 +1005,20 @@
 
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                >
 
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative">
+                    <!-- PRODUCT CARD -->
+
+                    <div
+                        class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative"
+                    >
 
                         <div class="absolute top-5 right-5 z-10">
 
                             <button
-                                onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Главная фото для каталога.jpg', currentSelectedColor)"
+                                onclick="toggleFavorite('MCHOSE A7 V2 PRO',2449,'Главная фото для каталога.jpg',currentSelectedColor)"
                                 class="wishlist-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3B30] transition-colors"
                             >
 
@@ -780,7 +1060,9 @@
                                 PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.
                             </p>
 
-                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2">
+                            <div
+                                class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2"
+                            >
 
                                 <img
                                     src="Главная фото для каталога.jpg"
@@ -798,7 +1080,7 @@
                         </div>
 
                         <button
-                            onclick="addToCartWithAnimation(event, 'MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Главная фото для каталога.jpg')"
+                            onclick="addToCartWithAnimation(event,'MCHOSE A7 V2 PRO',2449,currentSelectedColor,'Главная фото для каталога.jpg')"
                             class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm"
                             data-i18n="btn_add_cart"
                         >
@@ -813,7 +1095,9 @@
 
         </div>
 
-        <!-- PRODUCT -->
+        <!-- =====================================================
+             PRODUCT VIEW
+        ====================================================== -->
 
         <div
             id="productView"
@@ -846,11 +1130,17 @@
 
             </button>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto"
+            >
+
+                <!-- PRODUCT IMAGES -->
 
                 <div class="lg:col-span-7 space-y-4">
 
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center">
+                    <div
+                        class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center"
+                    >
 
                         <img
                             id="mainProductImage"
@@ -867,7 +1157,7 @@
                     >
 
                         <button
-                            onclick="changePhotoAndColor('Главная фото для каталога.jpg', null, this)"
+                            onclick="changePhotoAndColor('Главная фото для каталога.jpg',null,this)"
                             class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
                         >
                             <img
@@ -878,7 +1168,7 @@
                         </button>
 
                         <button
-                            onclick="changePhotoAndColor('Белая мышка.jpg', 'White', this)"
+                            onclick="changePhotoAndColor('Белая мышка.jpg','White',this)"
                             class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
                         >
                             <img
@@ -889,7 +1179,7 @@
                         </button>
 
                         <button
-                            onclick="changePhotoAndColor('Черная мышка.jpg', 'Black', this)"
+                            onclick="changePhotoAndColor('Черная мышка.jpg','Black',this)"
                             class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
                         >
                             <img
@@ -900,7 +1190,7 @@
                         </button>
 
                         <button
-                            onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink', this)"
+                            onclick="changePhotoAndColor('Розовая мышка.jpg','Pink',this)"
                             class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"
                         >
                             <img
@@ -913,6 +1203,8 @@
                     </div>
 
                 </div>
+
+                <!-- PRODUCT INFO -->
 
                 <div class="lg:col-span-5 space-y-6">
 
@@ -932,41 +1224,42 @@
 
                     </div>
 
-                    <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
+                    <!-- COLORS -->
 
-                        <span class="text-xs font-mono text-gray-500 uppercase font-bold">
+                    <div
+                        class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]"
+                    >
 
-                            <span data-i18n="prod_color_label">
-                                Колір:
-                            </span>
+                        <span
+                            class="text-xs font-mono text-gray-500 uppercase font-bold"
+                        >
+                            <span data-i18n="prod_color_label">Колір:</span>
 
                             <span
                                 id="selectedColorName"
                                 class="font-extrabold text-[#00C2FF]"
-                                data-i18n="prod_color_none"
                             >
                                 Не вибрано
                             </span>
-
                         </span>
 
                         <div class="flex items-center space-x-4">
 
                             <button
                                 id="colorBtnWhite"
-                                onclick="changePhotoAndColor('Белая мышка.jpg', 'White')"
+                                onclick="changePhotoAndColor('Белая мышка.jpg','White')"
                                 class="color-picker-btn w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md hover:scale-110 transition-transform"
                             ></button>
 
                             <button
                                 id="colorBtnBlack"
-                                onclick="changePhotoAndColor('Черная мышка.jpg', 'Black')"
+                                onclick="changePhotoAndColor('Черная мышка.jpg','Black')"
                                 class="color-picker-btn w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md hover:scale-110 transition-transform"
                             ></button>
 
                             <button
                                 id="colorBtnPink"
-                                onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink')"
+                                onclick="changePhotoAndColor('Розовая мышка.jpg','Pink')"
                                 class="color-picker-btn w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md hover:scale-110 transition-transform"
                             ></button>
 
@@ -974,9 +1267,13 @@
 
                     </div>
 
+                    <!-- QUANTITY -->
+
                     <div class="flex items-center space-x-3 pt-3">
 
-                        <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] h-14 px-4 shadow-inner">
+                        <div
+                            class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] h-14 px-4 shadow-inner"
+                        >
 
                             <button
                                 onclick="updateQty(-1)"
@@ -1010,7 +1307,7 @@
                         </button>
 
                         <button
-                            onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg, currentSelectedColor)"
+                            onclick="toggleFavorite('MCHOSE A7 V2 PRO',2449,currentSelectedImg,currentSelectedColor)"
                             class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md"
                         >
 
@@ -1032,11 +1329,17 @@
 
                     </div>
 
-                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
+                    <!-- ACCORDIONS -->
 
-                        <!-- ХАРАКТЕРИСТИКИ -->
+                    <div
+                        class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3"
+                    >
 
-                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                        <!-- SPECS -->
+
+                        <div
+                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
+                        >
 
                             <button
                                 onclick="toggleAccordion('specsAccordion')"
@@ -1077,24 +1380,45 @@
                             <div
                                 id="specsAccordion"
                                 class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                                data-i18n-specs="specs_content"
                             >
 
-                                <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
-                                <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
-                                <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
-                                <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
-                                <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
-                                <p>• <b>Акумулятор:</b> Енергоефективний, автономність до кількох тижнів активного використання</p>
-                                <p>• <b>Сумісність:</b> Windows, macOS, Linux, фірмове ПЗ для налаштування макросів і DPI</p>
+                                <p>
+                                    • <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)
+                                </p>
+
+                                <p>
+                                    • <b>Частота опитування:</b> Підтримка до 8000 Hz
+                                </p>
+
+                                <p>
+                                    • <b>Перемикачі:</b> Довговічні механічні перемикачі з чітким кліком
+                                </p>
+
+                                <p>
+                                    • <b>Режими підключення:</b> Type-C, 2.4 GHz та Bluetooth
+                                </p>
+
+                                <p>
+                                    • <b>Вага:</b> близько 54 грамів
+                                </p>
+
+                                <p>
+                                    • <b>Акумулятор:</b> автономність до кількох тижнів активного використання
+                                </p>
+
+                                <p>
+                                    • <b>Сумісність:</b> Windows, macOS, Linux
+                                </p>
 
                             </div>
 
                         </div>
 
-                        <!-- КОМПЛЕКТАЦИЯ -->
+                        <!-- BUNDLE -->
 
-                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                        <div
+                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
+                        >
 
                             <button
                                 onclick="toggleAccordion('bundleAccordion')"
@@ -1135,22 +1459,23 @@
                             <div
                                 id="bundleAccordion"
                                 class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                                data-i18n-bundle="bundle_content"
                             >
 
                                 <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
-                                <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
-                                <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
-                                <p>4. Комплект фірмових тефлонових глайдів (ніжок)</p>
-                                <p>5. Інструкція користувача та гарантійний талон</p>
+                                <p>2. 8K бездротовий ресивер</p>
+                                <p>3. Кабель USB Type-C</p>
+                                <p>4. Комплект тефлонових глайдів</p>
+                                <p>5. Інструкція та гарантійний талон</p>
 
                             </div>
 
                         </div>
 
-                        <!-- ДОСТАВКА -->
+                        <!-- SHIPPING -->
 
-                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                        <div
+                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
+                        >
 
                             <button
                                 onclick="toggleAccordion('shippingAccordion')"
@@ -1191,20 +1516,21 @@
                             <div
                                 id="shippingAccordion"
                                 class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                                data-i18n-shipping="shipping_content"
                             >
 
                                 <p>
-                                    Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.
+                                    Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні або онлайн-оплата.
                                 </p>
 
                             </div>
 
                         </div>
 
-                        <!-- ГАРАНТИЯ -->
+                        <!-- WARRANTY -->
 
-                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                        <div
+                            class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden"
+                        >
 
                             <button
                                 onclick="toggleAccordion('warrantyAccordion')"
@@ -1245,7 +1571,6 @@
                             <div
                                 id="warrantyAccordion"
                                 class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3"
-                                data-i18n-warranty="warranty_content"
                             >
 
                                 <p>
@@ -1266,891 +1591,283 @@
 
     </main>
 
-    <!-- FOOTER -->
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
 
-    <footer class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500 px-6">
-
+    <footer
+        class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500 px-6"
+    >
         <p data-i18n="footer_text">
             © 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.
         </p>
-
     </footer>
 
-    <!-- =====================================================
+    <!-- =========================================================
          JAVASCRIPT
-         ===================================================== -->
+    ========================================================== -->
 
     <script>
+
+        /* =========================================================
+           STATE
+        ========================================================== */
 
         let currentSelectedColor = null;
         let currentSelectedImg = 'Главная фото для каталога.jpg';
         let currentProductQty = 1;
         let currentLang = 'ua';
 
-        /* =====================================================
-           ПЕРЕВОДЫ
-           ===================================================== */
+        /* =========================================================
+           TRANSLATIONS
+        ========================================================== */
 
         const translations = {
 
             ua: {
+                nav_catalog: 'Каталог',
+                nav_search: 'Пошук',
 
-                nav_catalog: "Каталог",
-                nav_search: "Пошук",
-                hero_badge: "ULTIMATE HARDWARE",
+                hero_badge: 'ULTIMATE HARDWARE',
 
                 hero_desc:
-                    "Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.",
+                    'Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.',
 
-                hero_btn:
-                    "Детальніше про продукт",
+                hero_btn: 'Детальніше про продукт',
 
-                cat_sub:
-                    "Ексклюзивний реліз",
-
-                cat_title:
-                    "Каталог обладнання",
-
-                cat_stock:
-                    "У наявності",
+                cat_sub: 'Ексклюзивний реліз',
+                cat_title: 'Каталог обладнання',
+                cat_stock: 'У наявності',
 
                 card_desc:
-                    "PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.",
+                    'PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.',
 
-                btn_add_cart:
-                    "ДОДАТИ В КОШИК",
+                btn_add_cart: 'ДОДАТИ В КОШИК',
 
-                prod_back:
-                    "Назад до каталогу",
+                prod_back: 'Назад до каталогу',
 
-                prod_color_label:
-                    "Колір:",
+                prod_color_label: 'Колір:',
+                prod_color_none: 'Не вибрано',
+                prod_color_white: 'Білий',
+                prod_color_black: 'Чорний',
+                prod_color_pink: 'Рожевий',
 
-                prod_color_none:
-                    "Не вибрано",
-
-                prod_color_white:
-                    "Білий",
-
-                prod_color_black:
-                    "Чорний",
-
-                prod_color_pink:
-                    "Рожевий",
-
-                acc_specs:
-                    "Технічні характеристики",
-
-                acc_bundle:
-                    "Комплектація",
-
-                acc_shipping:
-                    "Доставка",
-
-                acc_warranty:
-                    "Гарантія",
+                acc_specs: 'Технічні характеристики',
+                acc_bundle: 'Комплектація',
+                acc_shipping: 'Доставка',
+                acc_warranty: 'Гарантія',
 
                 footer_text:
-                    "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
-
-                specs_content: `
-                    <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
-                    <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
-                    <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
-                    <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
-                    <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
-                    <p>• <b>Акумулятор:</b> Енергоефективний, автономність до кількох тижнів активного використання</p>
-                    <p>• <b>Сумісність:</b> Windows, macOS, Linux, фірмове ПЗ для налаштування макросів і DPI</p>
-                `,
-
-                bundle_content: `
-                    <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
-                    <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
-                    <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
-                    <p>4. Комплект фірмових тефлонових глайдів (ніжок)</p>
-                    <p>5. Інструкція користувача та гарантійний талон</p>
-                `,
-
-                shipping_content:
-                    `<p>Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.</p>`,
-
-                warranty_content:
-                    `<p>Офіційна гарантія від виробника та магазину складає 12 місяців.</p>`
+                    '© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.'
             },
 
             ru: {
+                nav_catalog: 'Каталог',
+                nav_search: 'Поиск',
 
-                nav_catalog:
-                    "Каталог",
-
-                nav_search:
-                    "Поиск",
-
-                hero_badge:
-                    "ULTIMATE HARDWARE",
+                hero_badge: 'ULTIMATE HARDWARE',
 
                 hero_desc:
-                    "Флагманская беспроводная игровая мышь с поддержкой 8K HyperPolling, сенсором PixArt PAW3395 и ультралегким корпусом.",
+                    'Флагманская беспроводная игровая мышь с поддержкой 8K HyperPolling, сенсором PixArt PAW3395 и ультралегким корпусом.',
 
-                hero_btn:
-                    "Подробнее о продукте",
+                hero_btn: 'Подробнее о продукте',
 
-                cat_sub:
-                    "Эксклюзивный релиз",
-
-                cat_title:
-                    "Каталог оборудования",
-
-                cat_stock:
-                    "В наличии",
+                cat_sub: 'Эксклюзивный релиз',
+                cat_title: 'Каталог оборудования',
+                cat_stock: 'В наличии',
 
                 card_desc:
-                    "PixArt PAW3395, 8K HyperPolling, 54г, три режима подключения.",
+                    'PixArt PAW3395, 8K HyperPolling, 54г, три режима подключения.',
 
-                btn_add_cart:
-                    "ДОБАВИТЬ В КОРЗИНУ",
+                btn_add_cart: 'ДОБАВИТЬ В КОРЗИНУ',
 
-                prod_back:
-                    "Назад в каталог",
+                prod_back: 'Назад в каталог',
 
-                prod_color_label:
-                    "Цвет:",
+                prod_color_label: 'Цвет:',
+                prod_color_none: 'Не выбрано',
+                prod_color_white: 'Белый',
+                prod_color_black: 'Черный',
+                prod_color_pink: 'Розовый',
 
-                prod_color_none:
-                    "Не выбрано",
-
-                prod_color_white:
-                    "Белый",
-
-                prod_color_black:
-                    "Черный",
-
-                prod_color_pink:
-                    "Розовый",
-
-                acc_specs:
-                    "Технические характеристики",
-
-                acc_bundle:
-                    "Комплектация",
-
-                acc_shipping:
-                    "Доставка",
-
-                acc_warranty:
-                    "Гарантия",
+                acc_specs: 'Технические характеристики',
+                acc_bundle: 'Комплектация',
+                acc_shipping: 'Доставка',
+                acc_warranty: 'Гарантия',
 
                 footer_text:
-                    "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
-
-                specs_content: `
-                    <p>• <b>Сенсор:</b> Оптический PixArt PAW3395 (до 26 000 DPI, 650 IPS, ускорение 50G)</p>
-                    <p>• <b>Частота опроса:</b> Поддержка до 8000 Hz (8K HyperPolling ресивер в комплекте)</p>
-                    <p>• <b>Переключатели (Свичи):</b> Долговечные механические переключатели с четким кликом</p>
-                    <p>• <b>Режимы подключения:</b> Проводной (Type-C), беспроводной 2.4 GHz и Bluetooth</p>
-                    <p>• <b>Вес:</b> Ультралегкий корпус — всего ~54 грамма</p>
-                    <p>• <b>Аккумулятор:</b> Энергоэффективный, автономность до нескольких недель активного использования</p>
-                    <p>• <b>Совместимость:</b> Windows, macOS, Linux, фирменное ПО для настройки макросов и DPI</p>
-                `,
-
-                bundle_content: `
-                    <p>1. Игровая мышь MCHOSE A7 V2 PRO</p>
-                    <p>2. Высокоскоростной 8K беспроводной ресивер (донгл)</p>
-                    <p>3. Съемный кабель USB Type-C в ультрамягкой паракордовой оплетке</p>
-                    <p>4. Комплект фирменных тефлоновых глайдов (ножек)</p>
-                    <p>5. Инструкция пользователя и гарантийный талон</p>
-                `,
-
-                shipping_content:
-                    `<p>Доставка Новой Почтой по всей Украине в течение 1–2 дней. Возможна оплата при получении (наложенный платеж) или онлайн-оплата.</p>`,
-
-                warranty_content:
-                    `<p>Официальная гарантия от производителя и магазина составляет 12 месяцев.</p>`
+                    '© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.'
             }
 
         };
 
-        /* =====================================================
-           DOM READY
-           ===================================================== */
+        /* =========================================================
+           STARTUP
+        ========================================================== */
 
         window.addEventListener('DOMContentLoaded', () => {
 
             /*
-             * Всегда начинаем сайт с самого верха.
-             */
+                Всегда открываем сайт с самого верха.
+            */
+
             window.scrollTo(0, 0);
 
             /*
-             * Запускаем стартовую сцену.
-             */
-            startMilipIntro();
+                Сначала определяем координату текста MILIPSTORE.
+
+                Бабочка садится немного ЛЕВЕЕ буквы M,
+                поэтому она не перекрывает логотип.
+            */
+
+            setupIntroButterfly();
 
             /*
-             * Остальной функционал.
-             */
+                Стартовая сцена длится около 6 секунд.
+            */
+
+            setTimeout(() => {
+
+                const overlay =
+                    document.getElementById('milip-intro-overlay');
+
+                if (overlay) {
+                    overlay.classList.add('hidden-intro');
+                }
+
+            }, 6000);
+
             updateFavoritesUI();
             updateCartUI();
 
         });
 
-        /* =====================================================
-           НОВАЯ СТАРТОВАЯ СЦЕНА БАБОЧКИ
-           ===================================================== */
+        /* =========================================================
+           INTRO BUTTERFLY POSITION
+        ========================================================== */
 
-        function startMilipIntro() {
-
-            const overlay =
-                document.getElementById('milip-intro-overlay');
+        function setupIntroButterfly() {
 
             const butterfly =
                 document.getElementById('introButterfly');
 
-            const logo =
-                document.querySelector('.intro-text-only');
+            const logoText =
+                document.getElementById('headerLogoText');
 
-            if (!overlay || !butterfly || !logo) {
-                return;
-            }
+            if (!butterfly || !logoText) return;
 
-            /*
-             * Снова гарантируем верх страницы.
-             */
-            window.scrollTo(0, 0);
-
-            const logoRect =
-                logo.getBoundingClientRect();
+            const rect =
+                logoText.getBoundingClientRect();
 
             /*
-             * Центр логотипа.
-             */
-            const logoCenterX =
-                logoRect.left +
-                logoRect.width / 2;
+                Центр точки назначения.
 
-            const logoCenterY =
-                logoRect.top +
-                logoRect.height / 2;
+                Бабочка находится немного левее
+                самой первой буквы M.
+            */
 
-            /*
-             * Финальная точка возле буквы M.
-             */
-            const finalX =
-                logoRect.left - 24;
+            const targetX =
+                rect.left - 30 + (rect.width / 2) -
+                (window.innerWidth / 2);
 
-            const finalY =
-                logoCenterY - 5;
+            const targetY =
+                rect.top + (rect.height / 2) -
+                (window.innerHeight / 2);
 
-            const butterflySize = 70;
-            const halfButterfly =
-                butterflySize / 2;
-
-            /*
-             * Старт:
-             * левый нижний угол.
-             */
-            const startX = -35;
-            const startY =
-                window.innerHeight + 40;
-
-            function setPosition(
-                x,
-                y,
-                rotation,
-                scale = 1,
-                opacity = 1
-            ) {
-
-                butterfly.style.opacity =
-                    opacity;
-
-                butterfly.style.transform =
-                    `translate3d(
-                        ${x - halfButterfly}px,
-                        ${y - halfButterfly}px,
-                        0
-                    )
-                    rotate(${rotation}deg)
-                    scale(${scale})`;
-
-            }
-
-            function easeInOutCubic(t) {
-
-                return t < 0.5
-                    ? 4 * t * t * t
-                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-            }
-
-            function easeOutCubic(t) {
-
-                return 1 -
-                    Math.pow(1 - t, 3);
-
-            }
-
-            function lerp(a, b, t) {
-
-                return a +
-                    (b - a) * t;
-
-            }
-
-            function clamp(value, min, max) {
-
-                return Math.max(
-                    min,
-                    Math.min(max, value)
-                );
-
-            }
-
-            /*
-             * Начальная позиция.
-             */
-            setPosition(
-                startX,
-                startY,
-                -20,
-                0.72,
-                0
+            butterfly.style.setProperty(
+                '--target-x',
+                `${targetX}px`
             );
 
-            /*
-             * Продолжительность этапов.
-             */
-            const phases = {
+            butterfly.style.setProperty(
+                '--target-y',
+                `${targetY}px`
+            );
 
-                entrance: 1250,
-
-                approach: 1450,
-
-                orbit: 3200,
-
-                hover: 650,
-
-                exit: 1050
-
-            };
-
-            const totalDuration =
-                phases.entrance +
-                phases.approach +
-                phases.orbit +
-                phases.hover +
-                phases.exit;
-
-            const startTime =
-                performance.now();
-
-            function animate(now) {
-
-                const elapsed =
-                    now - startTime;
-
-                /* =================================================
-                   1. ВЫЛЕТ ИЗ ЛЕВОГО НИЖНЕГО УГЛА
-                   ================================================= */
-
-                if (elapsed <= phases.entrance) {
-
-                    const t =
-                        clamp(
-                            elapsed / phases.entrance,
-                            0,
-                            1
-                        );
-
-                    const e =
-                        easeOutCubic(t);
-
-                    const x =
-                        lerp(
-                            startX,
-                            window.innerWidth * 0.16,
-                            e
-                        );
-
-                    const y =
-                        lerp(
-                            startY,
-                            window.innerHeight * 0.68,
-                            e
-                        );
-
-                    const waveX =
-                        Math.sin(
-                            t * Math.PI * 2.2
-                        ) * 30;
-
-                    const waveY =
-                        Math.sin(
-                            t * Math.PI * 3.1
-                        ) * 18;
-
-                    const rotation =
-                        -22 +
-                        Math.sin(
-                            t * Math.PI * 2
-                        ) * 14;
-
-                    const scale =
-                        0.72 +
-                        t * 0.20;
-
-                    setPosition(
-                        x + waveX,
-                        y + waveY,
-                        rotation,
-                        scale,
-                        clamp(t * 3, 0, 1)
-                    );
-
-                }
-
-                /* =================================================
-                   2. ПЛАВНЫЙ ПОДЛЁТ К ЛОГОТИПУ
-                   ================================================= */
-
-                else if (
-                    elapsed <=
-                    phases.entrance +
-                    phases.approach
-                ) {
-
-                    const local =
-                        elapsed -
-                        phases.entrance;
-
-                    const t =
-                        clamp(
-                            local / phases.approach,
-                            0,
-                            1
-                        );
-
-                    const e =
-                        easeInOutCubic(t);
-
-                    const fromX =
-                        window.innerWidth * 0.16;
-
-                    const fromY =
-                        window.innerHeight * 0.68;
-
-                    const targetX =
-                        logoCenterX - 5;
-
-                    const targetY =
-                        logoCenterY + 5;
-
-                    const x =
-                        lerp(
-                            fromX,
-                            targetX,
-                            e
-                        );
-
-                    const y =
-                        lerp(
-                            fromY,
-                            targetY,
-                            e
-                        );
-
-                    const wave =
-                        Math.sin(
-                            t * Math.PI * 4.2
-                        );
-
-                    const sideWave =
-                        Math.sin(
-                            t * Math.PI * 2.3 + 0.8
-                        );
-
-                    const waveX =
-                        wave *
-                        (65 * (1 - t));
-
-                    const waveY =
-                        sideWave *
-                        (42 * (1 - t));
-
-                    const rotation =
-                        Math.sin(
-                            t * Math.PI * 4
-                        ) * 18;
-
-                    setPosition(
-                        x + waveX,
-                        y + waveY,
-                        rotation,
-                        0.92 +
-                        Math.sin(t * Math.PI) * 0.08,
-                        1
-                    );
-
-                }
-
-                /* =================================================
-                   3. КРУЖЕНИЕ ВОКРУГ MILIPSTORE
-                   ================================================= */
-
-                else if (
-                    elapsed <=
-                    phases.entrance +
-                    phases.approach +
-                    phases.orbit
-                ) {
-
-                    const orbitStart =
-                        phases.entrance +
-                        phases.approach;
-
-                    const local =
-                        elapsed -
-                        orbitStart;
-
-                    const t =
-                        clamp(
-                            local / phases.orbit,
-                            0,
-                            1
-                        );
-
-                    /*
-                     * Около трёх оборотов.
-                     */
-                    const baseAngle =
-                        -Math.PI / 2 +
-                        t * Math.PI * 6.15;
-
-                    /*
-                     * Живая орбита.
-                     */
-                    const radiusX =
-                        125 +
-                        Math.sin(
-                            t * Math.PI * 2
-                        ) * 14;
-
-                    const radiusY =
-                        62 +
-                        Math.sin(
-                            t * Math.PI * 3 + 0.7
-                        ) * 10;
-
-                    const organicX =
-                        Math.sin(
-                            t * Math.PI * 8
-                        ) * 9;
-
-                    const organicY =
-                        Math.cos(
-                            t * Math.PI * 6
-                        ) * 6;
-
-                    const x =
-                        logoCenterX +
-                        Math.cos(baseAngle) *
-                        radiusX +
-                        organicX;
-
-                    const y =
-                        logoCenterY +
-                        Math.sin(baseAngle) *
-                        radiusY +
-                        organicY;
-
-                    /*
-                     * Наклон по направлению движения.
-                     */
-                    const tangentX =
-                        -Math.sin(baseAngle);
-
-                    const tangentY =
-                        Math.cos(baseAngle);
-
-                    const rotation =
-                        Math.atan2(
-                            tangentY,
-                            tangentX
-                        ) *
-                        180 /
-                        Math.PI +
-                        90;
-
-                    const scale =
-                        0.82 +
-                        Math.sin(
-                            t * Math.PI * 6.15
-                        ) * 0.05;
-
-                    setPosition(
-                        x,
-                        y,
-                        rotation,
-                        scale,
-                        1
-                    );
-
-                }
-
-                /* =================================================
-                   4. ЗАВИСАНИЕ ВОЗЛЕ M
-                   ================================================= */
-
-                else if (
-                    elapsed <=
-                    phases.entrance +
-                    phases.approach +
-                    phases.orbit +
-                    phases.hover
-                ) {
-
-                    const hoverStart =
-                        phases.entrance +
-                        phases.approach +
-                        phases.orbit;
-
-                    const local =
-                        elapsed -
-                        hoverStart;
-
-                    const t =
-                        clamp(
-                            local / phases.hover,
-                            0,
-                            1
-                        );
-
-                    const orbitEndAngle =
-                        -Math.PI / 2 +
-                        0.15 * Math.PI;
-
-                    const orbitEndX =
-                        logoCenterX +
-                        Math.cos(orbitEndAngle) *
-                        125;
-
-                    const orbitEndY =
-                        logoCenterY +
-                        Math.sin(orbitEndAngle) *
-                        62;
-
-                    const e =
-                        easeOutCubic(t);
-
-                    const x =
-                        lerp(
-                            orbitEndX,
-                            finalX,
-                            e
-                        );
-
-                    const y =
-                        lerp(
-                            orbitEndY,
-                            finalY,
-                            e
-                        ) +
-                        Math.sin(
-                            t * Math.PI * 3
-                        ) * 4;
-
-                    const rotation =
-                        lerp(
-                            25,
-                            -5,
-                            e
-                        ) +
-                        Math.sin(
-                            t * Math.PI * 2
-                        ) * 3;
-
-                    setPosition(
-                        x,
-                        y,
-                        rotation,
-                        0.78,
-                        1
-                    );
-
-                }
-
-                /* =================================================
-                   5. УЛЁТ В ЛЕВУЮ ВЕРХНЮЮ СТОРОНУ
-                   ================================================= */
-
-                else if (
-                    elapsed <= totalDuration
-                ) {
-
-                    const exitStart =
-                        phases.entrance +
-                        phases.approach +
-                        phases.orbit +
-                        phases.hover;
-
-                    const local =
-                        elapsed -
-                        exitStart;
-
-                    const t =
-                        clamp(
-                            local / phases.exit,
-                            0,
-                            1
-                        );
-
-                    const e =
-                        easeInOutCubic(t);
-
-                    const x =
-                        lerp(
-                            finalX,
-                            -120,
-                            e
-                        );
-
-                    const y =
-                        lerp(
-                            finalY,
-                            -120,
-                            e
-                        );
-
-                    const waveX =
-                        Math.sin(
-                            t * Math.PI * 2
-                        ) * 12;
-
-                    const waveY =
-                        Math.cos(
-                            t * Math.PI * 2.5
-                        ) * 8;
-
-                    const rotation =
-                        lerp(
-                            -5,
-                            -38,
-                            e
-                        ) +
-                        Math.sin(
-                            t * Math.PI * 2
-                        ) * 8;
-
-                    const opacity =
-                        1 -
-                        Math.pow(t, 2);
-
-                    setPosition(
-                        x + waveX,
-                        y + waveY,
-                        rotation,
-                        0.78 -
-                        t * 0.18,
-                        opacity
-                    );
-
-                }
-
-                /* =================================================
-                   ЗАВЕРШЕНИЕ
-                   ================================================= */
-
-                else {
-
-                    butterfly.style.opacity = '0';
-
-                    setTimeout(() => {
-                        overlay.classList.add(
-                            'hidden-intro'
-                        );
-                    }, 80);
-
-                    return;
-                }
-
-                requestAnimationFrame(animate);
-            }
-
-            requestAnimationFrame(animate);
         }
 
-        /* =====================================================
-           ЛОГОТИП — НА ГЛАВНУЮ / ВВЕРХ
-           ===================================================== */
+        window.addEventListener('resize', () => {
 
-        function goHomeFromLogo(event) {
+            const overlay =
+                document.getElementById('milip-intro-overlay');
 
-            if (event) {
-                event.preventDefault();
+            /*
+                Не пересчитываем траекторию после того,
+                как стартовая сцена закончилась.
+            */
+
+            if (
+                overlay &&
+                !overlay.classList.contains('hidden-intro')
+            ) {
+                setupIntroButterfly();
             }
 
-            /*
-             * Возвращаем каталог.
-             */
+        });
+
+        /* =========================================================
+           HOME / LOGO
+        ========================================================== */
+
+        function goHome() {
+
             switchView('catalog');
 
-            /*
-             * Плавно прокручиваем страницу наверх.
-             */
-            requestAnimationFrame(() => {
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
 
         }
 
-        /* =====================================================
-           ЯЗЫК
-           ===================================================== */
+        function scrollToCatalog() {
+
+            const catalog =
+                document.getElementById('catalogSection');
+
+            if (!catalog) return;
+
+            catalog.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        }
+
+        /* =========================================================
+           LANGUAGE
+        ========================================================== */
 
         function setLanguage(lang) {
 
             currentLang = lang;
 
-            const t =
-                translations[lang];
+            const t = translations[lang];
 
             document
                 .getElementById('htmlRoot')
-                .setAttribute(
-                    'lang',
-                    lang
-                );
+                .setAttribute('lang', lang);
 
-            const btnUa =
-                document.getElementById(
-                    'langBtnUa'
-                );
+            const ua =
+                document.getElementById('langBtnUa');
 
-            const btnRu =
-                document.getElementById(
-                    'langBtnRu'
-                );
+            const ru =
+                document.getElementById('langBtnRu');
 
             if (lang === 'ua') {
 
-                btnUa.className =
-                    "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                ua.className =
+                    'px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm';
 
-                btnRu.className =
-                    "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+                ru.className =
+                    'px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]';
 
             } else {
 
-                btnRu.className =
-                    "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                ru.className =
+                    'px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm';
 
-                btnUa.className =
-                    "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+                ua.className =
+                    'px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]';
 
             }
 
@@ -2159,53 +1876,37 @@
                 .forEach(el => {
 
                     const key =
-                        el.getAttribute(
-                            'data-i18n'
-                        );
+                        el.getAttribute('data-i18n');
 
                     if (t[key]) {
-                        el.innerText =
-                            t[key];
+                        el.innerText = t[key];
                     }
 
                 });
 
-            document.getElementById(
-                'heroDesc'
-            ).innerText =
-                t.hero_desc;
+            const hero =
+                document.getElementById('heroDesc');
 
-            document.getElementById(
-                'cardDesc'
-            ).innerText =
-                t.card_desc;
+            const card =
+                document.getElementById('cardDesc');
 
-            document.getElementById(
-                'specsAccordion'
-            ).innerHTML =
-                t.specs_content;
+            if (hero) {
+                hero.innerText = t.hero_desc;
+            }
 
-            document.getElementById(
-                'bundleAccordion'
-            ).innerHTML =
-                t.bundle_content;
-
-            document.getElementById(
-                'shippingAccordion'
-            ).innerHTML =
-                t.shipping_content;
-
-            document.getElementById(
-                'warrantyAccordion'
-            ).innerHTML =
-                t.warranty_content;
+            if (card) {
+                card.innerText = t.card_desc;
+            }
 
             if (!currentSelectedColor) {
 
-                document.getElementById(
-                    'selectedColorName'
-                ).innerText =
-                    t.prod_color_none;
+                const color =
+                    document.getElementById('selectedColorName');
+
+                if (color) {
+                    color.innerText =
+                        t.prod_color_none;
+                }
 
             } else {
 
@@ -2215,124 +1916,177 @@
 
         }
 
-        /* =====================================================
-           ЦВЕТ
-           ===================================================== */
+        /* =========================================================
+           COLOR
+        ========================================================== */
 
         function updateSelectedColorDisplay() {
 
-            if (!currentSelectedColor) {
-                return;
-            }
+            if (!currentSelectedColor) return;
 
             const t =
                 translations[currentLang];
 
-            let colorLocalized =
+            let color =
                 currentSelectedColor;
 
-            if (
-                currentSelectedColor ===
-                'White'
-            ) {
-                colorLocalized =
-                    t.prod_color_white;
+            if (currentSelectedColor === 'White') {
+                color = t.prod_color_white;
             }
 
-            if (
-                currentSelectedColor ===
-                'Black'
-            ) {
-                colorLocalized =
-                    t.prod_color_black;
+            if (currentSelectedColor === 'Black') {
+                color = t.prod_color_black;
             }
 
-            if (
-                currentSelectedColor ===
-                'Pink'
-            ) {
-                colorLocalized =
-                    t.prod_color_pink;
+            if (currentSelectedColor === 'Pink') {
+                color = t.prod_color_pink;
             }
 
-            const colorElem =
-                document.getElementById(
-                    'selectedColorName'
-                );
+            const element =
+                document.getElementById('selectedColorName');
 
-            if (colorElem) {
+            if (!element) return;
 
-                colorElem.innerText =
-                    colorLocalized;
+            element.innerText = color;
 
-                colorElem.className =
-                    "font-extrabold text-gray-900 dark:text-white";
-
-            }
+            element.className =
+                'font-extrabold text-gray-900 dark:text-white';
 
         }
 
-        /* =====================================================
-           КАТАЛОГ
-           ===================================================== */
+        function changePhotoAndColor(
+            imgPath,
+            colorName,
+            btnElement
+        ) {
 
-        function scrollToCatalog() {
+            currentSelectedColor = colorName;
+            currentSelectedImg = imgPath;
 
-            const catalogElem =
-                document.getElementById(
-                    'catalogSection'
-                );
+            const color =
+                document.getElementById('selectedColorName');
 
-            if (catalogElem) {
+            if (colorName) {
 
-                catalogElem.scrollIntoView({
-                    behavior: 'smooth'
+                updateSelectedColorDisplay();
+
+            } else if (color) {
+
+                color.innerText =
+                    translations[currentLang].prod_color_none;
+
+                color.className =
+                    'font-extrabold text-[#00C2FF]';
+
+            }
+
+            const mainImg =
+                document.getElementById('mainProductImage');
+
+            if (mainImg) {
+
+                mainImg.style.opacity = '.3';
+
+                setTimeout(() => {
+
+                    mainImg.src = imgPath;
+                    mainImg.style.opacity = '1';
+
+                }, 150);
+
+            }
+
+            document
+                .querySelectorAll('.color-picker-btn')
+                .forEach(btn => {
+
+                    btn.classList.remove(
+                        'border-[#00C2FF]',
+                        'scale-110',
+                        'ring-2',
+                        'ring-[#00C2FF]'
+                    );
+
                 });
 
+            const selectedButton = {
+
+                White:
+                    'colorBtnWhite',
+
+                Black:
+                    'colorBtnBlack',
+
+                Pink:
+                    'colorBtnPink'
+
+            }[colorName];
+
+            if (selectedButton) {
+
+                document
+                    .getElementById(selectedButton)
+                    ?.classList.add(
+                        'border-[#00C2FF]',
+                        'scale-110',
+                        'ring-2',
+                        'ring-[#00C2FF]'
+                    );
+
+            }
+
+            if (btnElement) {
+
+                document
+                    .querySelectorAll('#productThumbnails button')
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            'border-[#00C2FF]'
+                        );
+
+                    });
+
+                btnElement.classList.add(
+                    'border-[#00C2FF]'
+                );
+
             }
 
         }
+
+        /* =========================================================
+           VIEW SWITCHING
+        ========================================================== */
 
         function switchView(viewName) {
 
             document
-                .querySelectorAll(
-                    '.view-section'
-                )
+                .querySelectorAll('.view-section')
                 .forEach(el => {
 
-                    el.classList.add(
-                        'hidden'
-                    );
+                    el.classList.add('hidden');
 
                 });
 
             if (viewName === 'catalog') {
 
                 document
-                    .getElementById(
-                        'catalogView'
-                    )
-                    .classList.remove(
-                        'hidden'
-                    );
+                    .getElementById('catalogView')
+                    .classList.remove('hidden');
 
                 window.scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
 
-            } else if (
-                viewName === 'product'
-            ) {
+            }
+
+            if (viewName === 'product') {
 
                 document
-                    .getElementById(
-                        'productView'
-                    )
-                    .classList.remove(
-                        'hidden'
-                    );
+                    .getElementById('productView')
+                    .classList.remove('hidden');
 
                 window.scrollTo({
                     top: 0,
@@ -2347,251 +2101,76 @@
             switchView('product');
         }
 
-        /* =====================================================
-           ФОТО И ЦВЕТ
-           ===================================================== */
-
-        function changePhotoAndColor(
-            imgPath,
-            colorName,
-            btnElement
-        ) {
-
-            currentSelectedColor =
-                colorName;
-
-            currentSelectedImg =
-                imgPath;
-
-            if (colorName) {
-
-                updateSelectedColorDisplay();
-
-            } else {
-
-                const t =
-                    translations[currentLang];
-
-                document.getElementById(
-                    'selectedColorName'
-                ).innerText =
-                    t.prod_color_none;
-
-                document.getElementById(
-                    'selectedColorName'
-                ).className =
-                    "font-extrabold text-[#00C2FF]";
-
-            }
-
-            const mainImg =
-                document.getElementById(
-                    'mainProductImage'
-                );
-
-            if (mainImg) {
-
-                mainImg.style.opacity =
-                    '0.3';
-
-                setTimeout(() => {
-
-                    mainImg.src =
-                        imgPath;
-
-                    mainImg.style.opacity =
-                        '1';
-
-                }, 150);
-
-            }
-
-            document
-                .querySelectorAll(
-                    '.color-picker-btn'
-                )
-                .forEach(b => {
-
-                    b.classList.remove(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-                });
-
-            if (colorName === 'White') {
-
-                const b =
-                    document.getElementById(
-                        'colorBtnWhite'
-                    );
-
-                if (b) {
-
-                    b.classList.add(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-                }
-
-            } else if (
-                colorName === 'Black'
-            ) {
-
-                const b =
-                    document.getElementById(
-                        'colorBtnBlack'
-                    );
-
-                if (b) {
-
-                    b.classList.add(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-                }
-
-            } else if (
-                colorName === 'Pink'
-            ) {
-
-                const b =
-                    document.getElementById(
-                        'colorBtnPink'
-                    );
-
-                if (b) {
-
-                    b.classList.add(
-                        'border-[#00C2FF]',
-                        'scale-110',
-                        'ring-2',
-                        'ring-[#00C2FF]'
-                    );
-
-                }
-
-            }
-
-            if (btnElement) {
-
-                document
-                    .querySelectorAll(
-                        '#productThumbnails button'
-                    )
-                    .forEach(b => {
-
-                        b.classList.remove(
-                            'border-[#00C2FF]'
-                        );
-
-                    });
-
-                btnElement.classList.add(
-                    'border-[#00C2FF]'
-                );
-
-            }
-
-        }
-
-        /* =====================================================
-           КОЛИЧЕСТВО
-           ===================================================== */
+        /* =========================================================
+           QUANTITY
+        ========================================================== */
 
         function updateQty(delta) {
 
-            currentProductQty +=
-                delta;
+            currentProductQty += delta;
 
-            if (
-                currentProductQty < 1
-            ) {
+            if (currentProductQty < 1) {
                 currentProductQty = 1;
             }
 
-            const qtyElem =
-                document.getElementById(
-                    'productQty'
-                );
+            const element =
+                document.getElementById('productQty');
 
-            if (qtyElem) {
-
-                qtyElem.innerText =
+            if (element) {
+                element.innerText =
                     currentProductQty;
-
             }
 
         }
 
-        /* =====================================================
-           ИЗБРАННОЕ
-           ===================================================== */
+        /* =========================================================
+           FAVORITES
+        ========================================================== */
 
         function getFavorites() {
 
             try {
 
-                const favs =
+                const data =
                     JSON.parse(
-                        localStorage.getItem(
-                            'milip_favorites'
-                        )
+                        localStorage.getItem('milip_favorites')
                     ) || [];
 
-                return favs.filter(
+                return data.filter(
                     item =>
                         item &&
                         item.id &&
-                        item.id !==
-                        'undefined'
+                        item.id !== 'undefined'
                 );
 
-            } catch (e) {
-
+            } catch {
                 return [];
-
             }
 
         }
 
         function toggleFavorite(
             id,
-            price,
-            img,
-            color
+            price = 2449,
+            img = 'Главная фото для каталога.jpg',
+            color = 'White'
         ) {
 
-            if (
-                !id ||
-                id === 'undefined'
-            ) {
+            if (!id || id === 'undefined') {
                 return;
             }
 
-            let favs =
+            let favorites =
                 getFavorites();
 
             const index =
-                favs.findIndex(
-                    item =>
-                        item.id === id
+                favorites.findIndex(
+                    item => item.id === id
                 );
 
             if (index > -1) {
 
-                favs.splice(
-                    index,
-                    1
-                );
+                favorites.splice(index, 1);
 
                 showToast(
                     currentLang === 'ua'
@@ -2601,37 +2180,25 @@
 
             } else {
 
-                favs.push({
-
+                favorites.push({
                     id,
-
-                    price:
-                        price || 2449,
-
-                    img:
-                        img ||
-                        'Главная фото для каталога.jpg',
-
-                    color:
-                        color ||
-                        'White',
-
-                    qty:
-                        currentProductQty
-
+                    price,
+                    img,
+                    color: color || 'White',
+                    qty: currentProductQty
                 });
 
                 showToast(
                     currentLang === 'ua'
-                        ? 'Додано в обране ❤️'
-                        : 'Добавлено в избранное ❤️'
+                        ? 'Додано в обране'
+                        : 'Добавлено в избранное'
                 );
 
             }
 
             localStorage.setItem(
                 'milip_favorites',
-                JSON.stringify(favs)
+                JSON.stringify(favorites)
             );
 
             updateFavoritesUI();
@@ -2640,64 +2207,53 @@
 
         function updateFavoritesUI() {
 
-            const favs =
+            const favorites =
                 getFavorites();
 
             const badge =
-                document.getElementById(
-                    'favoritesBadge'
-                );
+                document.getElementById('favoritesBadge');
 
             if (badge) {
 
-                if (favs.length > 0) {
+                if (favorites.length) {
 
                     badge.innerText =
-                        favs.length;
+                        favorites.length;
 
-                    badge.classList.remove(
-                        'hidden'
-                    );
+                    badge.classList.remove('hidden');
 
                 } else {
 
-                    badge.classList.add(
-                        'hidden'
-                    );
+                    badge.classList.add('hidden');
 
                 }
 
             }
 
             document
-                .querySelectorAll(
-                    '.wishlist-btn'
-                )
-                .forEach(btn =>
-                    btn.classList.remove(
-                        'active'
-                    )
-                );
+                .querySelectorAll('.wishlist-btn')
+                .forEach(btn => {
 
-            favs.forEach(item => {
+                    btn.classList.remove('active');
+
+                });
+
+            favorites.forEach(item => {
+
+                const className =
+                    item.id.replace(/\s+/g, '-');
 
                 document
                     .querySelectorAll(
-                        `.fav-icon-${item.id.replace(/\s+/g, '-')}`
+                        `.fav-icon-${className}`
                     )
                     .forEach(icon => {
 
                         icon
-                            .closest(
-                                '.wishlist-btn'
-                            )
-                            ?.classList.add(
-                                'active'
-                            );
+                            .closest('.wishlist-btn')
+                            ?.classList.add('active');
 
-                        icon.classList.add(
-                            'active'
-                        );
+                        icon.classList.add('active');
 
                     });
 
@@ -2705,24 +2261,20 @@
 
         }
 
-        /* =====================================================
-           КОРЗИНА
-           ===================================================== */
+        /* =========================================================
+           CART
+        ========================================================== */
 
         function getCart() {
 
             try {
 
                 return JSON.parse(
-                    localStorage.getItem(
-                        'milip_cart'
-                    )
+                    localStorage.getItem('milip_cart')
                 ) || [];
 
-            } catch (e) {
-
+            } catch {
                 return [];
-
             }
 
         }
@@ -2730,15 +2282,11 @@
         function playButterflyAnimation(event) {
 
             const cartIcon =
-                document.getElementById(
-                    'cartIconButton'
-                );
+                document.getElementById('cartIconButton');
 
-            if (!cartIcon) {
-                return;
-            }
+            if (!cartIcon || !event) return;
 
-            const cartRect =
+            const rect =
                 cartIcon.getBoundingClientRect();
 
             const startX =
@@ -2748,48 +2296,39 @@
                 event.clientY;
 
             const targetX =
-                cartRect.left +
-                cartRect.width / 2 -
+                rect.left +
+                rect.width / 2 -
                 startX;
 
             const targetY =
-                cartRect.top +
-                cartRect.height / 2 -
+                rect.top +
+                rect.height / 2 -
                 startY;
 
             const butterfly =
-                document.createElement(
-                    'div'
-                );
+                document.createElement('div');
 
             butterfly.className =
-                'flying-butterfly';
+                'cart-butterfly';
 
             butterfly.style.left =
-                startX + 'px';
+                `${startX}px`;
 
             butterfly.style.top =
-                startY + 'px';
+                `${startY}px`;
 
             butterfly.style.setProperty(
                 '--target-x',
-                targetX + 'px'
+                `${targetX}px`
             );
 
             butterfly.style.setProperty(
                 '--target-y',
-                targetY + 'px'
+                `${targetY}px`
             );
 
             butterfly.innerHTML = `
-                <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 24 24"
-                    fill="#00C2FF"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style="filter: drop-shadow(0 0 8px rgba(0,194,255,0.8));"
-                >
+                <svg viewBox="0 0 24 24">
                     <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
                 </svg>
             `;
@@ -2814,7 +2353,7 @@
 
                 }, 200);
 
-            }, 2000);
+            }, 1750);
 
         }
 
@@ -2826,10 +2365,7 @@
             qty = 1
         ) {
 
-            if (
-                !id ||
-                id === 'undefined'
-            ) {
+            if (!id || id === 'undefined') {
                 return;
             }
 
@@ -2848,26 +2384,18 @@
 
             if (existing) {
 
-                existing.qty +=
-                    qty;
+                existing.qty += qty;
 
             } else {
 
                 cart.push({
-
                     id,
-
                     price,
-
-                    color:
-                        finalColor,
-
+                    color: finalColor,
                     img:
                         img ||
                         'Главная фото для каталога.jpg',
-
                     qty
-
                 });
 
             }
@@ -2881,8 +2409,8 @@
 
             showToast(
                 currentLang === 'ua'
-                    ? 'Товар додано в кошик 🛒'
-                    : 'Товар добавлен в корзину 🛒'
+                    ? 'Товар додано в кошик'
+                    : 'Товар добавлен в корзину'
             );
 
         }
@@ -2895,9 +2423,7 @@
             img
         ) {
 
-            playButterflyAnimation(
-                event
-            );
+            playButterflyAnimation(event);
 
             addToCart(
                 id,
@@ -2917,16 +2443,14 @@
 
                 showToast(
                     currentLang === 'ua'
-                        ? '⚠️ Будь ласка, оберіть колір товару!'
-                        : '⚠️ Пожалуйста, выберите цвет товара!'
+                        ? 'Будь ласка, оберіть колір товару'
+                        : 'Пожалуйста, выберите цвет товара'
                 );
 
                 return;
             }
 
-            playButterflyAnimation(
-                event
-            );
+            playButterflyAnimation(event);
 
             addToCart(
                 'MCHOSE A7 V2 PRO',
@@ -2944,43 +2468,39 @@
                 getCart();
 
             const badge =
-                document.getElementById(
-                    'cartBadge'
+                document.getElementById('cartBadge');
+
+            if (!badge) return;
+
+            const total =
+                cart.reduce(
+                    (sum, item) =>
+                        sum + item.qty,
+                    0
                 );
 
-            if (badge) {
+            if (total > 0) {
 
-                const totalCount =
-                    cart.reduce(
-                        (sum, item) =>
-                            sum + item.qty,
-                        0
-                    );
+                badge.innerText =
+                    total;
 
-                if (totalCount > 0) {
+                badge.classList.remove(
+                    'hidden'
+                );
 
-                    badge.innerText =
-                        totalCount;
+            } else {
 
-                    badge.classList.remove(
-                        'hidden'
-                    );
-
-                } else {
-
-                    badge.classList.add(
-                        'hidden'
-                    );
-
-                }
+                badge.classList.add(
+                    'hidden'
+                );
 
             }
 
         }
 
-        /* =====================================================
+        /* =========================================================
            TOAST
-           ===================================================== */
+        ========================================================== */
 
         function showToast(text) {
 
@@ -2989,14 +2509,10 @@
                     'toastContainer'
                 );
 
-            if (!container) {
-                return;
-            }
+            if (!container) return;
 
             const toast =
-                document.createElement(
-                    'div'
-                );
+                document.createElement('div');
 
             toast.className =
                 'bg-[#07101B] text-white border border-[#11223A] px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold animate-fade-in pointer-events-auto flex items-center space-x-2';
@@ -3004,14 +2520,11 @@
             toast.innerHTML =
                 `<span>${text}</span>`;
 
-            container.appendChild(
-                toast
-            );
+            container.appendChild(toast);
 
             setTimeout(() => {
 
-                toast.style.opacity =
-                    '0';
+                toast.style.opacity = '0';
 
                 setTimeout(() => {
 
@@ -3023,65 +2536,52 @@
 
         }
 
-        /* =====================================================
-           АККОРДЕОНЫ
-           ===================================================== */
+        /* =========================================================
+           ACCORDION
+        ========================================================== */
 
         function toggleAccordion(id) {
 
-            const el =
-                document.getElementById(
-                    id
-                );
+            const element =
+                document.getElementById(id);
 
             const arrow =
                 document.getElementById(
-                    id + 'Arrow'
+                    `${id}Arrow`
                 );
 
-            if (el) {
+            if (!element) return;
 
-                el.classList.toggle(
-                    'hidden'
-                );
+            element.classList.toggle(
+                'hidden'
+            );
 
-                if (arrow) {
+            if (arrow) {
 
-                    arrow.style.transform =
-                        el.classList.contains(
-                            'hidden'
-                        )
-                            ? 'rotate(0deg)'
-                            : 'rotate(180deg)';
-
-                }
+                arrow.style.transform =
+                    element.classList.contains('hidden')
+                        ? 'rotate(0deg)'
+                        : 'rotate(180deg)';
 
             }
 
         }
 
-        /* =====================================================
-           ИЗБРАННОЕ — МОДАЛКА
-           ===================================================== */
+        /* =========================================================
+           FAVORITES MODAL
+        ========================================================== */
 
         function openFavoritesModal() {
 
-            let existingModal =
-                document.getElementById(
-                    'favoritesModal'
-                );
+            document
+                .getElementById('favoritesModal')
+                ?.remove();
 
-            if (existingModal) {
-                existingModal.remove();
-            }
-
-            const favs =
+            const favorites =
                 getFavorites();
 
             const modal =
-                document.createElement(
-                    'div'
-                );
+                document.createElement('div');
 
             modal.id =
                 'favoritesModal';
@@ -3089,34 +2589,41 @@
             modal.className =
                 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4';
 
-            let titleText =
-                currentLang === 'ua'
-                    ? 'Обране ❤️'
-                    : 'Избранное ❤️';
+            const ua =
+                currentLang === 'ua';
 
-            let emptyText =
-                currentLang === 'ua'
+            const title =
+                ua
+                    ? 'Обране'
+                    : 'Избранное';
+
+            const empty =
+                ua
                     ? 'Список обраного порожній'
                     : 'Список избранного пуст';
 
-            let btnCartText =
-                currentLang === 'ua'
+            const add =
+                ua
                     ? 'Додати у кошик'
                     : 'Добавить в корзину';
 
-            let btnDelText =
-                currentLang === 'ua'
+            const remove =
+                ua
                     ? 'Видалити'
                     : 'Удалить';
 
-            let contentHtml = `
+            let html = `
 
-                <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[80vh] flex flex-col">
+                <div
+                    class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[80vh] flex flex-col"
+                >
 
-                    <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
+                    <div
+                        class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]"
+                    >
 
                         <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">
-                            ${titleText}
+                            ${title}
                         </h3>
 
                         <button
@@ -3128,58 +2635,47 @@
 
                     </div>
 
-                    <div class="overflow-y-auto py-4 space-y-3 flex-grow">
+                    <div
+                        class="overflow-y-auto py-4 space-y-3 flex-grow"
+                    >
             `;
 
-            if (favs.length === 0) {
+            if (!favorites.length) {
 
-                contentHtml += `
+                html += `
                     <p class="text-center text-gray-500 py-8 text-sm">
-                        ${emptyText}
+                        ${empty}
                     </p>
                 `;
 
             } else {
 
-                favs.forEach(item => {
+                favorites.forEach(item => {
 
-                    let colorNameLocal =
-                        item.color ||
-                        'White';
+                    let color =
+                        item.color || 'White';
 
-                    if (
-                        currentLang === 'ru'
-                    ) {
+                    if (!ua) {
 
-                        if (
-                            colorNameLocal ===
-                            'White'
-                        ) {
-                            colorNameLocal =
-                                'Белый';
+                        if (color === 'White') {
+                            color = 'Белый';
                         }
 
-                        if (
-                            colorNameLocal ===
-                            'Black'
-                        ) {
-                            colorNameLocal =
-                                'Черный';
+                        if (color === 'Black') {
+                            color = 'Черный';
                         }
 
-                        if (
-                            colorNameLocal ===
-                            'Pink'
-                        ) {
-                            colorNameLocal =
-                                'Розовый';
+                        if (color === 'Pink') {
+                            color = 'Розовый';
                         }
 
                     }
 
-                    contentHtml += `
+                    html += `
 
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
+                        <div
+                            class="flex flex-col sm:flex-row sm:items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3"
+                        >
 
                             <div
                                 class="flex items-center space-x-3 cursor-pointer"
@@ -3193,26 +2689,17 @@
 
                                 <div>
 
-                                    <h4 class="font-bold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                                    <h4
+                                        class="font-bold text-sm text-gray-900 dark:text-white"
+                                    >
                                         ${item.id}
                                     </h4>
 
                                     <div class="text-[11px] text-gray-500">
-
-                                        ${currentLang === 'ua' ? 'Колір' : 'Цвет'}:
-
+                                        ${ua ? 'Колір' : 'Цвет'}:
                                         <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                            ${colorNameLocal}
+                                            ${color}
                                         </span>
-
-                                        |
-
-                                        ${currentLang === 'ua' ? 'Кількість' : 'Количество'}:
-
-                                        <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                            ${item.qty || 1}
-                                        </span>
-
                                     </div>
 
                                     <div class="text-xs font-extrabold text-[#00C2FF]">
@@ -3223,38 +2710,41 @@
 
                             </div>
 
-                            <div class="flex items-center justify-between sm:justify-end space-x-3 border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-300 dark:border-gray-800">
+                            <div
+                                class="flex items-center justify-between sm:justify-end space-x-3"
+                            >
 
                                 <button
-                                    onclick="addToCart('${item.id}', ${item.price}, '${item.color || 'White'}', '${item.img}', ${item.qty || 1});"
+                                    onclick="addToCart('${item.id}',${item.price},'${item.color || 'White'}','${item.img}',${item.qty || 1})"
                                     class="px-3 py-2 bg-white text-black dark:bg-[#0F172A] dark:text-white text-xs font-extrabold rounded-xl shadow hover:opacity-90 transition-all"
                                 >
-                                    ${btnCartText}
+                                    ${add}
                                 </button>
 
                                 <button
                                     onclick="toggleFavorite('${item.id}'); openFavoritesModal();"
                                     class="text-xs font-extrabold text-red-500 hover:underline px-2 py-1"
                                 >
-                                    ${btnDelText}
+                                    ${remove}
                                 </button>
 
                             </div>
 
                         </div>
+
                     `;
 
                 });
 
             }
 
-            contentHtml += `
+            html += `
                     </div>
                 </div>
             `;
 
             modal.innerHTML =
-                contentHtml;
+                html;
 
             document.body.appendChild(
                 modal
@@ -3262,28 +2752,21 @@
 
         }
 
-        /* =====================================================
-           КОРЗИНА — DRAWER
-           ===================================================== */
+        /* =========================================================
+           CART DRAWER
+        ========================================================== */
 
         function openCartDrawer() {
 
-            let existingDrawer =
-                document.getElementById(
-                    'cartDrawer'
-                );
-
-            if (existingDrawer) {
-                existingDrawer.remove();
-            }
+            document
+                .getElementById('cartDrawer')
+                ?.remove();
 
             const cart =
                 getCart();
 
             const drawer =
-                document.createElement(
-                    'div'
-                );
+                document.createElement('div');
 
             drawer.id =
                 'cartDrawer';
@@ -3291,7 +2774,7 @@
             drawer.className =
                 'fixed inset-0 z-50 overflow-hidden';
 
-            let totalPrice =
+            const totalPrice =
                 cart.reduce(
                     (sum, item) =>
                         sum +
@@ -3300,141 +2783,137 @@
                     0
                 );
 
-            let titleText =
-                currentLang === 'ua'
-                    ? 'Кошик 🛒'
-                    : 'Корзина 🛒';
+            const ua =
+                currentLang === 'ua';
 
-            let emptyText =
-                currentLang === 'ua'
-                    ? 'Кошик порожній 🛒'
-                    : 'Корзина пуста 🛒';
+            const title =
+                ua
+                    ? 'Кошик'
+                    : 'Корзина';
 
-            let totalText =
-                currentLang === 'ua'
+            const empty =
+                ua
+                    ? 'Кошик порожній'
+                    : 'Корзина пуста';
+
+            const total =
+                ua
                     ? 'Загалом:'
                     : 'Итого:';
 
-            let btnOrderText =
-                currentLang === 'ua'
+            const order =
+                ua
                     ? 'ОФОРМИТИ ЗАМОВЛЕННЯ'
                     : 'ОФОРМИТЬ ЗАКАЗ';
 
-            let btnDelText =
-                currentLang === 'ua'
+            const remove =
+                ua
                     ? 'Видалити'
                     : 'Удалить';
 
             let itemsHtml = '';
 
-            if (cart.length === 0) {
+            if (!cart.length) {
 
                 itemsHtml = `
                     <p class="text-center text-gray-500 py-12 text-sm">
-                        ${emptyText}
+                        ${empty}
                     </p>
                 `;
 
             } else {
 
-                cart.forEach(
-                    (item, index) => {
+                cart.forEach((item, index) => {
 
-                        let colorNameLocal =
-                            item.color;
+                    let color =
+                        item.color;
 
-                        if (
-                            currentLang === 'ru'
-                        ) {
+                    if (!ua) {
 
-                            if (
-                                colorNameLocal ===
-                                'White'
-                            ) {
-                                colorNameLocal =
-                                    'Белый';
-                            }
-
-                            if (
-                                colorNameLocal ===
-                                'Black'
-                            ) {
-                                colorNameLocal =
-                                    'Черный';
-                            }
-
-                            if (
-                                colorNameLocal ===
-                                'Pink'
-                            ) {
-                                colorNameLocal =
-                                    'Розовый';
-                            }
-
+                        if (color === 'White') {
+                            color = 'Белый';
                         }
 
-                        itemsHtml += `
+                        if (color === 'Black') {
+                            color = 'Черный';
+                        }
 
-                            <div class="flex items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
+                        if (color === 'Pink') {
+                            color = 'Розовый';
+                        }
 
-                                <img
-                                    src="${item.img}"
-                                    class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1 flex-shrink-0"
+                    }
+
+                    itemsHtml += `
+
+                        <div
+                            class="flex items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3"
+                        >
+
+                            <img
+                                src="${item.img}"
+                                class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1 flex-shrink-0"
+                            >
+
+                            <div class="flex-grow min-w-0">
+
+                                <h4
+                                    class="font-bold text-xs text-gray-900 dark:text-white truncate"
                                 >
+                                    ${item.id}
+                                </h4>
 
-                                <div class="flex-grow min-w-0">
-
-                                    <h4 class="font-bold text-xs text-gray-900 dark:text-white truncate">
-                                        ${item.id}
-                                    </h4>
-
-                                    <div class="text-[10px] text-gray-500">
-
-                                        ${currentLang === 'ua' ? 'Колір' : 'Цвет'}:
-
-                                        <span class="font-semibold text-gray-800 dark:text-gray-200">
-                                            ${colorNameLocal}
-                                        </span>
-
-                                    </div>
-
-                                    <div class="text-xs font-extrabold text-[#00C2FF] mt-0.5">
-                                        ${item.price} ₴ × ${item.qty}
-                                    </div>
-
+                                <div class="text-[10px] text-gray-500">
+                                    ${ua ? 'Колір' : 'Цвет'}:
+                                    <span class="font-semibold text-gray-800 dark:text-gray-200">
+                                        ${color}
+                                    </span>
                                 </div>
 
-                                <button
-                                    onclick="removeFromCart(${index})"
-                                    class="text-red-500 hover:text-red-700 p-2 text-xs font-bold"
-                                >
-                                    ${btnDelText}
-                                </button>
+                                <div class="text-xs font-extrabold text-[#00C2FF] mt-0.5">
+                                    ${item.price} ₴ × ${item.qty}
+                                </div>
 
                             </div>
 
-                        `;
+                            <button
+                                onclick="removeFromCart(${index})"
+                                class="text-red-500 hover:text-red-700 p-2 text-xs font-bold"
+                            >
+                                ${remove}
+                            </button>
 
-                    }
-                );
+                        </div>
+
+                    `;
+
+                });
 
             }
 
             drawer.innerHTML = `
 
                 <div
-                    class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+                    class="absolute inset-0 bg-black/60 backdrop-blur-sm"
                     onclick="document.getElementById('cartDrawer').remove()"
                 ></div>
 
-                <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+                <div
+                    class="absolute inset-y-0 right-0 max-w-full flex pl-10"
+                >
 
-                    <div class="w-screen max-w-md bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex flex-col p-6 animate-fade-in">
+                    <div
+                        class="w-screen max-w-md bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex flex-col p-6 animate-fade-in"
+                    >
 
-                        <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
+                        <div
+                            class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]"
+                        >
 
-                            <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">
-                                ${titleText}
+                            <h3
+                                class="font-extrabold text-lg text-gray-900 dark:text-white"
+                            >
+                                ${title}
                             </h3>
 
                             <button
@@ -3446,18 +2925,22 @@
 
                         </div>
 
-                        <div class="overflow-y-auto py-4 space-y-3 flex-grow">
-
+                        <div
+                            class="overflow-y-auto py-4 space-y-3 flex-grow"
+                        >
                             ${itemsHtml}
-
                         </div>
 
-                        <div class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4">
+                        <div
+                            class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4"
+                        >
 
-                            <div class="flex items-center justify-between font-extrabold text-base">
+                            <div
+                                class="flex items-center justify-between font-extrabold text-base"
+                            >
 
                                 <span>
-                                    ${totalText}
+                                    ${total}
                                 </span>
 
                                 <span class="text-[#00C2FF]">
@@ -3467,10 +2950,10 @@
                             </div>
 
                             <button
-                                onclick="showToast('${currentLang === 'ua' ? 'Оформлення замовлення успішне!' : 'Оформление заказа успешно!'}'); localStorage.removeItem('milip_cart'); updateCartUI(); document.getElementById('cartDrawer').remove();"
+                                onclick="finishOrder()"
                                 class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90 transition-opacity"
                             >
-                                ${btnOrderText}
+                                ${order}
                             </button>
 
                         </div>
@@ -3478,7 +2961,6 @@
                     </div>
 
                 </div>
-
             `;
 
             document.body.appendChild(
@@ -3487,15 +2969,32 @@
 
         }
 
+        function finishOrder() {
+
+            showToast(
+                currentLang === 'ua'
+                    ? 'Оформлення замовлення успішне!'
+                    : 'Оформление заказа успешно!'
+            );
+
+            localStorage.removeItem(
+                'milip_cart'
+            );
+
+            updateCartUI();
+
+            document
+                .getElementById('cartDrawer')
+                ?.remove();
+
+        }
+
         function removeFromCart(index) {
 
             let cart =
                 getCart();
 
-            cart.splice(
-                index,
-                1
-            );
+            cart.splice(index, 1);
 
             localStorage.setItem(
                 'milip_cart',
@@ -3508,9 +3007,9 @@
 
         }
 
-        /* =====================================================
-           ПОИСК
-           ===================================================== */
+        /* =========================================================
+           SEARCH
+        ========================================================== */
 
         function openSearchModal() {
 
@@ -3522,32 +3021,26 @@
 
         }
 
-        /* =====================================================
-           ТЕМА
-           ===================================================== */
+        /* =========================================================
+           THEME
+        ========================================================== */
 
         function toggleTheme() {
 
-            document.documentElement
-                .classList.toggle(
-                    'dark'
-                );
+            document
+                .documentElement
+                .classList
+                .toggle('dark');
 
             document
-                .getElementById(
-                    'sunIcon'
-                )
-                .classList.toggle(
-                    'hidden'
-                );
+                .getElementById('sunIcon')
+                .classList
+                .toggle('hidden');
 
             document
-                .getElementById(
-                    'moonIcon'
-                )
-                .classList.toggle(
-                    'hidden'
-                );
+                .getElementById('moonIcon')
+                .classList
+                .toggle('hidden');
 
         }
 
@@ -3555,4 +3048,3 @@
 
 </body>
 </html>
-```
