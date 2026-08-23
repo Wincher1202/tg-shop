@@ -1,220 +1,833 @@
 <!DOCTYPE html>
-<html lang="uk" data-theme="moon">
+<html lang="uk" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE — MCHOSE A7 V2 PRO</title>
-    <link rel="stylesheet" href="style.css">
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO | Precision Hardware</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        milip: {
+                            blue: '#5BA9E6',
+                            darkBlue: '#3b89c7',
+                            lightBg: '#D1D4D8',
+                            cardLight: '#C9CDD2',
+                            nightBg: '#07111D',
+                            cardNight: '#0B1725',
+                            borderNight: '#13283A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                    },
+                    transitionDuration: {
+                        DEFAULT: '300ms'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Плавные переходы для тем и элементов */
+        body, header, div, button, input, select {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+        /* Убираем синий стандартный click-highlight на мобилках */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Стилизация скроллбара */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(91, 169, 230, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(91, 169, 230, 0.6);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-[#D1D4D8] text-[#111827] dark:bg-[#07111D] dark:text-[#F3F4F6] font-sans antialiased selection:bg-[#5BA9E6] selection:text-white min-h-screen flex flex-col">
 
     <!-- HEADER -->
-    <header class="milip-header">
-        <div class="header-container">
-            <!-- Desktop & Mobile Logo -->
-            <a href="#" class="milip-logo">
-                <svg class="butterfly-icon" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 16C16 10 10 4 4 8C1 10 2 16 16 16ZM16 16C16 10 22 4 28 8C31 10 30 16 16 16Z"/>
-                    <path d="M16 16C16 22 10 28 4 24C1 22 2 16 16 16ZM16 16C16 22 22 28 28 24C31 22 30 16 16 16Z"/>
-                </svg>
-                <span class="logo-text">MILIPSTORE</span>
-            </a>
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#D1D4D8]/80 dark:bg-[#07111D]/80 border-b border-[#BFC4C9] dark:border-[#13283A]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Left nav -->
+            <div class="flex items-center space-x-8">
+                <a href="#" onclick="switchView('catalog')" class="flex items-center space-x-3 group">
+                    <!-- Geometric Butterfly / M Logo SVG -->
+                    <svg class="w-8 h-8 text-[#5BA9E6] group-hover:scale-105 transition-transform" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.8"/>
+                        <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.8"/>
+                        <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
+                        <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
+                        <circle cx="16" cy="16" r="3" class="text-white dark:text-[#07111D]" fill="currentColor"/>
+                    </svg>
+                    <span class="font-bold tracking-wider text-lg">MILIPSTORE</span>
+                </a>
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#" onclick="switchView('catalog')" class="hover:text-[#5BA9E6] transition-colors">Каталог</a>
+                    <button onclick="openSearchModal()" class="flex items-center space-x-1 hover:text-[#5BA9E6] transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <span>Пошук</span>
+                    </button>
+                </nav>
+            </div>
 
-            <!-- Desktop Nav -->
-            <nav class="header-nav">
-                <a href="#catalog" class="nav-link">Каталог</a>
-                <a href="#search" class="nav-link" id="open-search">Пошук</a>
-            </nav>
+            <!-- Right icons / controls -->
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <!-- Lang Switcher -->
+                <div class="hidden sm:flex items-center space-x-1 text-xs font-semibold text-gray-500 dark:text-gray-400">
+                    <span class="text-[#5BA9E6] cursor-pointer">UA</span>
+                    <span>/</span>
+                    <span class="hover:text-[#5BA9E6] cursor-pointer">RU</span>
+                    <span>/</span>
+                    <span class="hover:text-[#5BA9E6] cursor-pointer">EN</span>
+                </div>
 
-            <!-- Header Actions (No circular buttons!) -->
-            <div class="header-actions">
-                <button class="icon-btn" id="theme-toggle" aria-label="Перемикач теми">
-                    <!-- Sun / Moon SVG switch -->
-                    <svg class="sun-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2m-4.22-7.78l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
-                    <svg class="moon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <!-- Theme Toggle (Sun / Moon) -->
+                <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2 text-gray-700 dark:text-gray-300 hover:text-[#5BA9E6] transition-colors" title="Змінити тему">
+                    <!-- Sun SVG (shown in dark mode) -->
+                    <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <!-- Moon SVG (shown in light mode) -->
+                    <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                 </button>
-                <button class="icon-btn" id="wishlist-btn" aria-label="Обране">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+
+                <!-- Favorites -->
+                <button onclick="openFavoritesModal()" class="relative p-2 text-gray-700 dark:text-gray-300 hover:text-[#5BA9E6] transition-colors" title="Обране">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    <span id="favoritesBadge" class="absolute top-1 right-1 bg-[#5BA9E6] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
                 </button>
-                <button class="icon-btn" id="cart-btn" aria-label="Кошик">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
-                    <span class="cart-badge" id="cart-count">0</span>
+
+                <!-- Cart -->
+                <button onclick="openCartDrawer()" class="relative p-2 text-gray-700 dark:text-gray-300 hover:text-[#5BA9E6] transition-colors" title="Кошик">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    <span id="cartBadge" class="absolute top-1 right-1 bg-[#5BA9E6] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
                 </button>
-                <button class="icon-btn mobile-menu-btn" id="mobile-menu-toggle" aria-label="Меню">
-                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+
+                <!-- Mobile Menu Hamburger -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-700 dark:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
         </div>
-        <!-- Mobile Search Bar Sub-row -->
-        <div class="mobile-search-bar">
-            <input type="text" placeholder="Пошук обладнання MILIP..." id="mobile-search-input">
+
+        <!-- Mobile Secondary Search Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div onclick="openSearchModal()" class="flex items-center space-x-2 bg-[#C9CDD2] dark:bg-[#0B1725] px-3 py-2 rounded-lg text-sm text-gray-500 cursor-pointer border border-[#BFC4C9] dark:border-[#13283A]">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <span>Пошук MCHOSE A7 V2 PRO...</span>
+            </div>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="milip-hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-tag">MILIP / 001 &bull; MCHOSE</div>
-                <h1 class="hero-title">A7 V2 PRO</h1>
-                <p class="hero-subtitle">PRECISION WITHOUT LIMITS</p>
-                <div class="hero-specs-grid">
-                    <div class="spec-item"><span>8K</span><label>Polling</label></div>
-                    <div class="spec-item"><span>PAW3395</span><label>Sensor</label></div>
-                    <div class="spec-item"><span>49g</span><label>Weight</label></div>
-                    <div class="spec-item"><span>WIRELESS</span><label>Tri-Mode</label></div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="glow-backdrop"></div>
-                <!-- Единая реальная фотография товара из проекта -->
-                <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" id="hero-main-img" class="product-main-photo">
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 bg-[#07111D]/90 backdrop-blur-lg transform translate-x-full transition-transform duration-300 md:hidden flex flex-col p-6">
+        <div class="flex justify-between items-center mb-8">
+            <span class="font-bold text-lg text-white">MILIPMENU</span>
+            <button onclick="toggleMobileMenu()" class="p-2 text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-6 text-lg font-medium text-gray-200">
+            <a href="#" onclick="toggleMobileMenu(); switchView('catalog')" class="hover:text-[#5BA9E6]">Каталог</a>
+            <a href="#" onclick="toggleMobileMenu(); openFavoritesModal()" class="hover:text-[#5BA9E6]">Обране</a>
+            <a href="#" onclick="toggleMobileMenu(); openCartDrawer()" class="hover:text-[#5BA9E6]">Кошик</a>
+            <div class="pt-6 border-t border-gray-800 flex space-x-4 text-sm">
+                <span class="text-[#5BA9E6] font-bold">UA</span>
+                <span class="text-gray-400">RU</span>
+                <span class="text-gray-400">EN</span>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- CATALOG / PRODUCT CARD SECTION -->
-    <main class="milip-main" id="catalog">
-        <div class="container">
-            <div class="section-header">
-                <h2>HARDWARE LINEUP</h2>
-                <span class="section-code">SYS.01 // MCHOSE</span>
-            </div>
-
-            <div class="products-grid">
-                <!-- Product Card -->
-                <div class="milip-product-card" data-id="a7-v2-pro">
-                    <button class="card-wishlist" aria-label="Додати в обране">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </button>
-                    <div class="card-image-container">
-                        <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" class="card-img">
+    <!-- MAIN VIEW CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- 1. CATALOG / HERO VIEW -->
+        <div id="catalogView" class="view-section">
+            <!-- Hero Section -->
+            <section class="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#BFC4C9] dark:bg-[#101F30] text-xs font-semibold tracking-wider text-[#5BA9E6]">
+                          <span>MILIP / 001</span>
+                          <span>•</span>
+                          <span>PRECISION HARDWARE</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">
+                            MCHOSE <br>
+                            <span class="text-[#5BA9E6]">A7 V2 PRO</span>
+                        </h1>
+                        <p class="text-gray-600 dark:text-gray-400 max-w-xl text-lg font-light">
+                            Високоточна бездротова ігрова миша нового покоління. Безкомпромісна ергономіка, сенсор PixArt PAW3395 та підтримка 8K частоти опитування.
+                        </p>
+                        <div class="flex flex-wrap gap-3 text-xs font-mono text-gray-500 dark:text-gray-400 pt-2">
+                            <span class="px-2.5 py-1 bg-[#BFC4C9] dark:bg-[#101F30] rounded">PAW3395</span>
+                            <span class="px-2.5 py-1 bg-[#BFC4C9] dark:bg-[#101F30] rounded">8K POLLING</span>
+                            <span class="px-2.5 py-1 bg-[#BFC4C9] dark:bg-[#101F30] rounded">49g ULTRA-LIGHT</span>
+                            <span class="px-2.5 py-1 bg-[#BFC4C9] dark:bg-[#101F30] rounded">TRI-MODE</span>
+                        </div>
+                        <div class="pt-4 flex items-center space-x-4">
+                            <button onclick="openProductPage()" class="px-8 h-12 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-medium rounded-xl hover:opacity-90 transition-all shadow-lg flex items-center justify-center">
+                                Детальніше про продукт
+                            </button>
+                        </div>
                     </div>
-                    <div class="card-meta">
-                        <span class="card-tag">MILIP / 001</span>
-                        <h3 class="card-title">MCHOSE A7 V2 PRO</h3>
-                        <div class="stock-status"><span class="dot-live"></span> В наявності</div>
-                        <div class="card-footer-row">
-                            <span class="card-price">2 449 ₴</span>
-                            <button class="btn-primary quick-buy-btn">ДОДАТИ В КОШИК</button>
+                    <div class="lg:col-span-5 flex justify-center">
+                        <div class="relative w-full max-w-md bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] shadow-2xl group cursor-pointer" onclick="openProductPage()">
+                            <img id="heroProductImg" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" alt="MCHOSE A7 V2 PRO" class="w-full h-auto object-cover rounded-xl group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 right-4">
+                                <button onclick="event.stopPropagation(); toggleFavorite('MCHOSE A7 V2 PRO')" id="heroHeartBtn" class="p-2.5 rounded-full bg-white/80 dark:bg-black/40 backdrop-blur text-gray-700 dark:text-white hover:text-[#5BA9E6]">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Catalog Grid -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+                <div class="border-t border-[#BFC4C9] dark:border-[#13283A] pt-12 mb-8 flex justify-between items-end">
+                    <div>
+                        <span class="text-xs font-mono text-[#5BA9E6] uppercase tracking-widest">Ексклюзивний реліз</span>
+                        <h2 class="text-2xl font-bold mt-1">Каталог MILIPSTORE</h2>
+                    </div>
+                    <span class="text-sm text-gray-500">1 модель у наявності</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Single Card: MCHOSE A7 V2 PRO -->
+                    <div class="bg-[#C9CDD2] dark:bg-[#0B1725] rounded-xl border border-[#BFC4C9] dark:border-[#13283A] p-5 flex flex-col justify-between group hover:border-[#5BA9E6] transition-all duration-300 relative">
+                        <div class="absolute top-4 right-4 z-10">
+                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO')" id="cardHeartBtn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-[#5BA9E6] transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </button>
+                        </div>
+                        <div onclick="openProductPage()" class="cursor-pointer">
+                            <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">MILIP / 001</div>
+                            <h3 class="font-bold text-lg mb-2">MCHOSE A7 V2 PRO</h3>
+                            <div class="relative overflow-hidden rounded-lg aspect-square mb-4 bg-[#BFC4C9] dark:bg-[#101F30]">
+                                <img id="catalogCardImg" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            </div>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+                                <span class="text-xs text-gray-600 dark:text-gray-400 font-medium">В наявності</span>
+                            </div>
+                            <div class="text-xl font-bold mb-4">2 449 ₴</div>
+                        </div>
+                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor)" class="w-full h-12 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-medium rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center space-x-2">
+                            <span>ДОДАТИ В КОШИК</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. PRODUCT DETAILS VIEW -->
+        <div id="productView" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#5BA9E6] mb-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                <span>Назад до каталогу</span>
+            </button>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Left: Gallery & Photos -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] aspect-video sm:aspect-square flex items-center justify-center overflow-hidden">
+                        <img id="mainProductViewImg" src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover rounded-xl" alt="MCHOSE A7 V2 PRO">
+                    </div>
+                    <!-- Thumbnails -->
+                    <div id="thumbnailContainer" class="flex space-x-4 overflow-x-auto pb-2">
+                        <button onclick="setProductImage('https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop', 0)" class="flex-shrink-0 w-20 h-20 rounded-lg border-2 border-[#5BA9E6] overflow-hidden bg-[#BFC4C9] dark:bg-[#101F30]">
+                            <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="setProductImage('https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop', 1)" class="flex-shrink-0 w-20 h-20 rounded-lg border-2 border-transparent overflow-hidden bg-[#BFC4C9] dark:bg-[#101F30]">
+                            <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="setProductImage('https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800&auto=format&fit=crop', 2)" class="flex-shrink-0 w-20 h-20 rounded-lg border-2 border-transparent overflow-hidden bg-[#BFC4C9] dark:bg-[#101F30]">
+                            <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Specs & Actions -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <div class="text-xs font-mono text-[#5BA9E6] mb-1">MILIP / 001</div>
+                        <h1 class="text-3xl font-extrabold mb-2">MCHOSE A7 V2 PRO</h1>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">В наявності</span>
+                        </div>
+                        <div class="text-3xl font-bold text-[#111827] dark:text-white">2 449 ₴</div>
+                    </div>
+
+                    <!-- Color Picker -->
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-gray-500 dark:text-gray-400">COLOR: <span id="selectedColorName" class="font-bold text-gray-900 dark:text-white">White</span></label>
+                        <div class="flex items-center space-x-4">
+                            <button onclick="selectColor('White', '#FFFFFF', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop')" class="color-btn w-9 h-9 rounded-full bg-white border-2 border-[#5BA9E6] shadow-md transition-transform flex items-center justify-center" data-color="White"></button>
+                            <button onclick="selectColor('Black', '#111827', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800&auto=format&fit=crop')" class="color-btn w-9 h-9 rounded-full bg-[#111827] border-2 border-transparent shadow-md transition-transform flex items-center justify-center" data-color="Black"></button>
+                            <button onclick="selectColor('Pink', '#E8A3B5', 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800&auto=format&fit=crop')" class="color-btn w-9 h-9 rounded-full bg-[#E8A3B5] border-2 border-transparent shadow-md transition-transform flex items-center justify-center" data-color="Pink"></button>
+                        </div>
+                    </div>
+
+                    <!-- Quantity & Add to Cart -->
+                    <div class="flex space-x-4 pt-4">
+                        <div class="flex items-center border border-[#BFC4C9] dark:border-[#13283A] rounded-xl bg-[#C9CDD2] dark:bg-[#0B1725]">
+                            <button onclick="decrementQty()" class="px-4 py-3 text-lg font-bold hover:text-[#5BA9E6]">-</button>
+                            <span id="productQty" class="w-8 text-center font-semibold">1</span>
+                            <button onclick="incrementQty()" class="px-4 py-3 text-lg font-bold hover:text-[#5BA9E6]">+</button>
+                        </div>
+                        <button onclick="addToCartFromProductPage()" class="flex-grow h-12 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-medium rounded-xl hover:opacity-90 transition-opacity">
+                            ДОДАТИ В КОШИК
+                        </button>
+                    </div>
+
+                    <!-- Accordions -->
+                    <div class="border-t border-[#BFC4C9] dark:border-[#13283A] pt-6 space-y-4">
+                        <div class="border border-[#BFC4C9] dark:border-[#13283A] rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion('descAcc')" class="w-full px-4 py-3 text-left font-semibold flex justify-between items-center bg-[#C9CDD2] dark:bg-[#0B1725]">
+                                <span>Опис</span>
+                                <svg class="w-4 h-4 transform transition-transform" id="descAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="descAcc" class="hidden px-4 py-3 text-sm text-gray-600 dark:text-gray-400 bg-[#C9CDD2]/50 dark:bg-[#0B1725]/50">
+                                MCHOSE A7 V2 PRO — це еталон легкості та швидкості. Завдяки передовому оптичному сенсору PixArt PAW3395 та підтримці частоти опитування 8K миша забезпечує нульову затримку введення та ідеальну точність кожного руху.
+                            </div>
+                        </div>
+
+                        <div class="border border-[#BFC4C9] dark:border-[#13283A] rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion('specsAcc')" class="w-full px-4 py-3 text-left font-semibold flex justify-between items-center bg-[#C9CDD2] dark:bg-[#0B1725]">
+                                <span>Характеристики</span>
+                                <svg class="w-4 h-4 transform transition-transform" id="specsAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="specsAcc" class="hidden px-4 py-3 text-sm text-gray-600 dark:text-gray-400 bg-[#C9CDD2]/50 dark:bg-[#0B1725]/50 space-y-1">
+                                <div>• Сенсор: PixArt PAW3395 (до 26 000 DPI)</div>
+                                <div>• Частота опитування: до 8000 Гц</div>
+                                <div>• Вага: 49 грамів</div>
+                                <div>• Підключення: Бездротове 2.4G + Bluetooth + USB Type-C</div>
+                            </div>
+                        </div>
+
+                        <div class="border border-[#BFC4C9] dark:border-[#13283A] rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion('boxAcc')" class="w-full px-4 py-3 text-left font-semibold flex justify-between items-center bg-[#C9CDD2] dark:bg-[#0B1725]">
+                                <span>Комплект</span>
+                                <svg class="w-4 h-4 transform transition-transform" id="boxAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="boxAcc" class="hidden px-4 py-3 text-sm text-gray-600 dark:text-gray-400 bg-[#C9CDD2]/50 dark:bg-[#0B1725]/50">
+                                Миша MCHOSE A7 V2 PRO, бездротовий приймач 8K, паракордовий кабель USB-C, документація, гарантійний талон.
+                            </div>
+                        </div>
+
+                        <div class="border border-[#BFC4C9] dark:border-[#13283A] rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion('deliveryAcc')" class="w-full px-4 py-3 text-left font-semibold flex justify-between items-center bg-[#C9CDD2] dark:bg-[#0B1725]">
+                                <span>Доставка</span>
+                                <svg class="w-4 h-4 transform transition-transform" id="deliveryAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="deliveryAcc" class="hidden px-4 py-3 text-sm text-gray-600 dark:text-gray-400 bg-[#C9CDD2]/50 dark:bg-[#0B1725]/50">
+                                Швидка доставка Новою Поштою, Укрпоштою або кур'єром Meest по всій Україні.
+                            </div>
+                        </div>
+
+                        <div class="border border-[#BFC4C9] dark:border-[#13283A] rounded-xl overflow-hidden">
+                            <button onclick="toggleAccordion('warrantyAcc')" class="w-full px-4 py-3 text-left font-semibold flex justify-between items-center bg-[#C9CDD2] dark:bg-[#0B1725]">
+                                <span>Гарантія</span>
+                                <svg class="w-4 h-4 transform transition-transform" id="warrantyAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="warrantyAcc" class="hidden px-4 py-3 text-sm text-gray-600 dark:text-gray-400 bg-[#C9CDD2]/50 dark:bg-[#0B1725]/50">
+                                Офіційна гарантія від виробника строком 12 місяців.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <!-- PRODUCT DETAIL SECTION (MAIN PRODUCT VIEW) -->
-    <section class="product-detail-section">
-        <div class="container product-detail-grid">
-            <!-- Gallery / Media -->
-            <div class="product-gallery">
-                <div class="main-image-container">
-                    <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" id="active-product-img">
-                </div>
-                <div class="thumbnails-row">
-                    <button class="thumb-btn active" data-color="white"><img src="assets/mchose-a7-v2-pro.jpg" alt="White"></button>
-                    <!-- Если другие фотографии цветов отсутствуют в проекте, свитчи управляют доступным медиаконтентом без подмены несуществующих файлов заглушками -->
-                </div>
-            </div>
-
-            <!-- Product Info Panel -->
-            <div class="product-info-panel">
-                <div class="hero-tag">MILIP / 001</div>
-                <h2 class="product-name">MCHOSE A7 V2 PRO</h2>
-                <div class="stock-status"><span class="dot-live"></span> В наявності</div>
-                <div class="product-price-block">2 449 ₴</div>
-
-                <!-- COLOR SWATCHES (Strictly required design) -->
-                <div class="color-picker-group">
-                    <label class="option-label">COLOR: <span id="selected-color-name">WHITE</span></label>
-                    <div class="swatches-row">
-                        <button class="color-swatch active" data-color="white" data-name="WHITE" style="background: #FFFFFF;" aria-label="White"></button>
-                        <button class="color-swatch" data-color="black" data-name="BLACK" style="background: #171B20;" aria-label="Black"></button>
-                        <button class="color-swatch" data-color="pink" data-name="PINK" style="background: #E8A5A5;" aria-label="Pink"></button>
+            <!-- Recently Viewed Section -->
+            <div id="recentlyViewedSection" class="mt-20 pt-12 border-t border-[#BFC4C9] dark:border-[#13283A] hidden">
+                <h3 class="text-xl font-bold mb-6">Нещодавно переглянуті</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-md">
+                    <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-4 rounded-xl border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer" onclick="openProductPage()">
+                        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" class="w-full h-32 object-cover rounded-lg mb-2">
+                        <div class="font-bold text-sm">MCHOSE A7 V2 PRO</div>
+                        <div class="text-xs text-gray-500">2 449 ₴</div>
                     </div>
-                </div>
-
-                <!-- QTY & ACTIONS -->
-                <div class="purchase-actions-row">
-                    <div class="quantity-selector">
-                        <button class="qty-btn" id="qty-minus">−</button>
-                        <span id="qty-value">1</span>
-                        <button class="qty-btn" id="qty-plus">+</button>
-                    </div>
-                    <button class="btn-primary add-to-cart-main">ДОДАТИ В КОШИК</button>
-                </div>
-                <button class="btn-secondary wishlist-main-btn">♡ Додати в обране</button>
-
-                <!-- ACCORDIONS / TABS -->
-                <div class="product-accordions">
-                    <details class="accordion-item" open>
-                        <summary>Опис</summary>
-                        <p>Ультралегка професійна бездротова ігрова миша MCHOSE A7 V2 PRO з передовим сенсором PAW3395 та підтримкою 8K опитування для безкомпромісної точності.</p>
-                    </details>
-                    <details class="accordion-item">
-                        <summary>Характеристики</summary>
-                        <ul>
-                            <li>Сенсор: PAW3395 (до 26 000 DPI)</li>
-                            <li>Частота опитування: 8K / 1000 Гц</li>
-                            <li>Вага: 49г</li>
-                            <li>Підключення: Tri-Mode (Wireless 2.4GHz / Bluetooth / Type-C)</li>
-                        </ul>
-                    </details>
-                    <details class="accordion-item">
-                        <summary>Комплект</summary>
-                        <p>Миша MCHOSE A7 V2 PRO, приймач 8K/1K, паракордовий кабель USB-C, гріпси (наклейки проти ковзання), інструкція.</p>
-                    </details>
-                    <details class="accordion-item">
-                        <summary>Доставка та гарантія</summary>
-                        <p>Швидка доставка по Україні кур'єром або у відділення Нової Пошти. Офіційна гарантія 12 місяців.</p>
-                    </details>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- RECENTLY VIEWED -->
-    <section class="recently-viewed-section" id="recently-viewed" style="display: none;">
-        <div class="container">
-            <h3>Нещодавно переглянуті</h3>
-            <div class="recent-grid" id="recent-grid-container"></div>
+        <!-- 3. CHECKOUT VIEW -->
+        <div id="checkoutView" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#5BA9E6] mb-8">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                <span>Назад до магазину</span>
+            </button>
+            <h1 class="text-3xl font-extrabold mb-8">Оформлення замовлення</h1>
+            
+            <form id="checkoutForm" onsubmit="submitOrder(event)" class="space-y-8">
+                <!-- Data -->
+                <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] space-y-4">
+                    <h2 class="font-bold text-lg text-[#5BA9E6]">Дані отримувача</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-mono uppercase mb-1">Ім'я</label>
+                            <input type="text" required class="w-full bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] rounded-xl px-4 py-3 text-sm focus:border-[#5BA9E6] outline-none" placeholder="Олександр">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono uppercase mb-1">Прізвище</label>
+                            <input type="text" required class="w-full bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] rounded-xl px-4 py-3 text-sm focus:border-[#5BA9E6] outline-none" placeholder="Коваленко">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono uppercase mb-1">Номер телефону</label>
+                        <input type="tel" required class="w-full bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] rounded-xl px-4 py-3 text-sm focus:border-[#5BA9E6] outline-none" placeholder="+380 (XX) XXX XX XX">
+                    </div>
+                </div>
+
+                <!-- Delivery -->
+                <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] space-y-4">
+                    <h2 class="font-bold text-lg text-[#5BA9E6]">Спосіб доставки</h2>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer">
+                            <input type="radio" name="delivery" checked class="text-[#5BA9E6]">
+                            <span>Нова Пошта (Відділення / Поштомат)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer">
+                            <input type="radio" name="delivery" class="text-[#5BA9E6]">
+                            <span>Укрпошта Експрес</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer">
+                            <input type="radio" name="delivery" class="text-[#5BA9E6]">
+                            <span>Meest Пошта</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Payment & Telegram Integration -->
+                <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] space-y-4">
+                    <h2 class="font-bold text-lg text-[#5BA9E6]">Спосіб оплати</h2>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer">
+                            <input type="radio" name="payment" value="cod" checked class="text-[#5BA9E6]">
+                            <span>Накладений платіж (Оплата при отриманні)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-[#D1D4D8] dark:bg-[#07111D] border border-[#BFC4C9] dark:border-[#13283A] cursor-pointer">
+                            <input type="radio" name="payment" value="telegram" class="text-[#5BA9E6]">
+                            <span>Онлайн-оплата (@payments_jobbot)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full h-14 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-bold rounded-xl hover:opacity-90 transition-opacity text-lg">
+                    ПІДТВЕРДИТИ ТА СТВОРИТИ ЗАМОВЛЕННЯ
+                </button>
+            </form>
         </div>
-    </section>
 
-    <!-- CART DRAWER PANEL -->
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-drawer" id="cart-drawer">
-        <div class="drawer-header">
-            <h3>КОШИК</h3>
-            <button class="icon-btn" id="close-cart">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        <!-- 4. ORDER SUCCESS / TIMELINE VIEW -->
+        <div id="orderView" class="view-section hidden py-16 px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto text-center space-y-8">
+            <div class="w-16 h-16 bg-[#5BA9E6]/20 text-[#5BA9E6] rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+                <span class="text-xs font-mono text-[#5BA9E6]">MS / 1024</span>
+                <h1 class="text-3xl font-extrabold mt-1">Замовлення успішно створено!</h1>
+                <p class="text-gray-500 mt-2 text-sm">Дякуємо за покупку в MILIPSTORE. Ми вже обробляємо ваше замовлення.</p>
+            </div>
+
+            <div class="bg-[#C9CDD2] dark:bg-[#0B1725] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] text-left space-y-4">
+                <h3 class="font-bold text-sm uppercase font-mono text-[#5BA9E6]">Статус замовлення (Timeline)</h3>
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-center space-x-3 text-emerald-500 font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        <span>Замовлення створено</span>
+                    </div>
+                    <div id="paymentTimelineItem" class="flex items-center space-x-3 text-emerald-500 font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        <span id="paymentTimelineText">Оплата отримана (@payments_jobbot)</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-400">
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center text-xs">○</div>
+                        <span>Передано в доставку</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-400">
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-400 flex items-center justify-center text-xs">○</div>
+                        <span>Доставлено</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="switchView('catalog')" class="px-8 h-12 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-medium rounded-xl">
+                Повернутися до магазину
             </button>
         </div>
-        <div class="drawer-body" id="cart-items-container">
-            <!-- Dynamic Cart Items -->
-            <div class="empty-cart-msg">Кошик порожній</div>
-        </div>
-        <div class="drawer-footer" id="cart-footer" style="display: none;">
-            <div class="cart-total-row">
-                <span>Загалом:</span>
-                <span id="cart-total-price">2 449 ₴</span>
+
+    </main>
+
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex justify-end">
+        <div class="w-full max-w-md bg-[#D1D4D8] dark:bg-[#07111D] h-full flex flex-col p-6 shadow-2xl transform transition-transform">
+            <div class="flex justify-between items-center pb-4 border-b border-[#BFC4C9] dark:border-[#13283A]">
+                <h2 class="font-bold text-lg">Кошик</h2>
+                <button onclick="closeCartDrawer()" class="p-2 text-gray-500 hover:text-[#5BA9E6]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
-            <button class="btn-primary checkout-btn">ДОДАТИ ОФОРМЛЕННЯ</button>
+            
+            <div id="cartItemsContainer" class="flex-grow overflow-y-auto py-4 space-y-4">
+                <!-- Dynamically filled -->
+            </div>
+
+            <div class="pt-4 border-t border-[#BFC4C9] dark:border-[#13283A] space-y-4">
+                <div class="flex justify-between font-bold text-lg">
+                    <span>Разом:</span>
+                    <span id="cartTotalPrice">0 ₴</span>
+                </div>
+                <button onclick="proceedToCheckout()" class="w-full h-12 bg-[#111827] text-white dark:bg-[#5BA9E6] dark:text-[#07111D] font-medium rounded-xl hover:opacity-90 transition-opacity">
+                    ОФОРМИТИ ЗАКАЗ
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- QUICK PREVIEW MODAL / BOTTOM SHEET -->
-    <div class="quick-view-overlay" id="quick-view-overlay"></div>
-    <div class="quick-view-modal" id="quick-view-modal">
-        <button class="icon-btn qv-close" id="close-qv">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-        </button>
-        <div class="qv-content" id="qv-content-inner">
-            <!-- Dynamic Quick Preview Content -->
+    <!-- FAVORITES MODAL / DRAWER -->
+    <div id="favoritesModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex justify-end">
+        <div class="w-full max-w-md bg-[#D1D4D8] dark:bg-[#07111D] h-full flex flex-col p-6 shadow-2xl">
+            <div class="flex justify-between items-center pb-4 border-b border-[#BFC4C9] dark:border-[#13283A]">
+                <h2 class="font-bold text-lg">Обране</h2>
+                <button onclick="closeFavoritesModal()" class="p-2 text-gray-500 hover:text-[#5BA9E6]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="favoritesItemsContainer" class="flex-grow overflow-y-auto py-4 space-y-4">
+                <!-- Dynamically filled -->
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- SEARCH MODAL -->
+    <div id="searchModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-md hidden flex items-start justify-center pt-24 px-4">
+        <div class="w-full max-w-2xl bg-[#D1D4D8] dark:bg-[#07111D] p-6 rounded-2xl border border-[#BFC4C9] dark:border-[#13283A] shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-[#BFC4C9] dark:border-[#13283A] pb-3">
+                <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Пошук товару (MCHOSE A7 V2 PRO)..." class="w-full bg-transparent outline-none text-lg">
+                <button onclick="closeSearchModal()" class="p-1 text-gray-500 hover:text-[#5BA9E6]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div id="searchResults" class="space-y-2">
+                <div onclick="openProductPage(); closeSearchModal();" class="p-3 bg-[#C9CDD2] dark:bg-[#0B1725] rounded-xl cursor-pointer hover:border-[#5BA9E6] border border-transparent flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop" class="w-12 h-12 object-cover rounded-lg">
+                        <div>
+                            <div class="font-bold text-sm">MCHOSE A7 V2 PRO</div>
+                            <div class="text-xs text-gray-500">2 449 ₴</div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-[#5BA9E6] font-medium">Переглянути</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-[#BFC4C9] dark:border-[#13283A] py-8 text-center text-xs text-gray-500 dark:text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <div class="flex justify-center items-center space-x-2">
+                <svg class="w-4 h-4 text-[#5BA9E6]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor"/>
+                    <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor"/>
+                    <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
+                    <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
+                </svg>
+                <span class="font-bold tracking-widest text-[#111827] dark:text-white">MILIPSTORE</span>
+            </div>
+            <p>© 2026 MILIPSTORE. All rights reserved. Precision PC Hardware.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // State management
+        let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
+        let favorites = JSON.parse(localStorage.getItem('milip_favorites')) || [];
+        let currentSelectedColor = 'White';
+        let currentSelectedImage = 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop';
+        let productQuantity = 1;
+        let isDarkMode = localStorage.getItem('milip_theme') === 'dark' || true; // default dark/night or user choice
+
+        // Init theme on load
+        if (localStorage.getItem('milip_theme') === 'light') {
+            setLightMode();
+        } else {
+            setDarkMode();
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                setLightMode();
+            } else {
+                setDarkMode();
+            }
+        }
+
+        function setDarkMode() {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('milip_theme', 'dark');
+            document.getElementById('sunIcon').classList.remove('hidden');
+            document.getElementById('moonIcon').classList.add('hidden');
+        }
+
+        function setLightMode() {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('milip_theme', 'light');
+            document.getElementById('sunIcon').classList.add('hidden');
+            document.getElementById('moonIcon').classList.remove('hidden');
+        }
+
+        // View switching
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            if (viewName === 'catalog') {
+                document.getElementById('catalogView').classList.remove('hidden');
+            } else if (viewName === 'product') {
+                document.getElementById('productView').classList.remove('hidden');
+                document.getElementById('recentlyViewedSection').classList.remove('hidden');
+            } else if (viewName === 'checkout') {
+                document.getElementById('checkoutView').classList.remove('hidden');
+            } else if (viewName === 'order') {
+                document.getElementById('orderView').classList.remove('hidden');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openProductPage() {
+            switchView('product');
+        }
+
+        // Color selection logic
+        function selectColor(colorName, hex, imgUrl) {
+            currentSelectedColor = colorName;
+            currentSelectedImage = imgUrl;
+            document.getElementById('selectedColorName').innerText = colorName;
+            document.getElementById('mainProductViewImg').src = imgUrl;
+            document.getElementById('heroProductImg').src = imgUrl;
+            document.getElementById('catalogCardImg').src = imgUrl;
+
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                if (btn.getAttribute('data-color') === colorName) {
+                    btn.style.borderColor = '#5BA9E6';
+                    btn.style.transform = 'scale(1.1)';
+                } else {
+                    btn.style.borderColor = 'transparent';
+                    btn.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        function setProductImage(url, index) {
+            currentSelectedImage = url;
+            document.getElementById('mainProductViewImg').src = url;
+        }
+
+        // Quantity logic
+        function incrementQty() {
+            productQuantity++;
+            document.getElementById('productQty').innerText = productQuantity;
+        }
+
+        function decrementQty() {
+            if (productQuantity > 1) {
+                productQuantity--;
+                document.getElementById('productQty').innerText = productQuantity;
+            }
+        }
+
+        // Accordion toggle
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(id + 'Icon');
+            el.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Cart management
+        function addToCart(name, price, color) {
+            const existingItem = cart.find(item => item.name === name && item.color === color);
+            if (existingItem) {
+                existingItem.qty += productQuantity;
+            } else {
+                cart.push({ name, price, color, qty: productQuantity, img: currentSelectedImage });
+            }
+            productQuantity = 1;
+            document.getElementById('productQty').innerText = 1;
+            saveCart();
+            updateCartUI();
+            openCartDrawer();
+        }
+
+        function addToCartFromProductPage() {
+            addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('milip_cart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            if (totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+            let totalPrice = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 py-12">Ваш кошик порожній</div>`;
+            } else {
+                cart.forEach((item, index) => {
+                    totalPrice += item.price * item.qty;
+                    container.innerHTML += `
+                        <div class="flex items-center justify-between bg-[#C9CDD2] dark:bg-[#0B1725] p-3 rounded-xl border border-[#BFC4C9] dark:border-[#13283A]">
+                            <img src="${item.img}" class="w-16 h-16 object-cover rounded-lg">
+                            <div class="flex-grow px-3">
+                                <div class="font-bold text-sm">${item.name}</div>
+                                <div class="text-xs text-gray-500">Колір: ${item.color} | Кількість: ${item.qty}</div>
+                                <div class="text-sm font-semibold mt-1">${item.price * item.qty} ₴</div>
+                            </div>
+                            <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 p-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('cartTotalPrice').innerText = totalPrice + ' ₴';
+        }
+
+        function openCartDrawer() {
+            updateCartUI();
+            document.getElementById('cartDrawer').classList.remove('hidden');
+        }
+
+        function closeCartDrawer() {
+            document.getElementById('cartDrawer').classList.add('hidden');
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            closeCartDrawer();
+            switchView('checkout');
+        }
+
+        // Favorites management
+        function toggleFavorite(productName) {
+            const index = favorites.indexOf(productName);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(productName);
+            }
+            localStorage.setItem('milip_favorites', JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+
+        function updateFavoritesUI() {
+            const badge = document.getElementById('favoritesBadge');
+            if (favorites.length > 0) {
+                badge.innerText = favorites.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function openFavoritesModal() {
+            const container = document.getElementById('favoritesItemsContainer');
+            container.innerHTML = '';
+            if (favorites.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 py-12">Список обраного порожній</div>`;
+            } else {
+                favorites.forEach(fav => {
+                    container.innerHTML += `
+                        <div class="flex items-center justify-between bg-[#C9CDD2] dark:bg-[#0B1725] p-3 rounded-xl border border-[#BFC4C9] dark:border-[#13283A]">
+                            <div class="font-bold text-sm">${fav}</div>
+                            <button onclick="openProductPage(); closeFavoritesModal();" class="text-xs text-[#5BA9E6] font-medium">Переглянути</button>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('favoritesModal').classList.remove('hidden');
+        }
+
+        function closeFavoritesModal() {
+            document.getElementById('favoritesModal').classList.add('hidden');
+        }
+
+        // Search modal
+        function openSearchModal() {
+            document.getElementById('searchModal').classList.remove('hidden');
+            document.getElementById('searchInput').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('searchModal').classList.add('hidden');
+        }
+
+        function handleSearch(query) {
+            // Instant filter simulation for MCHOSE A7 V2 PRO
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Order submission
+        function submitOrder(event) {
+            event.preventDefault();
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (paymentMethod === 'telegram') {
+                document.getElementById('paymentTimelineText').innerText = 'Оплата через Telegram (@payments_jobbot) успішна';
+            } else {
+                document.getElementById('paymentTimelineText').innerText = 'Накладений платіж (підтверджено)';
+            }
+
+            cart = [];
+            saveCart();
+            updateCartUI();
+            switchView('order');
+        }
+
+        // Initial UI sync
+        updateCartUI();
+        updateFavoritesUI();
+    </script>
 </body>
 </html>
