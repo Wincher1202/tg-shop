@@ -109,7 +109,7 @@
             align-content: start;
         }
 
-        /* КАРТОЧКА ТОВАРА (ФОРМАТ 4:3) */
+        /* КАРТОЧКА ТОВАРА */
         .product-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -128,9 +128,10 @@
             box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
         }
 
+        /* РАМКА ДЛЯ КАТАЛОГА (CONTAIN — ЧТОБЫ ФОТО НЕ ОБРЕЗАЛОСЬ) */
         .product-img {
             width: 100%;
-            aspect-ratio: 4 / 3; /* СТРОГИЙ ФОРМАТ 4:3 */
+            height: 160px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -141,9 +142,9 @@
         }
 
         .product-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .product-info {
@@ -216,9 +217,10 @@
             }
         }
 
+        /* РАМКА ДЛЯ ДЕТАЛЬНОГО ФОТО (CONTAIN) */
         .detail-img-box {
             width: 100%;
-            aspect-ratio: 4 / 3;
+            height: 280px;
             background: rgba(0,0,0,0.3);
             border-radius: 8px;
             overflow: hidden;
@@ -229,9 +231,9 @@
         }
 
         .detail-img-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         /* ВЫБОР ЦВЕТОВ */
@@ -344,7 +346,7 @@
         <!-- КАТАЛОГ ТОВАРОВ -->
         <main id="catalog-view" class="products-grid">
             
-            <!-- Товар 1: Мышка (Главное фото в каталоге) -->
+            <!-- Товар 1: Мышка -->
             <div class="product-card" onclick="openProduct('mouse')">
                 <div class="product-img">
                     <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO">
@@ -382,18 +384,18 @@
 
         </main>
 
-        <!-- ДЕТАЛЬНАЯ СТРАНИЦА ТОВАРА (СКРЫТА ПО УМОЛЧАНИЮ) -->
+        <!-- ДЕТАЛЬНАЯ СТРАНИЦА ТОВАРА -->
         <div id="product-detail" class="product-detail-view">
             <button class="back-btn" onclick="showCatalog()">← НАЗАД</button>
             
             <div class="detail-content">
                 <div>
                     <div class="detail-img-box">
-                        <img id="detail-main-img" src="Главная фото для каталога.jpg" alt="Товар">
+                        <img id="detail-main-img" src="Белая мышка.jpg" alt="Товар">
                     </div>
                     <!-- Выбор цветов -->
                     <div class="color-selector">
-                        <div class="color-dot" style="background: #ffffff;" onclick="setProductColor('Белая мышка.jpg', this)"></div>
+                        <div class="color-dot active" style="background: #ffffff;" onclick="setProductColor('Белая мышка.jpg', this)"></div>
                         <div class="color-dot" style="background: #111111;" onclick="setProductColor('Черная мышка.jpg', this)"></div>
                         <div class="color-dot" style="background: #ff007f;" onclick="setProductColor('Розовая мышка.jpg', this)"></div>
                     </div>
