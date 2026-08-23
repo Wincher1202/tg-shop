@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk" class="scroll-smooth" id="htmlRoot">
+<html lang="uk" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title id="metaTitle">MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
-    <meta name="description" content="Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом у MILIPSTORE.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO | Precision Hardware</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -32,341 +31,426 @@
         }
     </script>
     <style>
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden !important;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-
-        img, video, picture, svg {
-            max-width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
         body, header, div, button, input, select, section {
             transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.25s ease;
         }
-        * { -webkit-tap-highlight-color: transparent; }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 194, 255, 0.4); border-radius: 3px; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        * {
+            -webkit-tap-highlight-color: transparent;
         }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 194, 255, 0.4);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 194, 255, 0.8);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes heartPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.25); }
             100% { transform: scale(1); }
         }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-modal { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-        .wishlist-btn.active svg, 
-        .favorite-icon.active svg,
-        .wishlist-btn.active, 
-        .favorite-icon.active {
-            fill: #FF3B30 !important;
-            stroke: #FF3B30 !important;
-            color: #FF3B30 !important;
-            transform: scale(1.12);
-            filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.35));
-            animation: heartPulse 0.3s ease-in-out;
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .heart-pop {
+            animation: heartPulse 0.35s ease-in-out;
         }
 
-        /* Прелоадер на весь экран */
-        #milip-intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        html.dark #milip-intro-overlay {
-            background: #040B14;
-        }
-        #milip-intro-overlay.hidden-intro {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        /* Текст прелоадера с эффектом испарения */
-        .intro-text-container {
-            position: relative;
-            z-index: 2;
-            transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
-        }
-        .intro-text-container.fade-out {
-            opacity: 0;
-            filter: blur(12px);
-            transform: scale(1.08);
-        }
-
-        /* Бабочка в прелоадере */
-        .intro-flying-butterfly {
-            position: absolute;
-            width: 45px;
-            height: 45px;
-            z-index: 3;
-            pointer-events: none;
-            transform: translate(-9999px, -9999px);
-        }
-        .intro-flying-butterfly svg {
-            width: 100%;
-            height: 100%;
-            fill: #00C2FF;
-            filter: drop-shadow(0 0 12px rgba(0, 194, 255, 0.8));
-            animation: flap 0.2s infinite alternate ease-in-out;
-        }
-
-        @keyframes flap {
-            0% { transform: scaleX(1); }
-            100% { transform: scaleX(0.4); }
-        }
-
+        /* Butterfly Custom Animation & Styles */
         @keyframes butterflyFlight {
             0% {
-                transform: translate(0, 0) scale(0.4) rotate(0deg);
+                transform: translate(-100px, 150px) scale(0.3) rotate(-30deg);
                 opacity: 0;
             }
-            15% {
+            10% {
                 opacity: 1;
-                transform: translate(-30px, -60px) scale(1) rotate(45deg);
+                transform: translate(20px, 40px) scale(0.6) rotate(15deg);
+            }
+            25% {
+                transform: translate(90px, -20px) scale(0.9) rotate(-10deg);
             }
             40% {
-                transform: translate(-120px, -140px) scale(1.2) rotate(160deg);
+                transform: translate(40px, -50px) scale(1) rotate(20deg);
             }
-            70% {
-                transform: translate(40px, -220px) scale(0.9) rotate(260deg);
+            /* Кружение вокруг логотипа (примерно 3 секунды общей сценки) */
+            50% {
+                transform: translate(25px, -15px) scale(1) rotate(0deg);
             }
-            90% {
+            58% {
+                transform: translate(-5px, -25px) scale(1) rotate(-45deg);
+            }
+            66% {
+                transform: translate(-20px, -5px) scale(1) rotate(-90deg);
+            }
+            75% {
+                transform: translate(5px, 10px) scale(1) rotate(-180deg);
+            }
+            85% {
+                /* Зависание возле буквы М */
+                transform: translate(2px, -8px) scale(1) rotate(-200deg);
                 opacity: 1;
-                transform: translate(var(--target-x), var(--target-y)) scale(0.5) rotate(360deg);
             }
             100% {
+                /* Плавный улет влево вверх */
+                transform: translate(-250px, -200px) scale(0.5) rotate(-60deg);
                 opacity: 0;
-                transform: translate(var(--target-x), var(--target-y)) scale(0.2) rotate(400deg);
             }
         }
-        .flying-butterfly {
+
+        @keyframes wingFlap {
+            0%, 100% { transform: scaleX(1); filter: brightness(1); }
+            50% { transform: scaleX(0.3); filter: brightness(1.3); }
+        }
+
+        .butterfly-container {
             position: fixed;
-            z-index: 99999;
+            top: 24px;
+            left: 24px;
+            z-index: 60;
             pointer-events: none;
-            animation: butterflyFlight 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            will-change: transform, opacity;
+        }
+
+        .butterfly-animate {
+            animation: butterflyFlight 5.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .butterfly-wings {
+            animation: wingFlap 0.22s ease-in-out infinite;
+            transform-origin: center;
         }
     </style>
 </head>
-<body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
+<body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col">
 
-    <!-- Прелоадер с кружением бабочки и испарением текста -->
-    <div id="milip-intro-overlay">
-        <div class="intro-text-container font-extrabold tracking-widest text-3xl sm:text-5xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent" id="introLogoText">
-            <span style="color: #00C2FF;">M</span>ILIPSTORE
-        </div>
-        <div class="intro-flying-butterfly" id="introButterfly">
-            <svg viewBox="0 0 100 100">
-                <path d="M50 50 C 20 10, 0 30, 20 60 C 0 80, 20 100, 50 70 C 80 100, 100 80, 80 60 C 100 30, 80 10, 50 50 Z" />
-            </svg>
-        </div>
+    <!-- BUTTERFLY ANIMATION ELEMENT -->
+    <div id="introButterfly" class="butterfly-container hidden">
+        <svg class="w-12 h-12 text-[#00C2FF] drop-shadow-[0_0_12px_rgba(0,194,255,0.7)] butterfly-wings" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+            <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+            <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
+            <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
+            <circle cx="16" cy="16" r="3" class="text-[#D8DCF0] dark:text-[#040B14]" fill="currentColor"/>
+        </svg>
     </div>
 
-    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"></div>
-
     <!-- HEADER -->
-    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/90 dark:bg-[#040B14]/90 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full">
-        <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-6 sm:space-x-10 min-w-0">
-                <a href="#" onclick="switchView('catalog'); return false;" class="flex items-center space-x-3 group min-w-0">
-                    <svg id="headerLogoIcon" class="w-8 h-8 text-[#00C2FF] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/85 dark:bg-[#040B14]/85 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo & Left nav (Clickable Logo for Scroll to Top) -->
+            <div class="flex items-center space-x-6">
+                <a href="#" onclick="handleLogoClick(event)" class="flex items-center space-x-3 group cursor-pointer">
+                    <svg class="w-8 h-8 text-[#00C2FF] group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(0,194,255,0.4)]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
                         <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
                         <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
                         <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
                         <circle cx="16" cy="16" r="3" class="text-[#D8DCF0] dark:text-[#040B14]" fill="currentColor"/>
                     </svg>
-                    <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
+                    <span class="font-extrabold tracking-widest text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
                 </a>
-                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                    <a href="#" onclick="scrollToCatalog(); return false;" class="hover:text-[#00C2FF] transition-colors" data-i18n="nav_catalog">Каталог</a>
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                    <a href="#" onclick="switchView('catalog')" class="hover:text-[#00C2FF] transition-colors">Каталог</a>
                     <button onclick="openSearchModal()" class="flex items-center space-x-1.5 hover:text-[#00C2FF] transition-colors">
-                        <span data-i18n="nav_search">Пошук</span>
+                        <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        <span>Пошук</span>
                     </button>
                 </nav>
             </div>
 
-            <div class="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
-                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (UA / RU) -->
-                <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold">
-                    <button id="langBtnUa" onclick="setLanguage('ua')" class="px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm">UA</button>
-                    <button id="langBtnRu" onclick="setLanguage('ru')" class="px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]">RU</button>
+            <!-- Right icons / controls -->
+            <div class="flex items-center space-x-3 sm:space-x-5">
+                <!-- Lang Switcher -->
+                <div class="hidden sm:flex items-center space-x-1 text-xs font-bold text-gray-500 dark:text-gray-400">
+                    <span class="text-[#00C2FF] cursor-pointer">UA</span>
+                    <span>/</span>
+                    <span class="hover:text-[#00C2FF] cursor-pointer">RU</span>
+                    <span>/</span>
+                    <span class="hover:text-[#00C2FF] cursor-pointer">EN</span>
                 </div>
 
-                <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm" title="Змінити тему">
                     <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                     <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                 </button>
 
-                <button onclick="openFavoritesModal()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#FF3366] transition-colors">
+                <!-- Favorites -->
+                <button onclick="openFavoritesModal()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors" title="Обране">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     <span id="favoritesBadge" class="absolute -top-1 -right-1 bg-[#FF3366] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
                 </button>
 
-                <button id="cartIconButton" onclick="openCartDrawer()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors">
+                <!-- Cart -->
+                <button onclick="openCartDrawer()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors" title="Кошик">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                     <span id="cartBadge" class="absolute -top-1 -right-1 bg-[#00C2FF] text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
                 </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Secondary Search Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div onclick="openSearchModal()" class="flex items-center space-x-2 bg-[#C6CCDF] dark:bg-[#07101B] px-4 py-2.5 rounded-xl text-sm text-gray-500 cursor-pointer border border-[#B5BCD5] dark:border-[#11223A]">
+                <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <span>Пошук MCHOSE A7 V2 PRO...</span>
             </div>
         </div>
     </header>
 
-    <!-- MAIN -->
-    <main class="flex-grow w-full overflow-hidden">
-        <!-- CATALOG VIEW -->
-        <div id="catalogView" class="view-section animate-fade-in w-full">
-            <section class="relative overflow-hidden py-12 lg:py-24 px-6 sm:px-10 lg:px-16 w-full">
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 bg-[#040B14]/95 backdrop-blur-2xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col p-6">
+        <div class="flex justify-between items-center mb-8">
+            <span class="font-bold text-lg text-white tracking-widest">MILIPMENU</span>
+            <button onclick="toggleMobileMenu()" class="p-2 text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-6 text-lg font-medium text-gray-200">
+            <a href="#" onclick="toggleMobileMenu(); switchView('catalog')" class="hover:text-[#00C2FF]">Каталог</a>
+            <a href="#" onclick="toggleMobileMenu(); openFavoritesModal()" class="hover:text-[#00C2FF]">Обране</a>
+            <a href="#" onclick="toggleMobileMenu(); openCartDrawer()" class="hover:text-[#00C2FF]">Кошик</a>
+            <div class="pt-6 border-t border-[#11223A] flex space-x-4 text-sm font-bold">
+                <span class="text-[#00C2FF] cursor-pointer">UA</span>
+                <span class="text-gray-400 cursor-pointer">RU</span>
+                <span class="text-gray-400 cursor-pointer">EN</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- 1. CATALOG / HERO VIEW -->
+        <div id="catalogView" class="view-section animate-fade-in">
+            <section class="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    <div class="lg:col-span-7 space-y-6 text-left">
-                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]">
-                          <span>MILIP / 001</span><span>•</span><span data-i18n="hero_badge">ULTIMATE HARDWARE</span>
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF] shadow-inner">
+                          <span>MILIP / 001</span>
+                          <span>•</span>
+                          <span>PRECISION HARDWARE</span>
                         </div>
-                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
-                            MCHOSE <br><span class="text-[#00C2FF]">A7 V2 PRO</span>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-none">
+                            MCHOSE <br>
+                            <span class="text-[#00C2FF] drop-shadow-[0_0_20px_rgba(0,194,255,0.3)]">A7 V2 PRO</span>
                         </h1>
-                        <p id="heroDesc" class="text-gray-600 dark:text-gray-400 max-w-2xl text-base sm:text-lg font-light leading-relaxed">
-                            Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.
+                        <p class="text-gray-600 dark:text-gray-400 max-w-xl text-lg font-light leading-relaxed">
+                            Високоточна бездротова ігрова миша нового покоління. Безкомпромісна ергономіка, сенсор PixArt PAW3395 та підтримка 8K частоти опитування.
                         </p>
-                        <div class="pt-4 flex items-center">
-                            <button onclick="openProductPage()" class="w-full sm:w-auto px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl flex items-center justify-center">
-                                <span data-i18n="hero_btn">Детальніше про продукт</span>
+                        <div class="flex flex-wrap gap-2.5 text-xs font-mono text-gray-500 dark:text-gray-400 pt-1">
+                            <span class="px-3 py-1.5 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-lg">PAW3395</span>
+                            <span class="px-3 py-1.5 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-lg">8K POLLING</span>
+                            <span class="px-3 py-1.5 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-lg">49g ULTRA-LIGHT</span>
+                            <span class="px-3 py-1.5 bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-lg">TRI-MODE</span>
+                        </div>
+                        <div class="pt-4 flex items-center space-x-4">
+                            <button onclick="openProductPage()" class="px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-90 transition-all shadow-xl hover:shadow-[0_0_25px_rgba(0,194,255,0.4)] flex items-center justify-center">
+                                Детальніше про продукт
                             </button>
                         </div>
                     </div>
-                    <div class="lg:col-span-5 flex justify-center w-full">
+                    <div class="lg:col-span-5 flex justify-center">
                         <div class="relative w-full max-w-md bg-[#C6CCDF] dark:bg-[#07101B] p-6 rounded-3xl border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl group cursor-pointer" onclick="openProductPage()">
-                            <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <img id="heroProductImg" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <div class="absolute top-6 right-6">
+                                <button onclick="event.stopPropagation(); toggleFavorite('MCHOSE A7 V2 PRO')" id="heroHeartBtn" class="p-3 rounded-full bg-white/80 dark:bg-black/60 backdrop-blur-md text-gray-700 dark:text-white hover:text-[#FF3366] transition-all shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="catalogSection" class="w-full px-6 sm:px-10 lg:px-16 pb-24">
+            <!-- Product Catalog Grid -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
                 <div class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end">
                     <div>
-                        <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold" data-i18n="cat_sub">Ексклюзивний реліз</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1" data-i18n="cat_title">Каталог обладнання</h2>
+                        <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold">Ексклюзивний реліз</span>
+                        <h2 class="text-2xl font-extrabold mt-1">Каталог MILIPSTORE</h2>
                     </div>
-                    <span class="text-sm text-gray-500 font-medium" data-i18n="cat_stock">У наявності</span>
+                    <span class="text-sm text-gray-500 font-medium">1 модель у наявності</span>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] hover:shadow-[0_10px_30px_rgba(0,194,255,0.15)] transition-all duration-300 relative">
                         <div class="absolute top-5 right-5 z-10">
-                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Главная фото для каталога.jpg', currentSelectedColor)" class="wishlist-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3B30] transition-colors">
-                                <svg class="w-5 h-5 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO')" class="catalog-heart-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3366] transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                             </button>
                         </div>
                         <div onclick="openProductPage()" class="cursor-pointer">
                             <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">MILIP / 001</div>
-                            <h3 class="font-bold text-lg mb-2">MCHOSE A7 V2 PRO</h3>
-                            <p id="cardDesc" class="text-xs text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.</p>
-                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2">
-                                <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <h3 class="font-bold text-lg mb-3">MCHOSE A7 V2 PRO</h3>
+                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14]">
+                                <img id="catalogCardImg" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            </div>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span class="text-xs text-gray-600 dark:text-gray-300 font-semibold">В наявності</span>
                             </div>
                             <div class="text-2xl font-extrabold mb-4">2 449 ₴</div>
                         </div>
-                        <button onclick="addToCartWithAnimation(event, 'MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Главная фото для каталога.jpg')" class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm" data-i18n="btn_add_cart">
-                            ДОДАТИ В КОШИК
+                        <button onclick="addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor)" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center space-x-2 shadow-md">
+                            <span>ДОДАТИ В КОШИК</span>
                         </button>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- PRODUCT VIEW -->
-        <div id="productView" class="view-section hidden py-12 px-6 sm:px-10 lg:px-16 w-full animate-fade-in" data-product-id="MCHOSE A7 V2 PRO">
-            <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
+        <!-- 2. PRODUCT DETAILS VIEW -->
+        <div id="productView" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fade-in">
+            <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-8 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-                <span data-i18n="prod_back">Назад до каталогу</span>
+                <span>Назад до каталогу</span>
             </button>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Left: Gallery & Photos -->
                 <div class="lg:col-span-7 space-y-4">
-                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center">
-                        <img id="mainProductImage" src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl shadow-md transition-opacity duration-300">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] overflow-hidden shadow-2xl">
+                        <img id="mainProductImage" src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-cover rounded-2xl shadow-md transition-all duration-300">
                     </div>
-                    <div class="flex space-x-3 overflow-x-auto pb-2" id="productThumbnails">
-                        <button onclick="changePhotoAndColor('Главная фото для каталога.jpg', null, this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Главная фото для каталога.jpg" class="w-full h-full object-contain" loading="lazy"></button>
-                        <button onclick="changePhotoAndColor('Белая мышка.jpg', 'White', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Белая мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
-                        <button onclick="changePhotoAndColor('Черная мышка.jpg', 'Black', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Черная мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
-                        <button onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Розовая мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
+                    <!-- Thumbnails -->
+                    <div class="flex space-x-3 overflow-x-auto pb-2">
+                        <button onclick="changeColor('White')" class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#00C2FF] bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <img src="Белая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="changeColor('Black')" class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <img src="Черная мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="changeColor('Pink')" class="thumbnail-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <img src="Розовая мышка.jpg" onerror="this.src='https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800&auto=format&fit=crop'" class="w-full h-full object-cover">
+                        </button>
                     </div>
                 </div>
 
+                <!-- Right: Product Info & Actions -->
                 <div class="lg:col-span-5 space-y-6">
                     <div>
                         <div class="text-xs font-mono text-[#00C2FF] font-bold mb-1">MILIP / 001</div>
-                        <h1 class="text-4xl font-extrabold mb-3">MCHOSE A7 V2 PRO</h1>
+                        <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">MCHOSE A7 V2 PRO</h1>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="text-xs text-gray-600 dark:text-gray-300 font-semibold">В наявності</span>
+                        </div>
                         <div class="text-3xl font-extrabold">2 449 ₴</div>
                     </div>
 
+                    <!-- Color Picker -->
                     <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
-                        <span class="text-xs font-mono text-gray-500 uppercase font-bold"><span data-i18n="prod_color_label">Колір:</span> <span id="selectedColorName" class="font-extrabold text-[#00C2FF]" data-i18n="prod_color_none">Не вибрано</span></span>
+                        <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider font-bold">Color: <span id="selectedColorName" class="font-extrabold text-gray-900 dark:text-white">White</span></span>
                         <div class="flex items-center space-x-4">
-                            <button id="colorBtnWhite" onclick="changePhotoAndColor('Белая мышка.jpg', 'White')" class="color-picker-btn w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
-                            <button id="colorBtnBlack" onclick="changePhotoAndColor('Черная мышка.jpg', 'Black')" class="color-picker-btn w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
-                            <button id="colorBtnPink" onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink')" class="color-picker-btn w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
+                            <button onclick="changeColor('White')" class="color-circle relative w-10 h-10 rounded-full bg-white border-2 border-[#00C2FF] shadow-md flex items-center justify-center transform hover:scale-110" title="White"></button>
+                            <button onclick="changeColor('Black')" class="color-circle relative w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md flex items-center justify-center transform hover:scale-110" title="Black"></button>
+                            <button onclick="changeColor('Pink')" class="color-circle relative w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md flex items-center justify-center transform hover:scale-110" title="Pink"></button>
                         </div>
                     </div>
 
-                    <div class="flex items-center space-x-3 pt-3">
+                    <!-- Quantity & Add to Cart -->
+                    <div class="flex items-center space-x-4 pt-3">
                         <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] h-14 px-4 shadow-inner">
-                            <button onclick="updateQty(-1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">-</button>
+                            <button onclick="updateQty(-1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-black dark:hover:text-white font-bold text-lg">-</button>
                             <span id="productQty" class="w-8 text-center font-extrabold text-lg">1</span>
-                            <button onclick="updateQty(1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">+</button>
+                            <button onclick="updateQty(1)" class="w-8 h-full flex items-center justify-center text-gray-500 hover:text-black dark:hover:text-white font-bold text-lg">+</button>
                         </div>
-                        <button onclick="addCurrentProductToCartWithAnimation(event)" class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm" data-i18n="btn_add_cart">
-                            ДОДАТИ В КОШИК
+                        <button onclick="addCurrentProductToCart()" class="flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl hover:opacity-90 transition-all shadow-xl hover:shadow-[0_0_25px_rgba(0,194,255,0.4)] flex items-center justify-center space-x-2">
+                            <span>ДОДАТИ В КОШИК</span>
                         </button>
-                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg, currentSelectedColor)" class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md">
-                            <svg class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO')" id="productPageHeartBtn" class="h-14 w-14 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3366] shadow-md transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </button>
                     </div>
 
-                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
-                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
-                            <button onclick="toggleAccordion('specsAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                    <!-- Accordions -->
+                    <div class="space-y-3.5 pt-4 border-t border-[#B5BCD5] dark:border-[#11223A]">
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <button onclick="toggleAccordion('descAcc')" class="w-full px-5 py-4 flex justify-between items-center text-sm font-bold text-left hover:text-[#00C2FF] transition-colors">
                                 <span class="flex items-center space-x-2">
-                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                                    <span data-i18n="acc_specs">Технічні характеристики</span>
+                                    <span class="w-2 h-2 rounded-full bg-[#00C2FF]"></span>
+                                    <span>Опис</span>
                                 </span>
-                                <span id="specsAccordionArrow" class="transition-transform duration-300 rotate-180">▼</span>
+                                <svg class="w-5 h-5 transform transition-transform text-[#00C2FF]" id="descAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                             </button>
-                            <div id="specsAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3">
-                                <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
-                                <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
-                                <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
-                                <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
-                                <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
+                            <div id="descAcc" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed border-t border-[#B5BCD5]/50 dark:border-[#11223A] pt-3">
+                                MCHOSE A7 V2 PRO — це втілення інженерної точності у світі комп'ютерної перифери. Створена для професійного кіберспорту модель пропонує надлишок продуктивності, ультралегкий корпус (49г) та ідеальну ергономіку.
+                            </div>
+                        </div>
+
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <button onclick="toggleAccordion('specsAcc')" class="w-full px-5 py-4 flex justify-between items-center text-sm font-bold text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#00C2FF]"></span>
+                                    <span>Характеристики</span>
+                                </span>
+                                <svg class="w-5 h-5 transform transition-transform text-[#00C2FF]" id="specsAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="specsAcc" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-2 border-t border-[#B5BCD5]/50 dark:border-[#11223A] pt-3">
+                                <div class="flex justify-between"><span>Сенсор:</span> <strong class="text-black dark:text-white">PixArt PAW3395 (26k DPI)</strong></div>
+                                <div class="flex justify-between"><span>Частота опитування:</span> <strong class="text-black dark:text-white">8000 Гц</strong></div>
+                                <div class="flex justify-between"><span>Вага:</span> <strong class="text-black dark:text-white">49 г</strong></div>
+                                <div class="flex justify-between"><span>Підключення:</span> <strong class="text-black dark:text-white">Tri-Mode (2.4GHz / BT / USB-C)</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <button onclick="toggleAccordion('kitAcc')" class="w-full px-5 py-4 flex justify-between items-center text-sm font-bold text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#00C2FF]"></span>
+                                    <span>Комплект</span>
+                                </span>
+                                <svg class="w-5 h-5 transform transition-transform text-[#00C2FF]" id="kitAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="kitAcc" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 space-y-1.5 border-t border-[#B5BCD5]/50 dark:border-[#11223A] pt-3">
+                                <div>• Миша MCHOSE A7 V2 PRO</div>
+                                <div>• 8K / 1K приймач (донгл)</div>
+                                <div>• Паракордовий кабель USB-C</div>
+                                <div>• Фірмові гріпси та тефлонові гайди</div>
+                            </div>
+                        </div>
+
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <button onclick="toggleAccordion('deliveryAcc')" class="w-full px-5 py-4 flex justify-between items-center text-sm font-bold text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#00C2FF]"></span>
+                                    <span>Доставка</span>
+                                </span>
+                                <svg class="w-5 h-5 transform transition-transform text-[#00C2FF]" id="deliveryAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="deliveryAcc" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 border-t border-[#B5BCD5]/50 dark:border-[#11223A] pt-3">
+                                Нова Пошта, Укрпошта, Meest. Відправка в день замовлення по всій Україні.
+                            </div>
+                        </div>
+
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B] shadow-md">
+                            <button onclick="toggleAccordion('warrantyAcc')" class="w-full px-5 py-4 flex justify-between items-center text-sm font-bold text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-[#00C2FF]"></span>
+                                    <span>Гарантія</span>
+                                </span>
+                                <svg class="w-5 h-5 transform transition-transform text-[#00C2FF]" id="warrantyAccIcon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="warrantyAcc" class="hidden px-5 pb-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 border-t border-[#B5BCD5]/50 dark:border-[#11223A] pt-3">
+                                Офіційна гарантія від виробника та магазину — 12 місяців. Обмін/повернення протягом 14 днів.
                             </div>
                         </div>
                     </div>
@@ -375,138 +459,173 @@
         </div>
     </main>
 
-    <footer class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500">
-        &copy; 2026 MILIPSTORE. All rights reserved.
+    <!-- FOOTER -->
+    <footer class="border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <span>© 2026 MILIPSTORE. Усі права захищені.</span>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-[#00C2FF] transition-colors">Політика конфіденційності</a>
+                <a href="#" class="hover:text-[#00C2FF] transition-colors">Умови користування</a>
+            </div>
+        </div>
     </footer>
 
-    <!-- Скрипт анимации прелоадера и логики -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const introOverlay = document.getElementById('milip-intro-overlay');
-            const introButterfly = document.getElementById('introButterfly');
-            const introLogoText = document.getElementById('introLogoText');
+        let currentSelectedColor = 'White';
+        let productQuantity = 1;
+        let cart = [];
+        let favorites = [];
 
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const radius = 140; // Радиус круга вокруг надписи (безопасно от текста)
-
-            const circleDuration = 3500; // 3.5 секунды на круги
-            const zigZagDuration = 1800; // 1.8 секунды на зигзаг к букве M
-            let startTime = null;
-
-            // Конечная позиция возле буквы «M» (слева от центра текста)
-            const targetX = centerX - 120;
-            const targetY = centerY + 5;
-
-            function runIntroAnimation(timestamp) {
-                if (!startTime) startTime = timestamp;
-                let elapsed = timestamp - startTime;
-
-                if (elapsed < circleDuration) {
-                    // ФАЗА 1: Полет по идеальному кругу вокруг надписи
-                    let progress = elapsed / circleDuration;
-                    let angle = progress * Math.PI * 4; // 2 полных витка
-
-                    let x = centerX + Math.cos(angle) * radius - 20;
-                    let y = centerY + Math.sin(angle) * radius - 20;
-
-                    introButterfly.style.transform = `translate(${x}px, ${y}px)`;
-                    requestAnimationFrame(runIntroAnimation);
-
-                } else if (elapsed < circleDuration + zigZagDuration) {
-                    // ФАЗА 2: Переход в зигзаг и подлет к букве «M»
-                    let zigElapsed = elapsed - circleDuration;
-                    let progress = zigElapsed / zigZagDuration;
-                    if (progress > 1) progress = 1;
-
-                    let startZigX = centerX + radius - 20;
-                    let startZigY = centerY - 20;
-
-                    let currentX = startZigX + (targetX - startZigX) * progress;
-                    let baseStreamY = startZigY + (targetY - startZigY) * progress;
-                    let zigZagOffset = Math.sin(progress * Math.PI * 6) * 20; // синусоидальный зигзаг
-
-                    let x = currentX;
-                    let y = baseStreamY + zigZagOffset;
-
-                    introButterfly.style.transform = `translate(${x}px, ${y}px)`;
-
-                    if (progress < 1) {
-                        requestAnimationFrame(runIntroAnimation);
-                    } else {
-                        // ФАЗА 3: Остановка у буквы «M», испарение текста и улет бабочки
-                        triggerEndIntro();
-                    }
-                }
-            }
-
-            function triggerEndIntro() {
-                // Текст испаряется (fade-out с размытием)
-                introLogoText.classList.add('fade-out');
-
-                // Бабочка замирает на секунду у буквы М, затем улетает влево и вверх
-                setTimeout(() => {
-                    introButterfly.style.transition = 'transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 1s ease';
-                    introButterfly.style.transform = `translate(${targetX - 350}px, ${targetY - 400}px) scale(0.7) rotate(-30deg)`;
-                    introButterfly.style.opacity = '0';
-                }, 300);
-
-                // Скрываем весь прелоадер целиком
-                setTimeout(() => {
-                    introOverlay.classList.add('hidden-intro');
-                }, 1500);
-            }
-
-            // Запуск анимации бабочки сразу после загрузки
+        // Автоматический скролл на самый верх при первой загрузке и запуск анимации бабочки
+        window.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
+            // Запуск стартовой сценки бабочки
             setTimeout(() => {
-                requestAnimationFrame(runIntroAnimation);
-            }, 400);
+                const butterfly = document.getElementById('introButterfly');
+                if (butterfly) {
+                    butterfly.classList.remove('hidden');
+                    butterfly.classList.add('butterfly-animate');
+                    
+                    // Скрываем элемент после завершения анимации
+                    setTimeout(() => {
+                        butterfly.remove();
+                    }, 5600);
+                }
+            }, 300);
         });
 
-        // Базовые функции сайта (переключение тем, языков, переходы)
+        // Клик по логотипу: возвращает на главную (каталог) и плавно скроллит на самый верх
+        function handleLogoClick(event) {
+            event.preventDefault();
+            switchView('catalog');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function toggleTheme() {
-            const html = document.getElementById('htmlRoot');
-            html.classList.toggle('dark');
-            document.getElementById('sunIcon').classList.toggle('hidden');
-            document.getElementById('moonIcon').classList.toggle('hidden');
+            const html = document.documentElement;
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+                localStorage.setItem('theme', 'dark');
+            }
         }
 
         function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             if (viewName === 'catalog') {
                 document.getElementById('catalogView').classList.remove('hidden');
-                document.getElementById('productView').classList.add('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (viewName === 'product') {
-                document.getElementById('catalogView').classList.add('hidden');
                 document.getElementById('productView').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openProductPage() {
             switchView('product');
         }
 
-        function scrollToCatalog() {
-            switchView('catalog');
-            document.getElementById('catalogSection').scrollIntoView({ behavior: 'smooth' });
+        function changeColor(color) {
+            currentSelectedColor = color;
+            document.getElementById('selectedColorName').innerText = color;
+            
+            const imgMap = {
+                'White': 'Белая мышка.jpg',
+                'Black': 'Черная мышка.jpg',
+                'Pink': 'Розовая мышка.jpg'
+            };
+            
+            const targetImg = imgMap[color] || 'Белая мышка.jpg';
+            document.getElementById('mainProductImage').src = targetImg;
+            document.getElementById('heroProductImg').src = targetImg;
+            document.getElementById('catalogCardImg').src = targetImg;
         }
 
-        let currentSelectedColor = 'White';
-        let currentSelectedImg = 'Главная фото для каталога.jpg';
-
-        function changePhotoAndColor(imgSrc, colorName, btnElement) {
-            document.getElementById('mainProductImage').src = imgSrc;
-            currentSelectedImg = imgSrc;
-            if (colorName) {
-                currentSelectedColor = colorName;
-                document.getElementById('selectedColorName').innerText = colorName;
-            }
+        function updateQty(change) {
+            productQuantity += change;
+            if (productQuantity < 1) productQuantity = 1;
+            document.getElementById('productQty').innerText = productQuantity;
         }
 
         function toggleAccordion(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('hidden');
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + 'Icon');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(name, price, color) {
+            cart.push({ name, price, color, qty: 1 });
+            updateCartBadge();
+            alert(`Товар "${name}" (${color}) додано до кошика!`);
+        }
+
+        function addCurrentProductToCart() {
+            for(let i=0; i<productQuantity; i++) {
+                cart.push({ name: 'MCHOSE A7 V2 PRO', price: 2449, color: currentSelectedColor, qty: 1 });
+            }
+            updateCartBadge();
+            alert(`Додано до кошика: ${productQuantity} шт. (${currentSelectedColor})`);
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (cart.length > 0) {
+                badge.innerText = cart.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function toggleFavorite(name) {
+            const index = favorites.indexOf(name);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(name);
+            }
+            updateFavoritesBadge();
+        }
+
+        function updateFavoritesBadge() {
+            const badge = document.getElementById('favoritesBadge');
+            if (favorites.length > 0) {
+                badge.innerText = favorites.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function openCartDrawer() {
+            alert(cart.length === 0 ? "Кошик порожній" : `У кошику товарів: ${cart.length}`);
+        }
+
+        function openFavoritesModal() {
+            alert(favorites.length === 0 ? "Список обраного порожній" : `В обраному: ${favorites.join(', ')}`);
+        }
+
+        function openSearchModal() {
+            const query = prompt("Введіть пошуковий запит:");
+            if (query) {
+                alert(`Шукаємо: ${query}`);
+            }
         }
     </script>
 </body>
