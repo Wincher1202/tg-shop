@@ -227,6 +227,32 @@
                             <svg class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                         </button>
                     </div>
+
+                    <!-- ДЕТАЛЬНИЙ ОПИС ТОВАРУ ТА ХАРАКТЕРИСТИКИ -->
+                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4">
+                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">Опис та характеристика</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-light">
+                            <strong>MCHOSE A7 V2 PRO</strong> — це безкомпромісний інструмент для кіберспортсменів та геймерів, які цінують мілісекундну швидкість відгуку та абсолютну точність. Ергономічний корпус розроблений за участю професійних гравців.
+                        </p>
+                        <div class="grid grid-cols-2 gap-3 pt-2 text-xs">
+                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
+                                <span class="text-gray-500 block font-mono">Сенсор</span>
+                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">PixArt PAW3395</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
+                                <span class="text-gray-500 block font-mono">Частота опитування</span>
+                                <span class="font-extrabold text-[#00C2FF] text-sm">8K HyperPolling</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
+                                <span class="text-gray-500 block font-mono">Вага</span>
+                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">~54 грами</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
+                                <span class="text-gray-500 block font-mono">Підключення</span>
+                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">Трьохрежимне (2.4G / BT / Type-C)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -403,7 +429,6 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Повністю очищуємо потенційні биті дані `undefined` із localStorage при старті
         let rawFavs = JSON.parse(localStorage.getItem('milip_favorites')) || [];
         let favorites = rawFavs.filter(item => item && item.name && item.name !== 'undefined');
         localStorage.setItem('milip_favorites', JSON.stringify(favorites));
@@ -547,7 +572,6 @@
             }
         }
 
-        // AUTH MODAL LOGIC
         function openAuthModal() {
             document.getElementById('authModal').classList.remove('hidden');
             document.getElementById('authModal').classList.add('flex');
