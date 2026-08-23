@@ -3,651 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE // CATALOG</title>
+    <title>MILIPSTORE — Gaming Gear</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Подключаем Telegram Web App скрипт -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg-color: #0b0f19;
-            --text-color: #ffffff;
-            --hint-color: #8a99ad;
-            --accent-color: #00f0ff;
-            --card-bg: rgba(18, 25, 43, 0.95);
-            --border-color: rgba(0, 240, 255, 0.3);
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 12px;
-            /* Учитываем ширину панели справа */
-            padding-right: 48px;
-            padding-bottom: 90px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 16px;
-        }
-        .brand-logo {
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-        }
-        
-        /* Верхние кнопки в самом правом углу экрана (учитывая правую панель) */
-        .header-actions {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            position: absolute;
-            right: 44px;
-            top: 10px;
-            z-index: 98;
-        }
-        .icon-btn {
-            background: rgba(18, 25, 43, 0.95);
-            border: 1px solid var(--border-color);
-            color: var(--accent-color);
-            padding: 5px 7px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        }
-        .badge-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff007f;
-            color: #fff;
-            font-size: 9px;
-            padding: 2px 4px;
-            border-radius: 50%;
-        }
-
-        /* Правая вертикальная панель */
-        .right-sidebar-panel {
-            position: fixed;
-            right: 0;
-            top: 75px;
-            width: 38px;
-            background: linear-gradient(135deg, rgba(25, 38, 66, 0.95), rgba(220, 235, 255, 0.9));
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            box-shadow: -3px 0 15px rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 10px; /* Кнопки близко друг к другу */
-            padding: 10px 0;
-            z-index: 99;
-        }
-
-        /* Кнопки в правой панели */
-        .side-btn {
-            width: 28px;
-            height: 28px;
-            background: #ffffff;
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            color: #0b0f19;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .side-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-        .screen { display: none; }
-        .screen.active { display: block; }
-
-        .catalog-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-
-        .fav-icon {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 5;
-        }
-
-        .image-container {
-            position: relative;
-            width: 100%;
-            background: #0b0f19;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .image-container svg {
-            width: 100%;
-            height: 150px;
-        }
-
-        .p-title {
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: #fff;
-            cursor: pointer;
-            padding-right: 36px;
-        }
-        .price-badge {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(0, 240, 255, 0.2));
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            text-align: center;
-            padding: 8px;
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--accent-color);
-            margin-bottom: 8px;
-        }
-
-        .action-btn.primary {
-            width: 100%;
-            background: linear-gradient(135deg, #00f0ff, #0077ff);
-            color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        .back-btn {
-            background: none;
-            border: 1px solid var(--hint-color);
-            color: var(--hint-color);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-bottom: 14px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .detail-container, .cart-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-        }
-
-        .color-picker {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin: 14px 0;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px;
-            border-radius: 6px;
-        }
-        .color-dot {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-            transition: transform 0.2s;
-        }
-        .color-dot.active {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
-            transform: scale(1.15);
-        }
-        .dot-black { background: #1a1a1a; }
-        .dot-white { background: #ffffff; }
-        .dot-pink  { background: #ff007f; }
-
-        .section-box {
-            background: rgba(11, 15, 25, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-size: 13px;
-        }
-        .section-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: var(--accent-color);
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .spec-item:last-child { border-bottom: none; }
-        .spec-name { color: var(--hint-color); }
-        .spec-val { font-weight: 600; color: #fff; text-align: right; }
-
-        .checkout-btn {
-            background: linear-gradient(135deg, #00f0ff, #0077ff);
-            color: #fff;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.4);
-            margin-top: 6px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(11, 15, 25, 0.8);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .cart-item-info { font-size: 13px; }
-        .cart-item-title { font-weight: 700; color: #fff; }
-        .cart-item-price { color: var(--accent-color); font-weight: 600; font-size: 12px; }
-        .remove-btn { background: none; border: none; color: #ff007f; cursor: pointer; font-size: 16px; }
-    </style>
 </head>
 <body>
 
-    <!-- Правая панель с кнопками близко друг к другу -->
-    <div class="right-sidebar-panel">
-        <div class="side-btn" title="Зв'язок">📞</div>
-        <div class="side-btn" title="Правила">📜</div>
-        <div class="side-btn" title="Відгуки">⭐</div>
-    </div>
-
-    <div class="header">
-        <div class="brand-logo">MILIPSTORE</div>
-        <!-- Верхние кнопки в самом правом углу -->
-        <div class="header-actions">
-            <button class="icon-btn" onclick="openScreen('favorites')">❤️ <span id="fav-count" class="badge-count">0</span></button>
-            <button class="icon-btn" onclick="openScreen('cart')">🛒 <span id="cart-count" class="badge-count">0</span></button>
-            <button class="icon-btn" onclick="toggleLanguage()">UA/EN</button>
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ (HEADER) -->
+    <header class="header">
+        <div class="logo">MILIPSTORE</div>
+        <div class="header-right">
+            <button class="header-btn" title="Обране">❤️ <span class="counter">0</span></button>
+            <button class="header-btn" id="cart-btn" title="Кошик">🛒 <span class="counter">1</span></button>
+            <div class="lang-switch">UA/EN</div>
         </div>
-    </div>
+    </header>
 
-    <!-- ЭКРАН 1: КАТАЛОГ -->
-    <div id="catalog-screen" class="screen active">
-        <div class="catalog-grid" id="catalog-list"></div>
-    </div>
-
-    <!-- ЭКРАН 2: ДЕТАЛИ ТОВАРА -->
-    <div id="detail-screen" class="screen">
-        <button class="back-btn" onclick="openScreen('catalog')">← Назад</button>
-        <div class="detail-container">
-            <div class="price-badge" id="det-price"></div>
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР (СЕТКА + ПРАВАЯ ПАНЕЛЬ) -->
+    <div class="main-layout">
+        
+        <!-- СЕТКА ТОВАРОВ -->
+        <main class="products-grid">
             
-            <div class="image-container" id="det-img-container"></div>
+            <div class="product-card">
+                <div class="product-img">🎮</div>
+                <div class="product-info">
+                    <h3 class="product-title">ATK Blazing Sky F1 V2</h3>
+                    <div class="product-price">2 699 ₴</div>
+                    <button class="buy-btn" onclick="openCheckout('ATK Blazing Sky F1 V2', '2699')">КУПИТИ</button>
+                </div>
+            </div>
 
-            <div class="color-picker" id="color-picker-box">
-                <div class="color-dot dot-black active" onclick="changeColor('Black', 'black', this)"></div>
-                <div class="color-dot dot-white" onclick="changeColor('White', 'white', this)"></div>
-                <div class="color-dot dot-pink" onclick="changeColor('Pink', 'pink', this)"></div>
+            <div class="product-card">
+                <div class="product-img">⌨️</div>
+                <div class="product-info">
+                    <h3 class="product-title">Mechanical Keyboard</h3>
+                    <div class="product-price">2 899 ₴</div>
+                    <button class="buy-btn" onclick="openCheckout('Mechanical Keyboard', '2899')">КУПИТИ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">🎧</div>
+                <div class="product-info">
+                    <h3 class="product-title">RGB Headset X</h3>
+                    <div class="product-price">1 999 ₴</div>
+                    <button class="buy-btn" onclick="openCheckout('RGB Headset X', '1999')">КУПИТИ</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img">🖱️</div>
+                <div class="product-info">
+                    <h3 class="product-title">Wireless Pad Pro</h3>
+                    <div class="product-price">799 ₴</div>
+                    <button class="buy-btn" onclick="openCheckout('Wireless Pad Pro', '799')">КУПИТИ</button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- ПРАВАЯ БОКОВАЯ ПАНЕЛЬ -->
+        <aside class="sidebar-panel">
+            <button class="sidebar-btn">☎️ Зв'язок</button>
+            <button class="sidebar-btn">⭐ Відгуки</button>
+            <button class="sidebar-btn">📜 Правила</button>
+        </aside>
+
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ОФОРМЛЕНИЯ ЗАКАЗА (ЧЕКАУТ В СТИЛЕ OLX) -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Оформлення замовлення</h2>
+                <button class="close-modal" onclick="closeCheckout()">✕</button>
             </div>
             
-            <div class="section-box">
-                <div class="section-title">📦 Комплектація</div>
-                <div id="bundle-list"></div>
+            <div class="selected-product-preview">
+                <span id="modal-product-name">Обраний товар</span>
+                <strong id="modal-product-price">0 ₴</strong>
             </div>
 
-            <div class="section-box">
-                <div class="section-title">✨ Характеристики</div>
-                <div id="spec-list"></div>
-            </div>
+            <form class="checkout-form" id="orderForm" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>Імя та Прізвище*</label>
+                    <input type="text" placeholder="Дмитро Мисник" required>
+                </div>
 
-            <button class="checkout-btn" onclick="addCurrentToCart()">Додати в кошик 🛒</button>
-        </div>
-    </div>
+                <div class="form-group">
+                    <label>Номер телефону*</label>
+                    <input type="tel" placeholder="+380 XX XXX XX XX" required>
+                </div>
 
-    <!-- ЭКРАН 3: КОШИК -->
-    <div id="cart-screen" class="screen">
-        <button class="back-btn" onclick="openScreen('catalog')">← Каталог</button>
-        <div class="cart-container">
-            <div class="section-title" style="margin-bottom: 12px;">Ваш кошик</div>
-            <div id="cart-items-box"></div>
-            <div class="price-badge" id="cart-total" style="margin: 14px 0;">Разом: 0 ₴</div>
-            <button class="checkout-btn" onclick="checkoutCart()">ОПЛАТИТИ ЗАМОВЛЕННЯ 💳</button>
-        </div>
-    </div>
+                <div class="form-group">
+                    <label>Місто*</label>
+                    <input type="text" placeholder="Наприклад: Київ" required>
+                </div>
 
-    <!-- ЭКРАН 4: ИЗБРАННОЕ -->
-    <div id="favorites-screen" class="screen">
-        <button class="back-btn" onclick="openScreen('catalog')">← Каталог</button>
-        <div class="cart-container">
-            <div class="section-title" style="margin-bottom: 12px;">Обрані товари</div>
-            <div id="fav-items-box"></div>
+                <div class="form-group">
+                    <label>Відділення Нової Пошти*</label>
+                    <input type="text" placeholder="№5 або поштомат" required>
+                </div>
+
+                <div class="notice-box">
+                    ℹ️ Захист від відмов: сплата мінімального внеску за доставку (**150 ₴**), залишок суми — післяплата на пошті.
+                </div>
+
+                <button type="submit" class="submit-order-btn">ПЕРЕЙТИ ДО ОПЛАТИ (150 ₴)</button>
+            </form>
         </div>
     </div>
 
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+        const modal = document.getElementById('checkoutModal');
+        const productNameEl = document.getElementById('modal-product-name');
+        const productPriceEl = document.getElementById('modal-product-price');
 
-        let currentLang = 'ua';
-        let activeProductId = null;
-        let selectedColor = 'Black';
-        
-        let cart = [];
-        let favorites = [];
-
-        const products = {
-            mouse: {
-                id: 'mouse',
-                titleUA: "Ігрова мишка MCHOSE A7 V2 Pro",
-                titleENG: "Gaming Mouse MCHOSE A7 V2 Pro",
-                price: 2449,
-                isCustomImg: true,
-                catalogImg: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%93%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F%20%D1%84%D0%BE%D1%82%D0%BE%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D0%B0%D1%82%D0%B0%D0%BB%D0%BE%D0%B3%D0%B0.jpg",
-                images: {
-                    black: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A7%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    white: "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%91%D0%B5%D0%BB%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg",
-                    pink:  "https://raw.githubusercontent.com/Wincher1202/tg-shop/main/%D0%A0%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BC%D1%8B%D1%88%D0%BA%D0%B0.jpg"
-                },
-                bundleUA: [
-                    "Мишка MCHOSE A7 V2 PRO",
-                    "Кабель для зарядки",
-                    "Бездротовий приймач 2,4 ГГц",
-                    "Інструкція користувача",
-                    "Гріпси"
-                ],
-                bundleENG: [
-                    "Mouse MCHOSE A7 V2 PRO",
-                    "Charging cable",
-                    "2.4 GHz wireless receiver",
-                    "User manual",
-                    "Grips"
-                ],
-                specsUA: [
-                    ["Підключення", "2.4G / Bluetooth / Type-C"],
-                    ["Сенсор", "PAW3395"],
-                    ["DPI", "від 50 до 26 000"],
-                    ["Частота опитування", "8000 Гц"],
-                    ["Вага", "59 гр"],
-                    ["Акумулятор", "500 mAh"],
-                    ["Гарантія", "1 місяць"]
-                ],
-                specsENG: [
-                    ["Connection", "2.4G / Bluetooth / Type-C"],
-                    ["Sensor", "PAW3395"],
-                    ["DPI", "50 to 26,000"],
-                    ["Polling Rate", "8000 Hz"],
-                    ["Weight", "59 g"],
-                    ["Battery", "500 mAh"],
-                    ["Warranty", "1 month"]
-                ]
-            },
-            keyboard: {
-                id: 'keyboard',
-                titleUA: "Клавіатура MCHOSE GX87",
-                titleENG: "Keyboard MCHOSE GX87",
-                price: 3899,
-                isCustomImg: false,
-                svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="35" width="170" height="80" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="25" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="43" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="61" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="79" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="97" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="115" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="133" y="45" width="14" height="14" rx="3" fill="#00f0ff" fill-opacity="0.3"/><rect x="157" y="45" width="18" height="14" rx="3" fill="#ff007f" fill-opacity="0.5"/><rect x="25" y="65" width="150" height="40" rx="4" fill="#0b0f19"/></svg>`,
-                bundleUA: ["Клавіатура MCHOSE GX87", "Кабель Type-C", "Пулер для світчів", "Інструкція"],
-                bundleENG: ["Keyboard MCHOSE GX87", "Type-C cable", "Switch puller", "Manual"],
-                specsUA: [["Формат", "TKL 87%"], ["Свічі", "Mechanical Custom"], ["Підключення", "3 режиму"], ["Гарантія", "1 місяць"]],
-                specsENG: [["Layout", "TKL 87%"], ["Switches", "Mechanical Custom"], ["Connection", "Tri-mode"], ["Warranty", "1 month"]]
-            },
-            headset: {
-                id: 'headset',
-                titleUA: "Навушники MCHOSE G9 Pro",
-                titleENG: "Headset MCHOSE G9 Pro",
-                price: 2999,
-                isCustomImg: false,
-                svgIcon: `<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55 85C55 50 75 30 100 30C125 30 145 50 145 85" stroke="#00f0ff" stroke-width="6" stroke-linecap="round"/><rect x="35" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><rect x="140" y="65" width="25" height="45" rx="8" fill="#131b2e" stroke="#00f0ff" stroke-width="2"/><path d="M55 95L30 115" stroke="#ff007f" stroke-width="3" stroke-linecap="round"/></svg>`,
-                bundleUA: ["Навушники MCHOSE G9 Pro", "Мікрофон", "Кабель підключення", "Інструкція"],
-                bundleENG: ["Headset MCHOSE G9 Pro", "Microphone", "Audio cable", "Manual"],
-                specsUA: [["Динаміки", "50мм"], ["Звук", "7.1 Surround"], ["Автономність", "45 годин"], ["Гарантія", "1 місяць"]],
-                specsENG: [["Drivers", "50mm"], ["Audio", "7.1 Surround"], ["Battery", "45 hours"], ["Warranty", "1 month"]]
-            }
-        };
-
-        function renderCatalog() {
-            let container = document.getElementById('catalog-list');
-            container.innerHTML = '';
-
-            Object.values(products).forEach(p => {
-                let title = currentLang === 'ua' ? p.titleUA : p.titleENG;
-                let isFav = favorites.includes(p.id);
-                let mediaHtml = p.isCustomImg ? `<img src="${p.catalogImg}" alt="${title}">` : p.svgIcon;
-
-                container.innerHTML += `
-                    <div class="product-card">
-                        <div class="fav-icon" onclick="toggleFavorite('${p.id}')">${isFav ? '❤️' : '🤍'}</div>
-                        <div class="image-container" onclick="openDetail('${p.id}')">${mediaHtml}</div>
-                        <div class="p-title" onclick="openDetail('${p.id}')">${title}</div>
-                        <div class="price-badge">${p.price.toLocaleString()} ₴</div>
-                        <button class="action-btn primary" onclick="quickAddToCart('${p.id}')">В кошик</button>
-                    </div>
-                `;
-            });
-            updateCounters();
+        function openCheckout(name, price) {
+            productNameEl.textContent = name;
+            productPriceEl.textContent = price + ' ₴';
+            modal.style.display = 'flex';
         }
 
-        function openScreen(screenName) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenName + '-screen').classList.add('active');
-            window.scrollTo(0, 0);
-
-            if (screenName === 'cart') renderCart();
-            if (screenName === 'favorites') renderFavorites();
-            if (screenName === 'catalog') renderCatalog();
-            if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+        function closeCheckout() {
+            modal.style.display = 'none';
         }
 
-        function openDetail(id) {
-            activeProductId = id;
-            let p = products[id];
-            
-            document.getElementById('det-price').innerHTML = p.price.toLocaleString() + ' ₴';
-            
-            let imgBox = document.getElementById('det-img-container');
-            imgBox.innerHTML = p.isCustomImg ? `<img id="detail-img" src="${p.images.black}">` : p.svgIcon;
-            
-            let colorPicker = document.getElementById('color-picker-box');
-            colorPicker.style.display = p.isCustomImg ? 'flex' : 'none';
-
-            let bundleHtml = '';
-            let bundleArr = currentLang === 'ua' ? p.bundleUA : p.bundleENG;
-            bundleArr.forEach(item => {
-                bundleHtml += `<div class="spec-item"><span class="spec-val" style="text-align: left; width: 100%;">• ${item}</span></div>`;
-            });
-            document.getElementById('bundle-list').innerHTML = bundleHtml;
-
-            let specsHtml = '';
-            let specsArr = currentLang === 'ua' ? p.specsUA : p.specsENG;
-            specsArr.forEach(s => {
-                specsHtml += `<div class="spec-item"><span class="spec-name">${s[0]}</span><span class="spec-val">${s[1]}</span></div>`;
-            });
-            document.getElementById('spec-list').innerHTML = specsHtml;
-
-            openScreen('detail');
+        function submitOrder(event) {
+            event.preventDefault();
+            alert('Замовлення сформовано! Перенаправляємо на оплату внеску 150 грн...');
+            // Здесь в будущем подключим отправку данных через Telegram.WebApp.sendData()
+            closeCheckout();
         }
-
-        function changeColor(colorName, colorKey, element) {
-            selectedColor = colorName;
-            let p = products[activeProductId];
-            if (p && p.isCustomImg) {
-                document.getElementById('detail-img').src = p.images[colorKey];
-            }
-            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
-            element.classList.add('active');
-            if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
-        }
-
-        function toggleFavorite(id) {
-            let index = favorites.indexOf(id);
-            if (index > -1) favorites.splice(index, 1);
-            else favorites.push(id);
-            renderCatalog();
-        }
-
-        function quickAddToCart(id) {
-            let p = products[id];
-            cart.push({
-                id: p.id,
-                title: currentLang === 'ua' ? p.titleUA : p.titleENG,
-                price: p.price,
-                color: 'Standart'
-            });
-            updateCounters();
-            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-        }
-
-        function addCurrentToCart() {
-            let p = products[activeProductId];
-            cart.push({
-                id: p.id,
-                title: (currentLang === 'ua' ? p.titleUA : p.titleENG) + (p.isCustomImg ? ` (${selectedColor})` : ''),
-                price: p.price,
-                color: selectedColor
-            });
-            updateCounters();
-            openScreen('cart');
-            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-        }
-
-        function renderCart() {
-            let box = document.getElementById('cart-items-box');
-            let totalBox = document.getElementById('cart-total');
-            box.innerHTML = '';
-            
-            if (cart.length === 0) {
-                box.innerHTML = '<div style="color:var(--hint-color); text-align:center; padding: 20px;">Кошик порожній</div>';
-                totalBox.innerHTML = 'Разом: 0 ₴';
-                return;
-            }
-
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price;
-                box.innerHTML += `
-                    <div class="cart-item">
-                        <div class="cart-item-info">
-                            <div class="cart-item-title">${item.title}</div>
-                            <div class="cart-item-price">${item.price.toLocaleString()} ₴</div>
-                        </div>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">✕</button>
-                    </div>
-                `;
-            });
-            totalBox.innerHTML = `Разом: ${total.toLocaleString()} ₴`;
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            renderCart();
-            updateCounters();
-        }
-
-        function renderFavorites() {
-            let box = document.getElementById('fav-items-box');
-            box.innerHTML = '';
-            if (favorites.length === 0) {
-                box.innerHTML = '<div style="color:var(--hint-color); text-align:center; padding: 20px;">Немає улюблених товарів</div>';
-                return;
-            }
-            favorites.forEach(id => {
-                let p = products[id];
-                let title = currentLang === 'ua' ? p.titleUA : p.titleENG;
-                box.innerHTML += `
-                    <div class="cart-item" style="cursor:pointer;" onclick="openDetail('${p.id}')">
-                        <div class="cart-item-info">
-                            <div class="cart-item-title">${title}</div>
-                            <div class="cart-item-price">${p.price.toLocaleString()} ₴</div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function updateCounters() {
-            document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('fav-count').innerText = favorites.length;
-        }
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'ua' ? 'eng' : 'ua';
-            renderCatalog();
-        }
-
-        function checkoutCart() {
-            if (cart.length === 0) return;
-            let orderData = cart.map(item => ({
-                designer: "MILIPSTORE",
-                title: item.title,
-                price: item.price
-            }));
-
-            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-            tg.sendData(JSON.stringify(orderData));
-        }
-
-        renderCatalog();
     </script>
 </body>
 </html>
