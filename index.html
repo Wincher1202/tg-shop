@@ -3,1926 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MILIPSTORE — Precision Without Limits / MCHOSE A7 V2 PRO</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* LIGHT / MOON THEME (Default) - Cold Metal & Lunar Gray */
-            --bg-primary: #D8DBDF;
-            --bg-secondary: #C9CDD2;
-            --bg-card: #E2E5E9;
-            --bg-card-hover: #ECEFF3;
-            --text-main: #111827;
-            --text-muted: #374151;
-            --text-dim: #6b7280;
-            --accent-blue: #0076ff;
-            --accent-blue-glow: rgba(0, 118, 255, 0.22);
-            --accent-blue-subtle: rgba(0, 118, 255, 0.08);
-            --border-color: rgba(0, 0, 0, 0.12);
-            --border-hover: rgba(0, 118, 255, 0.4);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 118, 255, 0.15);
-            --glass-bg: rgba(216, 219, 223, 0.88);
-            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        [data-theme="dark"] {
-            /* DARK / NIGHT THEME - Deep Navy & Midnight */
-            --bg-primary: #040711;
-            --bg-secondary: #090e1a;
-            --bg-card: #0e1526;
-            --bg-card-hover: #131c32;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --text-dim: #64748b;
-            --accent-blue: #00d2ff;
-            --accent-blue-glow: rgba(0, 210, 255, 0.25);
-            --accent-blue-subtle: rgba(0, 210, 255, 0.08);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(0, 210, 255, 0.4);
-            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-            --shadow-hover: 0 20px 40px -15px rgba(0, 210, 255, 0.2);
-            --glass-bg: rgba(4, 7, 17, 0.82);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* HEADER */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 72px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            z-index: 1000;
-            transition: var(--transition);
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--text-main);
-            z-index: 10;
-        }
-
-        /* Geometric Butterfly & M Logo */
-        .butterfly-logo-svg {
-            width: 34px;
-            height: 34px;
-            fill: none;
-            stroke: var(--accent-blue);
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 0 10px var(--accent-blue-glow));
-            transition: var(--transition);
-        }
-
-        .brand-name {
-            font-weight: 800;
-            font-size: 1.15rem;
-            letter-spacing: 0.15em;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            z-index: 10;
-        }
-
-        .icon-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            cursor: pointer;
-            position: relative;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .icon-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            background: var(--accent-blue);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 800;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* SEARCH BAR */
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 10px 16px 10px 38px;
-            border-radius: 24px;
-            color: var(--text-main);
-            font-size: 0.85rem;
-            outline: none;
-            width: 220px;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            width: 280px;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue-glow);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 14px;
-            color: var(--text-dim);
-            font-size: 13px;
-        }
-
-        /* MOBILE SEARCH ROW */
-        .mobile-search-row {
-            display: none;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            position: fixed;
-            top: 72px;
-            left: 0;
-            width: 100%;
-            z-index: 999;
-        }
-
-        .mobile-search-input {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 10px 16px 10px 38px;
-            border-radius: 20px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        /* THEME TOGGLER (SVG ICONS, NO EMOJI) */
-        .theme-toggle-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-main);
-        }
-
-        .theme-toggle-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
-        }
-
-        .theme-toggle-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        /* Lang Selector */
-        .lang-select {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            outline: none;
-            transition: var(--transition);
-        }
-        .lang-select:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        /* MAIN CONTAINER */
-        main {
-            padding-top: 104px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-left: 40px;
-            padding-right: 40px;
-            padding-bottom: 80px;
-        }
-
-        /* HERO SECTION */
-        .hero-section {
-            position: relative;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 60px;
-            margin-bottom: 60px;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1.1fr;
-            align-items: center;
-            gap: 40px;
-            box-shadow: var(--shadow-card);
-        }
-
-        .tech-badge-sub {
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
-            color: var(--accent-blue);
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .hero-title {
-            font-size: 3.4rem;
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 32px;
-            max-width: 480px;
-        }
-
-        .hero-specs-grid {
-            display: flex;
-            gap: 32px;
-            margin-bottom: 36px;
-        }
-
-        .hero-spec-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .hero-spec-value {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .hero-spec-label {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .btn-primary {
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px 36px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px var(--accent-blue-glow);
-            filter: brightness(1.1);
-        }
-
-        .hero-image-wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--bg-card);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            height: 420px;
-            overflow: hidden;
-        }
-
-        .hero-product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 30px;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hero-section:hover .hero-product-img {
-            transform: scale(1.06);
-        }
-
-        .tech-float-tag {
-            position: absolute;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 8px;
-            pointer-events: none;
-            background: var(--glass-bg);
-            backdrop-filter: blur(6px);
-        }
-        .tag-1 { top: 20px; left: 20px; }
-        .tag-2 { bottom: 20px; left: 20px; }
-
-        /* CATALOG */
-        .section-header {
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-        }
-
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 30px;
-        }
-
-        /* REFINED PRODUCT CARD (NO BLUE FLASH / NO FULL BLUE BACKGROUND) */
-        .product-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 22px;
-            padding: 24px;
-            position: relative;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .product-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .product-badge-sub {
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        /* SVG FAVOURITE BUTTON */
-        .fav-btn {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 5;
-        }
-
-        .fav-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: none;
-            stroke: var(--text-dim);
-            stroke-width: 2;
-            transition: var(--transition);
-        }
-
-        .fav-btn:hover {
-            border-color: var(--accent-blue);
-        }
-
-        .fav-btn:hover svg {
-            stroke: var(--accent-blue);
-        }
-
-        .fav-btn.active svg {
-            fill: var(--accent-blue);
-            stroke: var(--accent-blue);
-            filter: drop-shadow(0 0 8px var(--accent-blue-glow));
-        }
-
-        .product-img-container {
-            width: 100%;
-            height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .product-card-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .product-card:hover .product-card-img {
-            transform: scale(1.06);
-        }
-
-        .product-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .product-name {
-            font-size: 1.2rem;
-            font-weight: 800;
-        }
-
-        .stock-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: #10b981;
-            font-weight: 600;
-        }
-
-        .stock-dot {
-            width: 6px;
-            height: 6px;
-            background: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
-        }
-
-        .card-bottom-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-            position: relative;
-            z-index: 5;
-        }
-
-        .product-price {
-            font-size: 1.3rem;
-            font-weight: 800;
-        }
-
-        .btn-add-cart {
-            background: var(--accent-blue-subtle);
-            border: 1px solid var(--border-color);
-            color: var(--accent-blue);
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-add-cart:hover {
-            background: var(--accent-blue);
-            color: #fff;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 15px var(--accent-blue-glow);
-        }
-
-        .btn-quick-preview {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-right: 8px;
-        }
-        .btn-quick-preview:hover {
-            border-color: var(--text-main);
-            color: var(--text-main);
-        }
-
-        /* PRODUCT DETAIL PAGE / MODAL */
-        .product-detail-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(14px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .product-detail-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .product-detail-modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            width: 92%;
-            max-width: 1080px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 48px;
-            position: relative;
-            transform: scale(0.95) translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
-        }
-
-        .product-detail-overlay.active .product-detail-modal {
-            transform: scale(1) translateY(0);
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 10;
-        }
-
-        .close-modal-btn:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .product-detail-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 48px;
-        }
-
-        .product-gallery-main {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            height: 380px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            margin-bottom: 16px;
-        }
-
-        .gallery-main-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: var(--transition);
-        }
-
-        .thumbnails-row {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-        }
-
-        .thumb-item {
-            width: 76px;
-            height: 76px;
-            flex-shrink: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 8px;
-            transition: var(--transition);
-        }
-
-        .thumb-item.active, .thumb-item:hover {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
-        }
-
-        .thumb-item img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .product-detail-info {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .detail-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-        }
-
-        .detail-price {
-            font-size: 1.85rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-        }
-
-        /* COLOR SWATCHES */
-        .color-picker-section {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .color-picker-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
-
-        .swatches-row {
-            display: flex;
-            gap: 20px;
-        }
-
-        .swatch-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-        }
-
-        .swatch-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .swatch-circle.white { background: #f8fafc; }
-        .swatch-circle.black { background: #0b0f19; border-color: #334155; }
-        .swatch-circle.pink { background: #f472b6; }
-
-        .swatch-item:hover .swatch-circle {
-            transform: scale(1.08);
-            border-color: var(--accent-blue);
-        }
-
-        .swatch-item.active .swatch-circle {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 18px var(--accent-blue-glow);
-            transform: scale(1.1);
-        }
-
-        .swatch-name {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        /* QUANTITY & ACTIONS */
-        .action-row {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 4px;
-        }
-
-        .qty-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            width: 38px;
-            height: 38px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1rem;
-            border-radius: 8px;
-            transition: var(--transition);
-        }
-
-        .qty-btn:hover {
-            background: var(--accent-blue-subtle);
-            color: var(--accent-blue);
-        }
-
-        .qty-value {
-            width: 36px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .btn-add-cart-large {
-            flex-grow: 1;
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-add-cart-large:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-            box-shadow: 0 8px 30px var(--accent-blue-glow);
-        }
-
-        /* ACCORDIONS */
-        .accordions-container {
-            margin-top: 24px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .accordion-header {
-            width: 100%;
-            background: transparent;
-            border: none;
-            padding: 16px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-main);
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .accordion-item.open .accordion-content {
-            max-height: 350px;
-            padding-bottom: 16px;
-        }
-
-        /* RECENTLY VIEWED */
-        .recently-viewed-section {
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* CART DRAWER */
-        .cart-drawer-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            z-index: 3000;
-            display: flex;
-            justify-content: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .cart-drawer-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .cart-drawer {
-            background: var(--bg-secondary);
-            border-left: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 440px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 30px;
-        }
-
-        .cart-drawer-overlay.active .cart-drawer {
-            transform: translateX(0);
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .cart-items-list {
-            flex-grow: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .cart-item-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .cart-item-img {
-            width: 64px;
-            height: 64px;
-            object-fit: contain;
-            background: var(--bg-primary);
-            border-radius: 10px;
-            padding: 6px;
-        }
-
-        .cart-footer {
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-            margin-top: 20px;
-        }
-
-        .cart-total-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 1.15rem;
-            font-weight: 800;
-        }
-
-        .btn-checkout {
-            width: 100%;
-            background: var(--accent-blue);
-            color: #fff;
-            border: none;
-            padding: 16px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-blue-glow);
-            transition: var(--transition);
-        }
-
-        .btn-checkout:hover {
-            filter: brightness(1.1);
-        }
-
-        /* CHECKOUT MODAL & TIMELINE */
-        .checkout-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 4000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .checkout-modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .checkout-modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            width: 90%;
-            max-width: 520px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 40px;
-            position: relative;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.6);
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
-
-        .form-input {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 13px 16px;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .form-input:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 12px var(--accent-blue-glow);
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 60px 40px 40px 40px;
-            margin-top: 80px;
-        }
-
-        .footer-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr repeat(4, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .footer-col ul li a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--accent-blue);
-        }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        /* MOBILE BOTTOM SHEET MENU */
-        .mobile-menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            z-index: 3500;
-            display: flex;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .mobile-menu-sheet {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-            border-radius: 28px 28px 0 0;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .mobile-menu-overlay.active .mobile-menu-sheet {
-            transform: translateY(0);
-        }
-
-        /* RESPONSIVE BREAKPOINTS */
-        @media (max-width: 1024px) {
-            header { padding: 0 24px; }
-            main { padding-left: 24px; padding-right: 24px; }
-            .hero-section { padding: 40px; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 0 16px;
-                height: 64px;
-            }
-            .search-container {
-                display: none;
-            }
-            .mobile-search-row {
-                display: flex;
-            }
-            main {
-                padding-top: 130px;
-                padding-left: 16px;
-                padding-right: 16px;
-            }
-            .hero-section {
-                grid-template-columns: 1fr;
-                padding: 30px 20px;
-                border-radius: 20px;
-                margin-bottom: 30px;
-            }
-            .hero-title {
-                font-size: 2.3rem;
-            }
-            .hero-specs-grid {
-                gap: 20px;
-            }
-            .hero-image-wrapper {
-                height: 260px;
-            }
-            .catalog-grid {
-                grid-template-columns: 1fr;
-            }
-            .product-detail-modal {
-                width: 96%;
-                padding: 24px 16px;
-                max-height: 95vh;
-                border-radius: 20px;
-            }
-            .product-detail-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .product-gallery-main {
-                height: 260px;
-            }
-            .detail-title {
-                font-size: 1.7rem;
-            }
-            .mobile-menu-toggle {
-                display: flex;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            footer {
-                padding: 40px 16px 30px 16px;
-            }
-        }
-    </style>
+    <title>MILIPSTORE — MCHOSE A7 V2 PRO</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- HEADER -->
-    <header>
-        <a class="brand-logo" href="#">
-            <!-- Minimal Geometric Butterfly & Orbit & M Logo -->
-            <svg class="butterfly-logo-svg" viewBox="0 0 34 34">
-                <circle cx="17" cy="17" r="15" stroke-dasharray="2 4" opacity="0.4"/>
-                <path d="M17 6 C12 3 5 8 8 15 C10 19 14 21 17 25 C20 21 24 19 26 15 C29 8 22 3 17 6 Z"/>
-                <path d="M17 10 L17 28" stroke-width="1.2"/>
-                <circle cx="17" cy="17" r="3" fill="var(--accent-blue)"/>
-            </svg>
-            <span class="brand-name">MILIPSTORE</span>
-        </a>
+    <header class="milip-header">
+        <div class="header-container">
+            <!-- Desktop & Mobile Logo -->
+            <a href="#" class="milip-logo">
+                <svg class="butterfly-icon" viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 16C16 10 10 4 4 8C1 10 2 16 16 16ZM16 16C16 10 22 4 28 8C31 10 30 16 16 16Z"/>
+                    <path d="M16 16C16 22 10 28 4 24C1 22 2 16 16 16ZM16 16C16 22 22 28 28 24C31 22 30 16 16 16Z"/>
+                </svg>
+                <span class="logo-text">MILIPSTORE</span>
+            </a>
 
-        <div class="header-actions">
-            <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" id="desktopSearch" placeholder="Пошук (A7 V2)...">
+            <!-- Desktop Nav -->
+            <nav class="header-nav">
+                <a href="#catalog" class="nav-link">Каталог</a>
+                <a href="#search" class="nav-link" id="open-search">Пошук</a>
+            </nav>
+
+            <!-- Header Actions (No circular buttons!) -->
+            <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" aria-label="Перемикач теми">
+                    <!-- Sun / Moon SVG switch -->
+                    <svg class="sun-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2m-4.22-7.78l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
+                    <svg class="moon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <button class="icon-btn" id="wishlist-btn" aria-label="Обране">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+                <button class="icon-btn" id="cart-btn" aria-label="Кошик">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+                <button class="icon-btn mobile-menu-btn" id="mobile-menu-toggle" aria-label="Меню">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </button>
             </div>
-
-            <select class="lang-select" id="langSelect">
-                <option value="UA">UA</option>
-                <option value="RU">RU</option>
-                <option value="EN">EN</option>
-            </select>
-
-            <!-- SVG Theme Toggler (Sun / Moon) -->
-            <button class="theme-toggle-btn" id="themeToggleBtn" title="Змінити тему">
-                <svg id="themeIconSun" viewBox="0 0 24 24" style="display:none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                <svg id="themeIconMoon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-
-            <button class="icon-btn" id="favsOpenBtn" title="Обране">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </button>
-
-            <button class="icon-btn" id="cartOpenBtn" title="Кошик">
-                🛒
-                <span class="cart-badge" id="cartBadge">0</span>
-            </button>
-
-            <button class="mobile-menu-toggle" id="mobileMenuBtn" title="Меню">
-                ☰
-            </button>
+        </div>
+        <!-- Mobile Search Bar Sub-row -->
+        <div class="mobile-search-bar">
+            <input type="text" placeholder="Пошук обладнання MILIP..." id="mobile-search-input">
         </div>
     </header>
 
-    <!-- MOBILE SEARCH ROW -->
-    <div class="mobile-search-row">
-        <div style="position:relative; width:100%;">
-            <span class="search-icon" style="top: 13px;">🔍</span>
-            <input type="text" class="mobile-search-input" placeholder="Пошук пристроїв...">
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <main>
-        <!-- HERO SECTION -->
-        <section class="hero-section">
+    <!-- HERO SECTION -->
+    <section class="milip-hero">
+        <div class="hero-container">
             <div class="hero-content">
-                <span class="tech-badge-sub mono">MILIP / 001 • WIRELESS</span>
-                <h1 class="hero-title">MCHOSE A7 V2 PRO</h1>
-                <p class="hero-desc">Прецизійна бездротова ігрова миша найвищого рівня. Створена для абсолютного контролю без компромісів та зайвого ігрового дизайну.</p>
-                
+                <div class="hero-tag">MILIP / 001 &bull; MCHOSE</div>
+                <h1 class="hero-title">A7 V2 PRO</h1>
+                <p class="hero-subtitle">PRECISION WITHOUT LIMITS</p>
                 <div class="hero-specs-grid">
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">8K Hz</span>
-                        <span class="hero-spec-label">Polling Rate</span>
-                    </div>
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">26000 DPI</span>
-                        <span class="hero-spec-label">Precision</span>
-                    </div>
-                    <div class="hero-spec-item">
-                        <span class="hero-spec-value mono">49g</span>
-                        <span class="hero-spec-label">Weight</span>
-                    </div>
+                    <div class="spec-item"><span>8K</span><label>Polling</label></div>
+                    <div class="spec-item"><span>PAW3395</span><label>Sensor</label></div>
+                    <div class="spec-item"><span>49g</span><label>Weight</label></div>
+                    <div class="spec-item"><span>WIRELESS</span><label>Tri-Mode</label></div>
                 </div>
-
-                <button class="btn-primary" onclick="openProductModal()">
-                    <span>ПЕРЕГЛЯНУТИ ТОВАР ТА КОЛЬОРИ</span>
-                    <span>→</span>
-                </button>
             </div>
-
-            <div class="hero-image-wrapper">
-                <div class="tech-float-tag tag-1 mono">PAW3395 SENSOR</div>
-                <div class="tech-float-tag tag-2 mono">ULTRA-LIGHT 49G</div>
-                <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80" alt="MCHOSE A7 V2 PRO" class="hero-product-img">
-            </div>
-        </section>
-
-        <!-- CATALOG -->
-        <div class="section-header">
-            <h2 class="section-title">Каталог пристроїв</h2>
-            <span class="mono" style="font-size: 0.8rem; color: var(--text-dim);">1 товар в каталозі</span>
-        </div>
-
-        <div class="catalog-grid" id="catalogGrid">
-            <!-- Product Card -->
-            <div class="product-card" onclick="openProductModal()">
-                <div class="card-top-row">
-                    <span class="product-badge-sub mono">MILIP / 001</span>
-                    <button class="fav-btn" onclick="event.stopPropagation(); toggleFav(this)" title="В обране">
-                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    </button>
-                </div>
-                <div class="product-img-container">
-                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80" alt="MCHOSE A7 V2 PRO" class="product-card-img">
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">MCHOSE A7 V2 PRO</h3>
-                    <div class="stock-status">
-                        <span class="stock-dot"></span>
-                        <span>В наявності</span>
-                    </div>
-                </div>
-                <div class="card-bottom-row">
-                    <span class="product-price mono">2 449 ₴</span>
-                    <div>
-                        <button class="btn-quick-preview" onclick="event.stopPropagation(); openQuickPreview()">ПЕРЕГЛЯД</button>
-                        <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart()">ДОДАТИ</button>
-                    </div>
-                </div>
+            <div class="hero-visual">
+                <div class="glow-backdrop"></div>
+                <!-- Единая реальная фотография товара из проекта -->
+                <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" id="hero-main-img" class="product-main-photo">
             </div>
         </div>
+    </section>
 
-        <!-- RECENTLY VIEWED (Dynamically shown) -->
-        <div class="recently-viewed-section" id="recentlyViewedSection" style="display:none;">
+    <!-- CATALOG / PRODUCT CARD SECTION -->
+    <main class="milip-main" id="catalog">
+        <div class="container">
             <div class="section-header">
-                <h3 style="font-size: 1.25rem; font-weight: 800;">Недавно проглянуті</h3>
+                <h2>HARDWARE LINEUP</h2>
+                <span class="section-code">SYS.01 // MCHOSE</span>
             </div>
-            <div class="catalog-grid" id="recentlyViewedGrid"></div>
+
+            <div class="products-grid">
+                <!-- Product Card -->
+                <div class="milip-product-card" data-id="a7-v2-pro">
+                    <button class="card-wishlist" aria-label="Додати в обране">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                    <div class="card-image-container">
+                        <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" class="card-img">
+                    </div>
+                    <div class="card-meta">
+                        <span class="card-tag">MILIP / 001</span>
+                        <h3 class="card-title">MCHOSE A7 V2 PRO</h3>
+                        <div class="stock-status"><span class="dot-live"></span> В наявності</div>
+                        <div class="card-footer-row">
+                            <span class="card-price">2 449 ₴</span>
+                            <button class="btn-primary quick-buy-btn">ДОДАТИ В КОШИК</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- FULL PRODUCT DETAIL MODAL -->
-    <div class="product-detail-overlay" id="productModal" onclick="closeProductModal(event)">
-        <div class="product-detail-modal" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeProductModalBtn()">✕</button>
-            <div class="product-detail-grid">
-                <div>
-                    <div class="product-gallery-main">
-                        <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80" alt="" class="gallery-main-img" id="modalMainImg">
-                    </div>
-                    <div class="thumbnails-row" id="modalThumbnails">
-                        <div class="thumb-item active" onclick="changeImage(this, 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80')">
-                            <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=200&q=80">
-                        </div>
-                        <div class="thumb-item" onclick="changeImage(this, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80')">
-                            <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=200&q=80">
-                        </div>
-                        <div class="thumb-item" onclick="changeImage(this, 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80')">
-                            <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=200&q=80">
-                        </div>
-                    </div>
+    <!-- PRODUCT DETAIL SECTION (MAIN PRODUCT VIEW) -->
+    <section class="product-detail-section">
+        <div class="container product-detail-grid">
+            <!-- Gallery / Media -->
+            <div class="product-gallery">
+                <div class="main-image-container">
+                    <img src="assets/mchose-a7-v2-pro.jpg" alt="MCHOSE A7 V2 PRO" id="active-product-img">
                 </div>
-
-                <div class="product-detail-info">
-                    <div>
-                        <span class="product-badge-sub mono">MILIP / 001 • IN STOCK</span>
-                        <h2 class="detail-title" style="margin-top: 6px;">MCHOSE A7 V2 PRO</h2>
-                    </div>
-                    <div class="detail-price mono">2 449 ₴</div>
-                    
-                    <!-- COLOR SWATCHES -->
-                    <div class="color-picker-section">
-                        <span class="color-picker-label">Колір: <span id="selectedColorLabel" style="color:var(--text-main); font-weight:700;">BLACK</span></span>
-                        <div class="swatches-row">
-                            <button class="swatch-item active" onclick="selectColor(this, 'Black', 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=800&q=80')">
-                                <div class="swatch-circle black"></div>
-                                <span class="swatch-name">Black</span>
-                            </button>
-                            <button class="swatch-item" onclick="selectColor(this, 'White', 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80')">
-                                <div class="swatch-circle white"></div>
-                                <span class="swatch-name">White</span>
-                            </button>
-                            <button class="swatch-item" onclick="selectColor(this, 'Pink', 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80')">
-                                <div class="swatch-circle pink"></div>
-                                <span class="swatch-name">Pink</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="action-row">
-                        <div class="quantity-selector">
-                            <button class="qty-btn" onclick="changeQty(-1)">-</button>
-                            <span class="qty-value mono" id="modalQty">1</span>
-                            <button class="qty-btn" onclick="changeQty(1)">+</button>
-                        </div>
-                        <button class="btn-add-cart-large" onclick="addToCartFromModal()">
-                            <span>ДОДАТИ В КОШИК</span>
-                        </button>
-                    </div>
-
-                    <!-- ACCORDIONS -->
-                    <div class="accordions-container">
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                <span>Опис пристрою</span>
-                                <span>+</span>
-                            </button>
-                            <div class="accordion-content">
-                                Флагманська миша MCHOSE A7 V2 PRO створена для професійного кіберспорту. Ергономічний корпус вагою лише 49 грамів, топовий сенсор PAW3395 та підтримка частоти опитування 8000 Гц забезпечують нульову затримку і неперевершену плавність керування.
-                            </div>
-                        </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                <span>Характеристики</span>
-                                <span>+</span>
-                            </button>
-                            <div class="accordion-content">
-                                • Сенсор: PixArt PAW3395 (до 26000 DPI)<br>
-                                • Частота опитування: до 8000 Hz (бездротовий режим)<br>
-                                • Вага: 49 г<br>
-                                • Перемикачі: Optical switches<br>
-                                • Автономність: до 100 годин
-                            </div>
-                        </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                <span>Комплект</span>
-                                <span>+</span>
-                            </button>
-                            <div class="accordion-content">
-                                Миша MCHOSE A7 V2 PRO, бездротовий приймач 8K, кабель USB-C у тканевому обплетенні, змінні тефлонові ніжки, інструкція.
-                            </div>
-                        </div>
-                        <div class="accordion-item" onclick="toggleAccordion(this)">
-                            <button class="accordion-header">
-                                <span>Доставка та Гарантія</span>
-                                <span>+</span>
-                            </button>
-                            <div class="accordion-content">
-                                Доставка Новою Поштою, Укрпоштою або Meest по Україні (1-2 дні). Оплата при отриманні або онлайн. Офіційна гарантія від виробника 12 місяців.
-                            </div>
-                        </div>
-                    </div>
+                <div class="thumbnails-row">
+                    <button class="thumb-btn active" data-color="white"><img src="assets/mchose-a7-v2-pro.jpg" alt="White"></button>
+                    <!-- Если другие фотографии цветов отсутствуют в проекте, свитчи управляют доступным медиаконтентом без подмены несуществующих файлов заглушками -->
                 </div>
             </div>
+
+            <!-- Product Info Panel -->
+            <div class="product-info-panel">
+                <div class="hero-tag">MILIP / 001</div>
+                <h2 class="product-name">MCHOSE A7 V2 PRO</h2>
+                <div class="stock-status"><span class="dot-live"></span> В наявності</div>
+                <div class="product-price-block">2 449 ₴</div>
+
+                <!-- COLOR SWATCHES (Strictly required design) -->
+                <div class="color-picker-group">
+                    <label class="option-label">COLOR: <span id="selected-color-name">WHITE</span></label>
+                    <div class="swatches-row">
+                        <button class="color-swatch active" data-color="white" data-name="WHITE" style="background: #FFFFFF;" aria-label="White"></button>
+                        <button class="color-swatch" data-color="black" data-name="BLACK" style="background: #171B20;" aria-label="Black"></button>
+                        <button class="color-swatch" data-color="pink" data-name="PINK" style="background: #E8A5A5;" aria-label="Pink"></button>
+                    </div>
+                </div>
+
+                <!-- QTY & ACTIONS -->
+                <div class="purchase-actions-row">
+                    <div class="quantity-selector">
+                        <button class="qty-btn" id="qty-minus">−</button>
+                        <span id="qty-value">1</span>
+                        <button class="qty-btn" id="qty-plus">+</button>
+                    </div>
+                    <button class="btn-primary add-to-cart-main">ДОДАТИ В КОШИК</button>
+                </div>
+                <button class="btn-secondary wishlist-main-btn">♡ Додати в обране</button>
+
+                <!-- ACCORDIONS / TABS -->
+                <div class="product-accordions">
+                    <details class="accordion-item" open>
+                        <summary>Опис</summary>
+                        <p>Ультралегка професійна бездротова ігрова миша MCHOSE A7 V2 PRO з передовим сенсором PAW3395 та підтримкою 8K опитування для безкомпромісної точності.</p>
+                    </details>
+                    <details class="accordion-item">
+                        <summary>Характеристики</summary>
+                        <ul>
+                            <li>Сенсор: PAW3395 (до 26 000 DPI)</li>
+                            <li>Частота опитування: 8K / 1000 Гц</li>
+                            <li>Вага: 49г</li>
+                            <li>Підключення: Tri-Mode (Wireless 2.4GHz / Bluetooth / Type-C)</li>
+                        </ul>
+                    </details>
+                    <details class="accordion-item">
+                        <summary>Комплект</summary>
+                        <p>Миша MCHOSE A7 V2 PRO, приймач 8K/1K, паракордовий кабель USB-C, гріпси (наклейки проти ковзання), інструкція.</p>
+                    </details>
+                    <details class="accordion-item">
+                        <summary>Доставка та гарантія</summary>
+                        <p>Швидка доставка по Україні кур'єром або у відділення Нової Пошти. Офіційна гарантія 12 місяців.</p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECENTLY VIEWED -->
+    <section class="recently-viewed-section" id="recently-viewed" style="display: none;">
+        <div class="container">
+            <h3>Нещодавно переглянуті</h3>
+            <div class="recent-grid" id="recent-grid-container"></div>
+        </div>
+    </section>
+
+    <!-- CART DRAWER PANEL -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="drawer-header">
+            <h3>КОШИК</h3>
+            <button class="icon-btn" id="close-cart">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="drawer-body" id="cart-items-container">
+            <!-- Dynamic Cart Items -->
+            <div class="empty-cart-msg">Кошик порожній</div>
+        </div>
+        <div class="drawer-footer" id="cart-footer" style="display: none;">
+            <div class="cart-total-row">
+                <span>Загалом:</span>
+                <span id="cart-total-price">2 449 ₴</span>
+            </div>
+            <button class="btn-primary checkout-btn">ДОДАТИ ОФОРМЛЕННЯ</button>
         </div>
     </div>
 
-    <!-- CART DRAWER -->
-    <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCart(event)">
-        <div class="cart-drawer" id="cartDrawer" onclick="event.stopPropagation()">
-            <div class="cart-header">
-                <h3 class="cart-title">Кошик</h3>
-                <button class="close-modal-btn" style="position:static; width:36px; height:36px;" onclick="closeCartBtn()">✕</button>
-            </div>
-            <div class="cart-items-list" id="cartItemsList"></div>
-            <div class="cart-footer" id="cartFooter" style="display:none;">
-                <div class="cart-total-row">
-                    <span>Разом:</span>
-                    <span class="mono" id="cartTotalPrice">0 ₴</span>
-                </div>
-                <button class="btn-checkout" onclick="openCheckout()">ОФОРМИТИ ЗАМОВЛЕННЯ</button>
-            </div>
+    <!-- QUICK PREVIEW MODAL / BOTTOM SHEET -->
+    <div class="quick-view-overlay" id="quick-view-overlay"></div>
+    <div class="quick-view-modal" id="quick-view-modal">
+        <button class="icon-btn qv-close" id="close-qv">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="qv-content" id="qv-content-inner">
+            <!-- Dynamic Quick Preview Content -->
         </div>
     </div>
 
-    <!-- CHECKOUT MODAL & TIMELINE -->
-    <div class="checkout-modal-overlay" id="checkoutModal">
-        <div class="checkout-modal">
-            <button class="close-modal-btn" onclick="closeCheckout()">✕</button>
-            <h3 style="margin-bottom: 24px; font-weight: 800;" id="checkoutModalTitle">Оформлення замовлення</h3>
-            
-            <form id="checkoutForm" onsubmit="submitOrder(event)">
-                <div class="form-group">
-                    <label class="form-label">Ім'я та Прізвище</label>
-                    <input type="text" class="form-input" id="orderName" required placeholder="Олександр Шевченко">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Телефон</label>
-                    <input type="tel" class="form-input" id="orderPhone" required placeholder="+380 (XX) XXX XX XX">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Служба доставки</label>
-                    <select class="form-input" id="orderDeliveryService">
-                        <option value="nova">Нова Пошта (відділення / поштомат)</option>
-                        <option value="ukr">Укрпошта Експрес</option>
-                        <option value="meest">Meest Express</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Місто та відділення / адреса</label>
-                    <input type="text" class="form-input" id="orderAddress" required placeholder="Київ, відд. №1">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Спосіб оплаты</label>
-                    <select class="form-input" id="orderPayment">
-                        <option value="telegram">Telegram Payments (@payments_jobbot)</option>
-                        <option value="cod">Післяплата</option>
-                        <option value="card">Карткою онлайн (Visa/Mastercard)</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-checkout" style="margin-top: 10px;">ПІДТВЕРДИТИ ТА ОТРИМАТИ НОМЕР</button>
-            </form>
-
-            <div id="orderSuccessView" style="display:none; text-align:center; padding: 20px 0;">
-                <div style="font-size: 3rem; margin-bottom: 12px;">✨</div>
-                <h4 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">Замовлення створено!</h4>
-                <p class="mono" id="orderNumberDisplay" style="color: var(--accent-blue); font-weight: 700; margin-bottom: 20px; font-size: 1.1rem;"></p>
-                
-                <div style="text-align: left; background: var(--bg-card); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); margin-bottom: 10px; text-transform: uppercase;">Статус замовлення (Timeline)</div>
-                    <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
-                        <div style="color: #10b981; font-weight: 600;">✓ Замовлення створено</div>
-                        <div style="color: #10b981; font-weight: 600;">✓ Оплата отримана (@payments_jobbot)</div>
-                        <div style="color: var(--text-muted);">○ Передано в доставку</div>
-                        <div style="color: var(--text-dim);">○ Доставлено</div>
-                    </div>
-                </div>
-                <button class="btn-checkout" onclick="closeCheckoutSession()">ЗАКРИТИ</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MOBILE BOTTOM SHEET MENU -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="closeMobileMenu(event)">
-        <div class="mobile-menu-sheet" onclick="event.stopPropagation()">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:14px;">
-                <span style="font-weight:800; font-size:1.1rem;">MILIPSTORE MENU</span>
-                <button class="close-modal-btn" style="position:static; width:36px; height:36px;" onclick="closeMobileMenuBtn()">✕</button>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:16px; padding: 10px 0;">
-                <a href="#" onclick="closeMobileMenuBtn(); openProductModal();" style="color:var(--text-main); text-decoration:none; font-weight:700; font-size:1rem;">MCHOSE A7 V2 PRO</a>
-                <a href="#" onclick="closeMobileMenuBtn(); openCart();" style="color:var(--text-main); text-decoration:none; font-weight:700; font-size:1rem;">Кошик (<span id="mobileCartCount">0</span>)</a>
-                <a href="#" onclick="closeMobileMenuBtn(); alert('Розділ допомоги та контактів');" style="color:var(--text-muted); text-decoration:none; font-size:0.95rem;">Допомога та контакти</a>
-                <a href="https://t.me/" target="_blank" style="color:var(--accent-blue); text-decoration:none; font-weight:700; font-size:0.95rem;">Telegram Підтримка</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
-                    <svg class="butterfly-logo-svg" style="width:24px; height:24px;" viewBox="0 0 34 34">
-                        <circle cx="17" cy="17" r="15" stroke-dasharray="2 4" opacity="0.4"/>
-                        <path d="M17 6 C12 3 5 8 8 15 C10 19 14 21 17 25 C20 21 24 19 26 15 C29 8 22 3 17 6 Z"/>
-                        <circle cx="17" cy="17" r="3" fill="var(--accent-blue)"/>
-                    </svg>
-                    <span style="font-weight:800; letter-spacing:0.1em;">MILIPSTORE</span>
-                </div>
-                <p style="color:var(--text-dim); font-size:0.85rem; line-height:1.5; max-width:280px;">Прецизійна PC-периферия нового покоління. Абсолютний контроль без зайвих компромісів.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Каталог</h4>
-                <ul>
-                    <li><a href="#" onclick="openProductModal()">MCHOSE A7 V2 PRO</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Покупцям</h4>
-                <ul>
-                    <li><a href="#" onclick="openCart()">Кошик</a></li>
-                    <li><a href="#" onclick="alert('Доставка Новою Поштою, Укрпоштою та Meest по всій Україні.')">Доставка</a></li>
-                    <li><a href="#" onclick="alert('Офіційна гарантія 12 місяців.')">Гарантія</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Підтримка</h4>
-                <ul>
-                    <li><a href="https://t.me/" target="_blank">Telegram Bot</a></li>
-                    <li><a href="#" onclick="alert('Контакти: support@milipstore.ua')">Контакти</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Бренд</h4>
-                <ul>
-                    <li><span style="color:var(--accent-blue); font-weight:700;">Moon / Night Tech</span></li>
-                    <li><span style="color:var(--text-dim); font-size:0.8rem;">MILIP / 001</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2026 MILIPSTORE. All rights reserved.</span>
-            <span class="mono">PRECISION WITHOUT LIMITS</span>
-        </div>
-    </footer>
-
-    <script>
-        // THEME TOGGLER (MOON / DARK) WITH SVG ICONS
-        const htmlEl = document.documentElement;
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIconSun = document.getElementById('themeIconSun');
-        const themeIconMoon = document.getElementById('themeIconMoon');
-
-        function setTheme(theme) {
-            htmlEl.setAttribute('data-theme', theme);
-            localStorage.setItem('milip_theme', theme);
-            if(theme === 'dark') {
-                themeIconSun.style.display = 'block';
-                themeIconMoon.style.display = 'none';
-            } else {
-                themeIconSun.style.display = 'none';
-                themeIconMoon.style.display = 'block';
-            }
-        }
-
-        const savedTheme = localStorage.getItem('milip_theme') || 'moon';
-        setTheme(savedTheme);
-
-        themeToggleBtn.addEventListener('click', () => {
-            const current = htmlEl.getAttribute('data-theme');
-            setTheme(current === 'moon' ? 'dark' : 'moon');
-        });
-
-        // CART & PERSISTENCE
-        let cart = JSON.parse(localStorage.getItem('milip_cart')) || [];
-        let selectedColorName = 'Black';
-        let modalQuantity = 1;
-        let viewedProducts = JSON.parse(localStorage.getItem('milip_viewed')) || [];
-
-        function saveCart() {
-            localStorage.setItem('milip_cart', JSON.stringify(cart));
-            updateCartBadge();
-        }
-
-        function updateCartBadge() {
-            const badge = document.getElementById('cartBadge');
-            const mobileCount = document.getElementById('mobileCartCount');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            badge.textContent = totalItems;
-            if(mobileCount) mobileCount.textContent = totalItems;
-        }
-        updateCartBadge();
-
-        function renderCart() {
-            const list = document.getElementById('cartItemsList');
-            const footer = document.getElementById('cartFooter');
-            
-            if (cart.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-dim); text-align:center; margin-top:40px;">Кошик порожній</p>';
-                footer.style.display = 'none';
-                return;
-            }
-
-            footer.style.display = 'block';
-            list.innerHTML = cart.map((item, index) => `
-                <div class="cart-item-card">
-                    <img src="${item.img}" class="cart-item-img">
-                    <div style="flex-grow:1;">
-                        <div style="font-weight:700; font-size:0.9rem;">${item.name}</div>
-                        <div style="font-size:0.75rem; color:var(--text-dim);">Колір: ${item.color} | Кількість: ${item.quantity}</div>
-                        <div class="mono" style="font-weight:800; color:var(--accent-blue); margin-top:4px;">${item.price * item.quantity} ₴</div>
-                    </div>
-                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:var(--text-dim); cursor:pointer; font-size:1rem; padding:6px;">✕</button>
-                </div>
-            `).join('');
-
-            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            document.getElementById('cartTotalPrice').textContent = totalPrice.toLocaleString() + ' ₴';
-        }
-
-        function addToCart(product) {
-            const existing = cart.find(i => i.name === product.name && i.color === product.color);
-            if (existing) {
-                existing.quantity += product.quantity || 1;
-            } else {
-                cart.push({ ...product, quantity: product.quantity || 1 });
-            }
-            saveCart();
-            renderCart();
-            openCart();
-        }
-
-        function quickAddToCart() {
-            addToCart({
-                name: 'MCHOSE A7 V2 PRO',
-                price: 2449,
-                color: 'Black',
-                img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=200&q=80'
-            });
-        }
-
-        function addToCartFromModal() {
-            addToCart({
-                name: 'MCHOSE A7 V2 PRO',
-                price: 2449,
-                color: selectedColorName,
-                img: document.getElementById('modalMainImg').src,
-                quantity: modalQuantity
-            });
-            closeProductModalBtn();
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            saveCart();
-            renderCart();
-        }
-
-        // MODAL & RECENTLY VIEWED
-        function openProductModal() {
-            document.getElementById('productModal').classList.add('active');
-            addToRecentlyViewed();
-        }
-        function closeProductModalBtn() {
-            document.getElementById('productModal').classList.remove('active');
-        }
-        function closeProductModal(e) {
-            if(e.target === document.getElementById('productModal')) {
-                closeProductModalBtn();
-            }
-        }
-
-        function openQuickPreview() {
-            openProductModal();
-        }
-
-        function addToRecentlyViewed() {
-            const productObj = {
-                name: 'MCHOSE A7 V2 PRO',
-                price: '2 449 ₴',
-                img: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=500&q=80'
-            };
-            if (!viewedProducts.some(p => p.name === productObj.name)) {
-                viewedProducts.unshift(productObj);
-                if(viewedProducts.length > 3) viewedProducts.pop();
-                localStorage.setItem('milip_viewed', JSON.stringify(viewedProducts));
-            }
-            renderRecentlyViewed();
-        }
-
-        function renderRecentlyViewed() {
-            const section = document.getElementById('recentlyViewedSection');
-            const grid = document.getElementById('recentlyViewedGrid');
-            if (viewedProducts.length === 0) {
-                section.style.display = 'none';
-                return;
-            }
-            section.style.display = 'block';
-            grid.innerHTML = viewedProducts.map(p => `
-                <div class="product-card" onclick="openProductModal()">
-                    <div class="card-top-row">
-                        <span class="product-badge-sub mono">MILIP / 001</span>
-                    </div>
-                    <div class="product-img-container">
-                        <img src="${p.img}" class="product-card-img">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">${p.name}</h3>
-                    </div>
-                    <div class="card-bottom-row">
-                        <span class="product-price mono">${p.price}</span>
-                        <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart()">ДОДАТИ</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        renderRecentlyViewed();
-
-        // COLOR SWATCHES & GALLERY
-        function selectColor(btn, colorName, imgSrc) {
-            document.querySelectorAll('.swatch-item').forEach(el => el.classList.remove('active'));
-            btn.classList.add('active');
-            selectedColorName = colorName;
-            document.getElementById('selectedColorLabel').textContent = colorName.toUpperCase();
-            
-            const mainImg = document.getElementById('modalMainImg');
-            mainImg.style.opacity = '0';
-            setTimeout(() => {
-                mainImg.src = imgSrc;
-                mainImg.style.opacity = '1';
-            }, 150);
-        }
-
-        function changeImage(thumb, src) {
-            document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-            thumb.classList.add('active');
-            const mainImg = document.getElementById('modalMainImg');
-            mainImg.style.opacity = '0';
-            setTimeout(() => {
-                mainImg.src = src;
-                mainImg.style.opacity = '1';
-            }, 150);
-        }
-
-        function changeQty(delta) {
-            modalQuantity = Math.max(1, modalQuantity + delta);
-            document.getElementById('modalQty').textContent = modalQuantity;
-        }
-
-        // ACCORDIONS
-        function toggleAccordion(item) {
-            const isOpen = item.classList.contains('open');
-            document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('open'));
-            if (!isOpen) {
-                item.classList.add('open');
-            }
-        }
-
-        // FAVOURITES
-        function toggleFav(btn) {
-            btn.classList.toggle('active');
-        }
-
-        // CART DRAWER
-        function openCart() {
-            document.getElementById('cartDrawerOverlay').classList.add('active');
-            renderCart();
-        }
-        function closeCartBtn() {
-            document.getElementById('cartDrawerOverlay').classList.remove('active');
-        }
-        function closeCart(e) {
-            if(e.target === document.getElementById('cartDrawerOverlay')) {
-                closeCartBtn();
-            }
-        }
-        document.getElementById('cartOpenBtn').addEventListener('click', openCart);
-        document.getElementById('favsOpenBtn').addEventListener('click', () => {
-            alert('Обраних товарів у списку: 0. Натисніть на іконку серця на картці товару.');
-        });
-
-        // CHECKOUT & TELEGRAM @payments_jobbot
-        function openCheckout() {
-            closeCartBtn();
-            document.getElementById('checkoutModal').classList.add('active');
-            document.getElementById('checkoutForm').style.display = 'block';
-            document.getElementById('orderSuccessView').style.display = 'none';
-            document.getElementById('checkoutModalTitle').textContent = 'Оформлення замовлення';
-        }
-        function closeCheckout() {
-            document.getElementById('checkoutModal').classList.remove('active');
-        }
-
-        function submitOrder(e) {
-            e.preventDefault();
-            const orderNum = 'MS / ' + Math.floor(1000 + Math.random() * 9000);
-            
-            document.getElementById('checkoutForm').style.display = 'none';
-            document.getElementById('checkoutModalTitle').textContent = 'Статус замовлення';
-            document.getElementById('orderSuccessView').style.display = 'block';
-            document.getElementById('orderNumberDisplay').textContent = 'Номер замовлення: ' + orderNum;
-            
-            cart = [];
-            saveCart();
-        }
-
-        function closeCheckoutSession() {
-            closeCheckout();
-        }
-
-        // MOBILE MENU
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-            mobileMenuOverlay.classList.add('active');
-        });
-        function closeMobileMenuBtn() {
-            mobileMenuOverlay.classList.remove('active');
-        }
-        function closeMobileMenu(e) {
-            if(e.target === mobileMenuOverlay) {
-                closeMobileMenuBtn();
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
