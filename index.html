@@ -4,139 +4,244 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MILIPSTORE — Gaming Gear</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Подключаем Telegram Web App скрипт -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --accent-color: #00f0ff;
+            --text-color: #ffffff;
+            --border-color: rgba(0, 240, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            padding: 12px;
+            padding-right: 48px;
+            padding-bottom: 90px;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .brand-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Верхние кнопки в правом углу */
+        .header-actions {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            background: rgba(18, 25, 43, 0.95);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            position: absolute;
+            right: 44px;
+            top: 0px;
+            z-index: 98;
+        }
+
+        .icon-btn {
+            background: rgba(18, 25, 43, 0.95);
+            border: 1px solid var(--border-color);
+            color: var(--accent-color);
+            padding: 5px 7px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #7928ca;
+            color: white;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 50%;
+        }
+
+        /* Правая вертикальная панель */
+        .right-sidebar-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 38px;
+            background: linear-gradient(135deg, rgba(25, 38, 66, 0.95), rgba(220, 235, 255, 0.9));
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            box-shadow: -3px 0 15px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            z-index: 99;
+        }
+
+        .side-btn {
+            width: 28px;
+            height: 28px;
+            background: rgba(13, 19, 33, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .side-btn:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        /* Контейнер сетки товаров */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .product-img {
+            height: 90px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .product-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .buy-btn {
+            background: var(--accent-color);
+            color: #0b0f19;
+            border: none;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ (HEADER) -->
-    <header class="header">
-        <div class="logo">MILIPSTORE</div>
-        <div class="header-right">
-            <button class="header-btn" title="Обране">❤️ <span class="counter">0</span></button>
-            <button class="header-btn" id="cart-btn" title="Кошик">🛒 <span class="counter">1</span></button>
-            <div class="lang-switch">UA/EN</div>
-        </div>
-    </header>
-
-    <!-- ОСНОВНОЙ КОНТЕЙНЕР (СЕТКА + ПРАВАЯ ПАНЕЛЬ) -->
-    <div class="main-layout">
-        
-        <!-- СЕТКА ТОВАРОВ -->
-        <main class="products-grid">
-            
-            <div class="product-card">
-                <div class="product-img">🎮</div>
-                <div class="product-info">
-                    <h3 class="product-title">ATK Blazing Sky F1 V2</h3>
-                    <div class="product-price">2 699 ₴</div>
-                    <button class="buy-btn" onclick="openCheckout('ATK Blazing Sky F1 V2', '2699')">КУПИТИ</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img">⌨️</div>
-                <div class="product-info">
-                    <h3 class="product-title">Mechanical Keyboard</h3>
-                    <div class="product-price">2 899 ₴</div>
-                    <button class="buy-btn" onclick="openCheckout('Mechanical Keyboard', '2899')">КУПИТИ</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img">🎧</div>
-                <div class="product-info">
-                    <h3 class="product-title">RGB Headset X</h3>
-                    <div class="product-price">1 999 ₴</div>
-                    <button class="buy-btn" onclick="openCheckout('RGB Headset X', '1999')">КУПИТИ</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-img">🖱️</div>
-                <div class="product-info">
-                    <h3 class="product-title">Wireless Pad Pro</h3>
-                    <div class="product-price">799 ₴</div>
-                    <button class="buy-btn" onclick="openCheckout('Wireless Pad Pro', '799')">КУПИТИ</button>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- ПРАВАЯ БОКОВАЯ ПАНЕЛЬ -->
-        <aside class="sidebar-panel">
-            <button class="sidebar-btn">☎️ Зв'язок</button>
-            <button class="sidebar-btn">⭐ Відгуки</button>
-            <button class="sidebar-btn">📜 Правила</button>
-        </aside>
-
+    <!-- Правая вертикальная панель -->
+    <div class="right-sidebar-panel">
+        <div class="side-btn" title="Зв'язок">📞</div>
+        <div class="side-btn" title="Правила">📜</div>
+        <div class="side-btn" title="Відгуки">⭐</div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ОФОРМЛЕНИЯ ЗАКАЗА (ЧЕКАУТ В СТИЛЕ OLX) -->
-    <div class="modal-overlay" id="checkoutModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Оформлення замовлення</h2>
-                <button class="close-modal" onclick="closeCheckout()">✕</button>
-            </div>
-            
-            <div class="selected-product-preview">
-                <span id="modal-product-name">Обраний товар</span>
-                <strong id="modal-product-price">0 ₴</strong>
-            </div>
-
-            <form class="checkout-form" id="orderForm" onsubmit="submitOrder(event)">
-                <div class="form-group">
-                    <label>Імя та Прізвище*</label>
-                    <input type="text" placeholder="Дмитро Мисник" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Номер телефону*</label>
-                    <input type="tel" placeholder="+380 XX XXX XX XX" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Місто*</label>
-                    <input type="text" placeholder="Наприклад: Київ" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Відділення Нової Пошти*</label>
-                    <input type="text" placeholder="№5 або поштомат" required>
-                </div>
-
-                <div class="notice-box">
-                    ℹ️ Захист від відмов: сплата мінімального внеску за доставку (**150 ₴**), залишок суми — післяплата на пошті.
-                </div>
-
-                <button type="submit" class="submit-order-btn">ПЕРЕЙТИ ДО ОПЛАТИ (150 ₴)</button>
-            </form>
+    <!-- Шапка сайта -->
+    <div class="header">
+        <div class="brand-logo">MILIPSTORE</div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="openScreen('favorites')">❤️ <span id="fav-count" class="badge-count">0</span></button>
+            <button class="icon-btn" onclick="openScreen('cart')">🛒 <span id="cart-count" class="badge-count">0</span></button>
         </div>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="products-container">
+        
+        <div class="product-card">
+            <div class="product-img">🎮</div>
+            <div class="product-title">ATK Blazing Sky F1 V2</div>
+            <div class="product-price">2 699 ₴</div>
+            <button class="buy-btn" onclick="buyProduct('ATK Blazing Sky F1 V2', '2699')">КУПИТИ</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">⌨️</div>
+            <div class="product-title">Mechanical Keyboard</div>
+            <div class="product-price">2 899 ₴</div>
+            <button class="buy-btn" onclick="buyProduct('Mechanical Keyboard', '2899')">КУПИТИ</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">🎧</div>
+            <div class="product-title">RGB Headset X</div>
+            <div class="product-price">1 999 ₴</div>
+            <button class="buy-btn" onclick="buyProduct('RGB Headset X', '1999')">КУПИТИ</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img">🖱️</div>
+            <div class="product-title">Wireless Pad Pro</div>
+            <div class="product-price">799 ₴</div>
+            <button class="buy-btn" onclick="buyProduct('Wireless Pad Pro', '799')">КУПИТИ</button>
+        </div>
+
     </div>
 
     <script>
-        const modal = document.getElementById('checkoutModal');
-        const productNameEl = document.getElementById('modal-product-name');
-        const productPriceEl = document.getElementById('modal-product-price');
-
-        function openCheckout(name, price) {
-            productNameEl.textContent = name;
-            productPriceEl.textContent = price + ' ₴';
-            modal.style.display = 'flex';
+        function buyProduct(name, price) {
+            const data = {
+                product: name,
+                price: price
+            };
+            if (window.Telegram && window.Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify(data));
+            } else {
+                alert('Замовлення: ' + name + ' (' + price + ' грн)');
+            }
         }
 
-        function closeCheckout() {
-            modal.style.display = 'none';
-        }
-
-        function submitOrder(event) {
-            event.preventDefault();
-            alert('Замовлення сформовано! Перенаправляємо на оплату внеску 150 грн...');
-            // Здесь в будущем подключим отправку данных через Telegram.WebApp.sendData()
-            closeCheckout();
+        function openScreen(type) {
+            console.log('Open screen:', type);
         }
     </script>
 </body>
