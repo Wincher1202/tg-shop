@@ -228,30 +228,57 @@
                         </button>
                     </div>
 
-                    <!-- ДЕТАЛЬНИЙ ОПИС ТОВАРУ ТА ХАРАКТЕРИСТИКИ -->
-                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4">
-                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">Опис та характеристика</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-                            <strong>MCHOSE A7 V2 PRO</strong> — це безкомпромісний інструмент для кіберспортсменів та геймерів, які цінують мілісекундну швидкість відгуку та абсолютну точність. Ергономічний корпус розроблений за участю професійних гравців.
-                        </p>
-                        <div class="grid grid-cols-2 gap-3 pt-2 text-xs">
-                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
-                                <span class="text-gray-500 block font-mono">Сенсор</span>
-                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">PixArt PAW3395</span>
-                            </div>
-                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
-                                <span class="text-gray-500 block font-mono">Частота опитування</span>
-                                <span class="font-extrabold text-[#00C2FF] text-sm">8K HyperPolling</span>
-                            </div>
-                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
-                                <span class="text-gray-500 block font-mono">Вага</span>
-                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">~54 грами</span>
-                            </div>
-                            <div class="p-3 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A]">
-                                <span class="text-gray-500 block font-mono">Підключення</span>
-                                <span class="font-extrabold text-gray-900 dark:text-white text-sm">Трьохрежимне (2.4G / BT / Type-C)</span>
+                    <!-- ІНТЕРАКТИВНІ ВИПАДАЮЧІ БЛОКИ (АККОРДЕОНИ) -->
+                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
+                        
+                        <!-- Блок 1: Характеристики та комплектація -->
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
+                            <button onclick="toggleAccordion('accSpecs')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    <span>Характеристики та комплектація</span>
+                                </span>
+                                <svg id="icon-accSpecs" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="content-accSpecs" class="hidden px-4 pb-4 pt-1 text-xs text-gray-600 dark:text-gray-300 space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A]">
+                                <p><strong>Сенсор:</strong> PixArt PAW3395 (до 26 000 DPI, 650 IPS)</p>
+                                <p><strong>Частота опитування:</strong> Підтримка 8K HyperPolling у комплекті</p>
+                                <p><strong>Вага:</strong> Ультралегкий корпус ~54 г</p>
+                                <p><strong>Комплектація:</strong> Миша MCHOSE A7 V2 PRO, 8K ресивер, фірмовий паракордовий кабель Type-C, тефлонові ніжки, інструкція.</p>
                             </div>
                         </div>
+
+                        <!-- Блок 2: Доставка та терміни -->
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
+                            <button onclick="toggleAccordion('accDelivery')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                                    <span>Доставка та терміни</span>
+                                </span>
+                                <svg id="icon-accDelivery" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="content-accDelivery" class="hidden px-4 pb-4 pt-1 text-xs text-gray-600 dark:text-gray-300 space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A]">
+                                <p><strong>Нова Пошта:</strong> За тарифами перевізника (відділення, поштомат або кур'єр). Терміни: 1-2 дні.</p>
+                                <p><strong>Meest Express:</strong> Доставка у пункти видачі та поштомати по всій Україні.</p>
+                                <p><strong>Терміни відправки:</strong> Замовлення, оформлені до 16:00, відправляються в день замовлення!</p>
+                            </div>
+                        </div>
+
+                        <!-- Блок 3: Гарантія та повернення -->
+                        <div class="border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden bg-[#C6CCDF] dark:bg-[#07101B]">
+                            <button onclick="toggleAccordion('accWarranty')" class="w-full p-4 flex items-center justify-between font-bold text-sm text-left hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                    <span>Гарантія та повернення</span>
+                                </span>
+                                <svg id="icon-accWarranty" class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div id="content-accWarranty" class="hidden px-4 pb-4 pt-1 text-xs text-gray-600 dark:text-gray-300 space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A]">
+                                <p><strong>Офіційна гарантія:</strong> 12 місяців від виробника MCHOSE.</p>
+                                <p><strong>Повернення/Обмін:</strong> Протягом 14 днів з моменту покупки, за умови збереження товарного вигляду, повної комплектації та цілісності упаковки.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -462,6 +489,19 @@
         }
 
         function openProductPage() { switchView('product'); }
+
+        // Функція перемикання акордеонів на сторінці товару
+        function toggleAccordion(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
 
         function toggleTheme() {
             const html = document.documentElement;
