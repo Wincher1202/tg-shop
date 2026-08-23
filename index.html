@@ -87,6 +87,7 @@
             animation: heartPulse 0.3s ease-in-out;
         }
 
+        /* Прелоадер на весь экран с логотипом MILIPSTORE */
         #milip-intro-overlay {
             position: fixed;
             top: 0;
@@ -95,11 +96,11 @@
             height: 100vh;
             background: #ffffff;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 99999;
             transition: opacity 0.5s ease, visibility 0.5s ease;
-            pointer-events: none;
         }
         html.dark #milip-intro-overlay {
             background: #040B14;
@@ -107,12 +108,26 @@
         #milip-intro-overlay.hidden-intro {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Анимация появления логотипа на старте */
+        @keyframes logoIntroAppear {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            50% { opacity: 1; transform: scale(1.05) translateY(0); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .intro-logo-container {
+            display: flex;
+            align-items: center;
+            space-x: 12px;
+            animation: logoIntroAppear 1s ease forwards;
         }
 
         /* 3-секундная бомбезная леташка, улетающая в левый верхний угол к логотипу */
         @keyframes introFlyaround {
             0% {
-                transform: translate(0, 50px) scale(2.2) rotate(0deg);
+                transform: translate(0, 70px) scale(2.2) rotate(0deg);
                 opacity: 0;
             }
             10% {
@@ -137,7 +152,7 @@
 
         .intro-flying-butterfly {
             position: fixed;
-            top: 50%;
+            top: 55%;
             left: 50%;
             z-index: 100000;
             pointer-events: none;
@@ -179,13 +194,24 @@
 </head>
 <body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
 
-    <div id="milip-intro-overlay"></div>
-
-    <!-- Бомбезная бабочка, которая летает 3 секунды и уходит в левый угол к лого -->
-    <div class="intro-flying-butterfly">
-        <svg width="70" height="70" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 15px rgba(0,194,255,0.9));">
-            <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
-        </svg>
+    <!-- Статовый экран с логотипом MILIPSTORE и летающей бабочкой -->
+    <div id="milip-intro-overlay">
+        <div class="intro-logo-container flex items-center space-x-3">
+            <svg class="w-12 h-12 text-[#00C2FF]" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+                <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+                <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
+                <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
+                <circle cx="16" cy="16" r="3" class="text-white dark:text-[#040B14]" fill="currentColor"/>
+            </svg>
+            <span class="font-extrabold tracking-widest text-2xl sm:text-3xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
+        </div>
+        <!-- Бомбезная бабочка, которая летает 3 секунды и уходит в левый угол к шапке -->
+        <div class="intro-flying-butterfly">
+            <svg width="75" height="75" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 18px rgba(0,194,255,0.9));">
+                <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
+            </svg>
+        </div>
     </div>
 
     <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"></div>
@@ -202,7 +228,7 @@
                         <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
                         <circle cx="16" cy="16" r="3" class="text-[#D8DCF0] dark:text-[#040B14]" fill="currentColor"/>
                     </svg>
-                    <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent truncate">MILIPSTORE</span>
+                    <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
                 </a>
                 <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
                     <a href="#" onclick="scrollToCatalog(); return false;" class="hover:text-[#00C2FF] transition-colors">Каталог</a>
@@ -422,6 +448,9 @@
         let currentProductQty = 1;
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Принудительный скролл на самый верх при заходе
+            window.scrollTo({ top: 0, behavior: 'instant' });
+
             setTimeout(() => {
                 const overlay = document.getElementById('milip-intro-overlay');
                 if (overlay) overlay.classList.add('hidden-intro');
