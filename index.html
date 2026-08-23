@@ -1,1199 +1,980 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk" class="scroll-smooth" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MILIPSTORE</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="metaTitle">MILIPSTORE — MCHOSE A7 V2 PRO | Ultimate Gaming Hardware</title>
+    <meta name="description" content="Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом у MILIPSTORE.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        milip: {
+                            turquoise: '#00C2FF',
+                            turquoiseGlow: '#00E5FF',
+                            lightBg: '#D8DCF0',
+                            cardLight: '#C6CCDF',
+                            nightBg: '#040B14',
+                            cardNight: '#07101B',
+                            borderNight: '#11223A',
+                            borderLight: '#B5BCD5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            box-sizing: border-box;
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden !important;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
+        *, *:before, *:after {
+            box-sizing: inherit;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #eef1f4;
-            color: #111827;
-            overflow-x: hidden;
+        img, video, picture, svg {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
         }
 
-        /* =====================================================
-           INTRO
-        ===================================================== */
+        body, header, div, button, input, select, section {
+            transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.25s ease;
+        }
+        * { -webkit-tap-highlight-color: transparent; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 194, 255, 0.4); border-radius: 3px; }
 
-        #intro {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes heartPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-modal { animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .wishlist-btn.active svg, 
+        .favorite-icon.active svg,
+        .wishlist-btn.active, 
+        .favorite-icon.active {
+            fill: #FF3B30 !important;
+            stroke: #FF3B30 !important;
+            color: #FF3B30 !important;
+            transform: scale(1.12);
+            filter: drop-shadow(0 0 6px rgba(255, 59, 48, 0.35));
+            animation: heartPulse 0.3s ease-in-out;
+        }
+
+        /* Прелоадер на весь экран */
+        #milip-intro-overlay {
             position: fixed;
-            inset: 0;
-            z-index: 99999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #eef1f4;
-            overflow: hidden;
-            transition:
-                opacity .7s ease,
-                visibility .7s ease;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-
-        #intro.hide {
+        html.dark #milip-intro-overlay {
+            background: #040B14;
+        }
+        #milip-intro-overlay.hidden-intro {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
 
-        .intro-content {
-            position: relative;
-            width: min(900px, 90vw);
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        @keyframes textAppear {
+            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .intro-text-only {
+            font-extrabold;
+            letter-spacing: 0.15em;
+            animation: textAppear 0.8s ease forwards;
         }
 
-        /* Главная надпись */
-
-        .intro-title {
-            position: relative;
-            z-index: 5;
-
-            font-size: clamp(42px, 8vw, 105px);
-            font-weight: 900;
-            letter-spacing: -5px;
-            color: #17243d;
-
-            opacity: 0;
-            transform: translateY(12px) scale(.97);
-
-            animation:
-                introTitleIn .7s ease forwards;
-
-            user-select: none;
-        }
-
-        .intro-title span {
-            display: inline-block;
-        }
-
-        @keyframes introTitleIn {
-            from {
+        /* Анимация бабочки: появляется снизу, летит на место иконки логотипа в шапке, затем улетает */
+        @keyframes introFlyaround {
+            0% {
+                transform: translate(0, 120px) scale(1.8) rotate(15deg);
                 opacity: 0;
-                transform: translateY(12px) scale(.97);
             }
-
-            to {
+            15% {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translate(-10vw, 20vh) scale(1.4) rotate(-20deg);
+            }
+            45% {
+                transform: translate(15vw, -5vh) scale(1.1) rotate(25deg);
+            }
+            75% {
+                /* Точное попадание на место иконки логотипа в шапке */
+                transform: translate(var(--dest-x), var(--dest-y)) scale(0.85) rotate(0deg);
+                opacity: 1;
+            }
+            88% {
+                transform: translate(var(--dest-x), var(--dest-y)) scale(0.9) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-45vw, -45vh) scale(0.2) rotate(360deg);
+                opacity: 0;
             }
         }
 
-        /* =====================================================
-           БАБОЧКА
-        ===================================================== */
-
-        .butterfly {
-            position: absolute;
-            z-index: 10;
-
-            left: 50%;
-            top: 50%;
-
-            width: 46px;
-            height: 46px;
-
-            opacity: 0;
-
-            /*
-                Начальная точка — примерно середина экрана.
-                Дальше вся траектория задаётся JS.
-            */
-            transform:
-                translate(-50%, -50%)
-                rotate(0deg);
-
-            pointer-events: none;
-        }
-
-        .butterfly.active {
-            opacity: 1;
-        }
-
-        /*
-            Само тело бабочки.
-            Она всегда ориентирована вертикально,
-            поэтому не переворачивается во время полёта.
-        */
-
-        .butterfly-body {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-
-            width: 7px;
-            height: 25px;
-
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-
-            background: #17243d;
-            z-index: 3;
-        }
-
-        .wing {
-            position: absolute;
-            top: 50%;
-
-            width: 21px;
-            height: 31px;
-
-            border-radius: 80% 20% 80% 20%;
-
-            background: #17243d;
-
-            transform-origin: center bottom;
-        }
-
-        .wing-left {
-            right: 50%;
-            transform:
-                translateY(-50%)
-                rotate(28deg);
-        }
-
-        .wing-right {
-            left: 50%;
-            transform:
-                translateY(-50%)
-                scaleX(-1)
-                rotate(28deg);
-        }
-
-        .wing-inner-left,
-        .wing-inner-right {
-            position: absolute;
-            width: 9px;
-            height: 13px;
-            background: #eef1f4;
-            border-radius: 70%;
-            opacity: .9;
-        }
-
-        .wing-inner-left {
-            left: 5px;
-            top: 8px;
-        }
-
-        .wing-inner-right {
-            right: 5px;
-            top: 8px;
-        }
-
-        /* лёгкое движение крыльев */
-
-        .butterfly.active .wing-left {
-            animation: wingLeft .18s ease-in-out infinite alternate;
-        }
-
-        .butterfly.active .wing-right {
-            animation: wingRight .18s ease-in-out infinite alternate;
-        }
-
-        @keyframes wingLeft {
-            from {
-                transform:
-                    translateY(-50%)
-                    rotate(18deg);
-            }
-
-            to {
-                transform:
-                    translateY(-50%)
-                    rotate(42deg);
-            }
-        }
-
-        @keyframes wingRight {
-            from {
-                transform:
-                    translateY(-50%)
-                    scaleX(-1)
-                    rotate(18deg);
-            }
-
-            to {
-                transform:
-                    translateY(-50%)
-                    scaleX(-1)
-                    rotate(42deg);
-            }
-        }
-
-        /* =====================================================
-           ЛОГОТИП
-        ===================================================== */
-
-        .site-logo {
+        .intro-flying-butterfly {
             position: fixed;
-            top: 24px;
-            left: 28px;
-
-            z-index: 100;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            font-size: 25px;
-            font-weight: 900;
-            letter-spacing: -1px;
-
-            color: #17243d;
+            top: 50%;
+            left: 50%;
+            z-index: 100000;
+            pointer-events: none;
+            animation: introFlyaround 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .logo-mark {
-            width: 38px;
-            height: 38px;
-
-            border-radius: 12px;
-
-            background: #17243d;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: white;
-            font-size: 19px;
-            font-weight: 900;
-        }
-
-        /* =====================================================
-           ОСНОВНОЙ САЙТ
-        ===================================================== */
-
-        #site {
-            min-height: 100vh;
-
-            opacity: 0;
-            transform: translateY(8px);
-
-            transition:
-                opacity .7s ease,
-                transform .7s ease;
-        }
-
-        #site.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-
-            height: 76px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 5vw;
-
-            background: rgba(238, 241, 244, .88);
-            backdrop-filter: blur(18px);
-
-            border-bottom: 1px solid rgba(23, 36, 61, .08);
-        }
-
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            color: #17243d;
-            font-size: 23px;
-            font-weight: 900;
-            text-decoration: none;
-        }
-
-        .header-logo-mark {
-            width: 38px;
-            height: 38px;
-
-            border-radius: 11px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: white;
-            background: #17243d;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
-
-        nav a {
-            color: #17243d;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
-
-            transition: opacity .2s ease;
-        }
-
-        nav a:hover {
-            opacity: .55;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .icon-button {
-            width: 42px;
-            height: 42px;
-
-            border: 1px solid rgba(23, 36, 61, .1);
-            border-radius: 12px;
-
-            background: white;
-            color: #17243d;
-
-            cursor: pointer;
-
-            transition:
-                transform .2s ease,
-                background .2s ease;
-        }
-
-        .icon-button:hover {
-            transform: translateY(-2px);
-            background: #f5f7f9;
-        }
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .hero {
-            width: min(1180px, 90vw);
-            margin: 0 auto;
-
-            padding: 100px 0 70px;
-
-            display: grid;
-            grid-template-columns: 1.1fr .9fr;
-            align-items: center;
-            gap: 60px;
-        }
-
-        .hero-text h1 {
-            color: #17243d;
-
-            font-size: clamp(45px, 7vw, 90px);
-            line-height: .94;
-            letter-spacing: -5px;
-
-            margin-bottom: 28px;
-        }
-
-        .hero-text p {
-            max-width: 530px;
-
-            color: #5f6878;
-
-            font-size: 18px;
-            line-height: 1.65;
-
-            margin-bottom: 35px;
-        }
-
-        .hero-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 15px 24px;
-
-            border: 0;
-            border-radius: 14px;
-
-            background: #17243d;
-            color: white;
-
-            text-decoration: none;
-            font-weight: 800;
-
-            transition:
-                transform .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .hero-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(23, 36, 61, .2);
-        }
-
-        .hero-card {
-            min-height: 430px;
-
-            border-radius: 30px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #dce2e9,
-                    #f7f8f9
-                );
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            box-shadow:
-                0 25px 70px rgba(23, 36, 61, .12);
-        }
-
-        .hero-butterfly {
-            font-size: 150px;
-            opacity: .9;
-        }
-
-        /* =====================================================
-           PRODUCTS
-        ===================================================== */
-
-        .products {
-            width: min(1180px, 90vw);
-            margin: 0 auto;
-
-            padding: 50px 0 100px;
-        }
-
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-
-            margin-bottom: 30px;
-        }
-
-        .section-title h2 {
-            color: #17243d;
-
-            font-size: 38px;
-            letter-spacing: -2px;
-        }
-
-        .section-title p {
-            color: #7b8491;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 18px;
-        }
-
-        .product {
-            padding: 16px;
-
-            border-radius: 22px;
-
-            background: white;
-
-            border: 1px solid rgba(23, 36, 61, .07);
-
-            transition:
-                transform .25s ease,
-                box-shadow .25s ease;
-        }
-
-        .product:hover {
-            transform: translateY(-6px);
-
-            box-shadow:
-                0 20px 50px rgba(23, 36, 61, .1);
-        }
-
-        .product-image {
-            height: 230px;
-
-            border-radius: 17px;
-
-            background: #edf0f3;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 16px;
-
-            font-size: 70px;
-        }
-
-        .product h3 {
-            color: #17243d;
-            font-size: 17px;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            color: #17243d;
-            font-size: 19px;
-            font-weight: 900;
-        }
-
-        /* =====================================================
-           FOOTER
-        ===================================================== */
-
-        footer {
-            padding: 50px 5vw;
-
-            background: #17243d;
-            color: white;
-
-            text-align: center;
-        }
-
-        footer strong {
-            font-size: 22px;
-        }
-
-        footer p {
-            margin-top: 10px;
-            opacity: .65;
-        }
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 800px) {
-
-            header {
-                padding: 0 20px;
+        @keyframes butterflyFlight {
+            0% {
+                transform: translate(0, 0) scale(0.4) rotate(0deg);
+                opacity: 0;
             }
-
-            nav {
-                display: none;
+            15% {
+                opacity: 1;
+                transform: translate(-30px, -60px) scale(1) rotate(45deg);
             }
-
-            .hero {
-                grid-template-columns: 1fr;
-                padding-top: 60px;
+            40% {
+                transform: translate(-120px, -140px) scale(1.2) rotate(160deg);
             }
-
-            .hero-card {
-                min-height: 300px;
+            70% {
+                transform: translate(40px, -220px) scale(0.9) rotate(260deg);
             }
-
-            .product-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
+            90% {
+                opacity: 1;
+                transform: translate(var(--target-x), var(--target-y)) scale(0.5) rotate(360deg);
             }
-
-            .intro-title {
-                letter-spacing: -3px;
-            }
-
-            .site-logo {
-                top: 18px;
-                left: 18px;
+            100% {
+                opacity: 0;
+                transform: translate(var(--target-x), var(--target-y)) scale(0.2) rotate(400deg);
             }
         }
-
-        @media (max-width: 480px) {
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-text h1 {
-                letter-spacing: -3px;
-            }
+        .flying-butterfly {
+            position: fixed;
+            z-index: 99999;
+            pointer-events: none;
+            animation: butterflyFlight 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
     </style>
 </head>
+<body class="bg-[#D8DCF0] text-[#0F172A] dark:bg-[#040B14] dark:text-[#F1F5F9] font-sans antialiased selection:bg-[#00C2FF] selection:text-black min-h-screen flex flex-col w-full overflow-x-hidden">
 
-<body>
-
-    <!-- =====================================================
-         INTRO
-    ===================================================== -->
-
-    <div id="intro">
-
-        <!-- маленький логотип, к которому прилетает бабочка -->
-
-        <div class="site-logo">
-            <div class="logo-mark">M</div>
-            <span>MILIPSTORE</span>
+    <!-- Прелоадер с идеальной надписью и бабочкой -->
+    <div id="milip-intro-overlay">
+        <div class="intro-text-only font-extrabold tracking-widest text-3xl sm:text-4xl bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">
+            MILIPSTORE
         </div>
-
-        <div class="intro-content">
-
-            <!-- Главная надпись -->
-            <div class="intro-title" id="introTitle">
-                <span>M</span><span>I</span><span>L</span><span>I</span><span>P</span><span>S</span><span>T</span><span>O</span><span>R</span><span>E</span>
-            </div>
-
-            <!-- Бабочка -->
-
-            <div class="butterfly" id="butterfly">
-
-                <div class="wing wing-left">
-                    <div class="wing-inner-left"></div>
-                </div>
-
-                <div class="wing wing-right">
-                    <div class="wing-inner-right"></div>
-                </div>
-
-                <div class="butterfly-body"></div>
-
-            </div>
-
+        <div class="intro-flying-butterfly" id="introButterfly">
+            <svg width="70" height="70" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 16px rgba(0,194,255,0.9));">
+                <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
+            </svg>
         </div>
     </div>
 
+    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-3 pointer-events-none max-w-[calc(100vw-2rem)]"></div>
 
-    <!-- =====================================================
-         MAIN SITE
-    ===================================================== -->
-
-    <main id="site">
-
-        <header>
-
-            <a href="#" class="header-logo">
-                <div class="header-logo-mark">M</div>
-                MILIPSTORE
-            </a>
-
-            <nav>
-                <a href="#catalog">Каталог</a>
-                <a href="#about">О нас</a>
-                <a href="#contacts">Контакты</a>
-            </nav>
-
-            <div class="header-actions">
-
-                <button class="icon-button" aria-label="Избранное">
-                    ♡
-                </button>
-
-                <button class="icon-button" aria-label="Корзина">
-                    🛒
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <h1>
-                    MILIPSTORE
-                </h1>
-
-                <p>
-                    Современный магазин с аккуратным дизайном,
-                    качественными товарами и простым способом
-                    выбрать то, что действительно нравится.
-                </p>
-
-                <a href="#catalog" class="hero-button">
-                    Перейти в каталог
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#D8DCF0]/90 dark:bg-[#040B14]/90 border-b border-[#B5BCD5] dark:border-[#11223A] shadow-sm w-full">
+        <div class="w-full px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-6 sm:space-x-10 min-w-0">
+                <a href="#" onclick="switchView('catalog'); return false;" class="flex items-center space-x-3 group min-w-0">
+                    <svg id="headerLogoIcon" class="w-8 h-8 text-[#00C2FF] flex-shrink-0 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 16L4 6C2 4 4 2 7 3C12 5 15 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+                        <path d="M16 16L28 6C30 4 28 2 25 3C20 5 17 12 16 16Z" fill="currentColor" fill-opacity="0.9"/>
+                        <path d="M16 16L6 26C4 28 6 30 9 29C14 27 15 20 16 16Z" fill="currentColor"/>
+                        <path d="M16 16L26 26C28 28 26 30 23 29C18 27 17 20 16 16Z" fill="currentColor"/>
+                        <circle cx="16" cy="16" r="3" class="text-[#D8DCF0] dark:text-[#040B14]" fill="currentColor"/>
+                    </svg>
+                    <span class="font-extrabold tracking-widest text-base sm:text-lg bg-gradient-to-r from-[#0F172A] to-[#00C2FF] dark:from-white dark:to-[#00C2FF] bg-clip-text text-transparent">MILIPSTORE</span>
                 </a>
-
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                    <a href="#" onclick="scrollToCatalog(); return false;" class="hover:text-[#00C2FF] transition-colors" data-i18n="nav_catalog">Каталог</a>
+                    <button onclick="openSearchModal()" class="flex items-center space-x-1.5 hover:text-[#00C2FF] transition-colors">
+                        <span data-i18n="nav_search">Пошук</span>
+                    </button>
+                </nav>
             </div>
 
-            <div class="hero-card">
-                <div class="hero-butterfly">
-                    🦋
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- PRODUCTS -->
-
-        <section class="products" id="catalog">
-
-            <div class="section-title">
-
-                <div>
-                    <h2>Каталог</h2>
-                    <p>Избранные товары MILIPSTORE</p>
+            <div class="flex items-center space-x-3 sm:space-x-4 flex-shrink-0">
+                <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (UA / RU) -->
+                <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-xl p-1 text-xs font-bold">
+                    <button id="langBtnUa" onclick="setLanguage('ua')" class="px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm">UA</button>
+                    <button id="langBtnRu" onclick="setLanguage('ru')" class="px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]">RU</button>
                 </div>
 
+                <button onclick="toggleTheme()" id="themeToggleBtn" class="p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-[#00C2FF] hover:scale-105 transition-all shadow-sm">
+                    <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+
+                <button onclick="openFavoritesModal()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#FF3366] transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    <span id="favoritesBadge" class="absolute -top-1 -right-1 bg-[#FF3366] text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
+                </button>
+
+                <button id="cartIconButton" onclick="openCartDrawer()" class="relative p-2.5 rounded-xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-gray-700 dark:text-gray-300 hover:text-[#00C2FF] transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-[#00C2FF] text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold hidden shadow-lg">0</span>
+                </button>
             </div>
+        </div>
+    </header>
 
-            <div class="product-grid">
+    <!-- MAIN -->
+    <main class="flex-grow w-full overflow-hidden">
+        <!-- CATALOG VIEW -->
+        <div id="catalogView" class="view-section animate-fade-in w-full">
+            <section class="relative overflow-hidden py-12 lg:py-24 px-6 sm:px-10 lg:px-16 w-full">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-6 text-left">
+                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] text-xs font-bold tracking-wider text-[#00C2FF]">
+                          <span>MILIP / 001</span><span>•</span><span data-i18n="hero_badge">ULTIMATE HARDWARE</span>
+                        </div>
+                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+                            MCHOSE <br><span class="text-[#00C2FF]">A7 V2 PRO</span>
+                        </h1>
+                        <p id="heroDesc" class="text-gray-600 dark:text-gray-400 max-w-2xl text-base sm:text-lg font-light leading-relaxed">
+                            Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.
+                        </p>
+                        <div class="pt-4 flex items-center">
+                            <button onclick="openProductPage()" class="w-full sm:w-auto px-8 h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-2xl hover:opacity-95 transition-all shadow-xl flex items-center justify-center">
+                                <span data-i18n="hero_btn">Детальніше про продукт</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5 flex justify-center w-full">
+                        <div class="relative w-full max-w-md bg-[#C6CCDF] dark:bg-[#07101B] p-6 rounded-3xl border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl group cursor-pointer" onclick="openProductPage()">
+                            <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                <article class="product">
+            <section id="catalogSection" class="w-full px-6 sm:px-10 lg:px-16 pb-24">
+                <div class="border-t border-[#B5BCD5] dark:border-[#11223A] pt-12 mb-8 flex justify-between items-end">
+                    <div>
+                        <span class="text-xs font-mono text-[#00C2FF] uppercase tracking-widest font-bold" data-i18n="cat_sub">Ексклюзивний реліз</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1" data-i18n="cat_title">Каталог обладнання</h2>
+                    </div>
+                    <span class="text-sm text-gray-500 font-medium" data-i18n="cat_stock">У наявності</span>
+                </div>
 
-                    <div class="product-image">
-                        🎧
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] p-6 flex flex-col justify-between group hover:border-[#00C2FF] transition-all duration-300 relative">
+                        <div class="absolute top-5 right-5 z-10">
+                            <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, 'Главная фото для каталога.jpg', currentSelectedColor)" class="wishlist-btn p-2.5 rounded-xl bg-white/40 dark:bg-black/30 backdrop-blur text-gray-600 dark:text-gray-300 hover:text-[#FF3B30] transition-colors">
+                                <svg class="w-5 h-5 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                            </button>
+                        </div>
+                        <div onclick="openProductPage()" class="cursor-pointer">
+                            <div class="text-[11px] font-mono text-gray-500 dark:text-gray-400 mb-1">MILIP / 001</div>
+                            <h3 class="font-bold text-lg mb-2">MCHOSE A7 V2 PRO</h3>
+                            <p id="cardDesc" class="text-xs text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.</p>
+                            <div class="relative overflow-hidden rounded-xl aspect-square mb-4 bg-[#B5BCD5] dark:bg-[#040B14] flex items-center justify-center p-2">
+                                <img src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            </div>
+                            <div class="text-2xl font-extrabold mb-4">2 449 ₴</div>
+                        </div>
+                        <button onclick="addToCartWithAnimation(event, 'MCHOSE A7 V2 PRO', 2449, currentSelectedColor, 'Главная фото для каталога.jpg')" class="add-to-cart-btn w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-bold rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center shadow-md text-sm" data-i18n="btn_add_cart">
+                            ДОДАТИ В КОШИК
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PRODUCT VIEW -->
+        <div id="productView" class="view-section hidden py-12 px-6 sm:px-10 lg:px-16 w-full animate-fade-in" data-product-id="MCHOSE A7 V2 PRO">
+            <button onclick="switchView('catalog')" class="inline-flex items-center space-x-2 text-sm text-gray-500 hover:text-[#00C2FF] mb-6 font-medium">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                <span data-i18n="prod_back">Назад до каталогу</span>
+            </button>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-[#C6CCDF] dark:bg-[#07101B] rounded-3xl p-6 border border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex items-center justify-center">
+                        <img id="mainProductImage" src="Главная фото для каталога.jpg" alt="MCHOSE A7 V2 PRO" class="w-full h-auto aspect-square object-contain rounded-2xl shadow-md transition-opacity duration-300">
+                    </div>
+                    <div class="flex space-x-3 overflow-x-auto pb-2" id="productThumbnails">
+                        <button onclick="changePhotoAndColor('Главная фото для каталога.jpg', null, this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Главная фото для каталога.jpg" class="w-full h-full object-contain" loading="lazy"></button>
+                        <button onclick="changePhotoAndColor('Белая мышка.jpg', 'White', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Белая мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
+                        <button onclick="changePhotoAndColor('Черная мышка.jpg', 'Black', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Черная мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
+                        <button onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink', this)" class="thumb-btn flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 border-transparent bg-[#C6CCDF] dark:bg-[#07101B] p-1"><img src="Розовая мышка.jpg" class="w-full h-full object-contain" loading="lazy"></button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <div class="text-xs font-mono text-[#00C2FF] font-bold mb-1">MILIP / 001</div>
+                        <h1 class="text-4xl font-extrabold mb-3">MCHOSE A7 V2 PRO</h1>
+                        <div class="text-3xl font-extrabold">2 449 ₴</div>
                     </div>
 
-                    <h3>
-                        Premium Headphones
-                    </h3>
-
-                    <div class="product-price">
-                        2 499 ₴
+                    <div class="space-y-3 pt-3 border-t border-[#B5BCD5] dark:border-[#11223A]">
+                        <span class="text-xs font-mono text-gray-500 uppercase font-bold"><span data-i18n="prod_color_label">Колір:</span> <span id="selectedColorName" class="font-extrabold text-[#00C2FF]" data-i18n="prod_color_none">Не вибрано</span></span>
+                        <div class="flex items-center space-x-4">
+                            <button id="colorBtnWhite" onclick="changePhotoAndColor('Белая мышка.jpg', 'White')" class="color-picker-btn w-10 h-10 rounded-full bg-white border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
+                            <button id="colorBtnBlack" onclick="changePhotoAndColor('Черная мышка.jpg', 'Black')" class="color-picker-btn w-10 h-10 rounded-full bg-[#0F172A] border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
+                            <button id="colorBtnPink" onclick="changePhotoAndColor('Розовая мышка.jpg', 'Pink')" class="color-picker-btn w-10 h-10 rounded-full bg-[#f472b6] border-2 border-transparent shadow-md hover:scale-110 transition-transform"></button>
+                        </div>
                     </div>
 
-                </article>
-
-
-                <article class="product">
-
-                    <div class="product-image">
-                        🖱️
+                    <div class="flex items-center space-x-3 pt-3">
+                        <div class="flex items-center bg-[#C6CCDF] dark:bg-[#07101B] rounded-2xl border border-[#B5BCD5] dark:border-[#11223A] h-14 px-4 shadow-inner">
+                            <button onclick="updateQty(-1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">-</button>
+                            <span id="productQty" class="w-8 text-center font-extrabold text-lg">1</span>
+                            <button onclick="updateQty(1)" class="w-8 h-full flex items-center justify-center font-bold text-lg">+</button>
+                        </div>
+                        <button onclick="addCurrentProductToCartWithAnimation(event)" class="add-to-cart-btn flex-grow h-14 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm" data-i18n="btn_add_cart">
+                            ДОДАТИ В КОШИК
+                        </button>
+                        <button onclick="toggleFavorite('MCHOSE A7 V2 PRO', 2449, currentSelectedImg, currentSelectedColor)" class="wishlist-btn h-14 w-14 flex-shrink-0 rounded-2xl bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] flex items-center justify-center text-gray-700 dark:text-white hover:text-[#FF3B30] shadow-md">
+                            <svg class="w-6 h-6 fav-icon-MCHOSE-A7-V2-PRO" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </button>
                     </div>
 
-                    <h3>
-                        Gaming Mouse
-                    </h3>
+                    <div class="pt-6 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-3">
+                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                            <button onclick="toggleAccordion('specsAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    <span data-i18n="acc_specs">Технічні характеристики</span>
+                                </span>
+                                <span id="specsAccordionArrow" class="transition-transform duration-300 rotate-180">▼</span>
+                            </button>
+                            <div id="specsAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-specs="specs_content">
+                                <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
+                                <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
+                                <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
+                                <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
+                                <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
+                                <p>• <b>Акумулятор:</b> Енергоефективний, автономність до кількох тижнів активного використання</p>
+                                <p>• <b>Сумісність:</b> Windows, macOS, Linux, фірмове ПЗ для налаштування макросів і DPI</p>
+                            </div>
+                        </div>
 
-                    <div class="product-price">
-                        1 799 ₴
+                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                            <button onclick="toggleAccordion('bundleAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                    <span data-i18n="acc_bundle">Комплектація</span>
+                                </span>
+                                <span id="bundleAccordionArrow" class="transition-transform duration-300 rotate-180">▼</span>
+                            </button>
+                            <div id="bundleAccordion" class="px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-bundle="bundle_content">
+                                <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
+                                <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
+                                <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
+                                <p>4. Комплект фірмових тефлонових глайдів (ніжок)</p>
+                                <p>5. Інструкція користувача та гарантійний талон</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                            <button onclick="toggleAccordion('shippingAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                    <span data-i18n="acc_shipping">Доставка</span>
+                                </span>
+                                <span id="shippingAccordionArrow" class="transition-transform duration-300">▼</span>
+                            </button>
+                            <div id="shippingAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-shipping="shipping_content">
+                                <p>Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-[#C6CCDF] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] rounded-2xl overflow-hidden">
+                            <button onclick="toggleAccordion('warrantyAccordion')" class="w-full p-4 flex items-center justify-between font-extrabold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">
+                                <span class="flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-[#00C2FF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                    <span data-i18n="acc_warranty">Гарантія</span>
+                                </span>
+                                <span id="warrantyAccordionArrow" class="transition-transform duration-300">▼</span>
+                            </button>
+                            <div id="warrantyAccordion" class="hidden px-4 pb-4 text-xs text-gray-600 dark:text-gray-300 leading-relaxed space-y-2 border-t border-[#B5BCD5]/40 dark:border-[#11223A] pt-3" data-i18n-warranty="warranty_content">
+                                <p>Офіційна гарантія від виробника та магазину складає 12 місяців.</p>
+                            </div>
+                        </div>
                     </div>
-
-                </article>
-
-
-                <article class="product">
-
-                    <div class="product-image">
-                        ⌨️
-                    </div>
-
-                    <h3>
-                        Mechanical Keyboard
-                    </h3>
-
-                    <div class="product-price">
-                        2 299 ₴
-                    </div>
-
-                </article>
-
-
-                <article class="product">
-
-                    <div class="product-image">
-                        🖥️
-                    </div>
-
-                    <h3>
-                        Gaming Monitor
-                    </h3>
-
-                    <div class="product-price">
-                        7 999 ₴
-                    </div>
-
-                </article>
-
+                </div>
             </div>
-
-        </section>
-
-
-        <footer id="contacts">
-
-            <strong>MILIPSTORE</strong>
-
-            <p>
-                Современный магазин для тех, кто ценит стиль.
-            </p>
-
-        </footer>
-
+        </div>
     </main>
 
+    <footer class="w-full bg-[#C6CCDF] dark:bg-[#07101B] border-t border-[#B5BCD5] dark:border-[#11223A] py-8 text-center text-xs text-gray-500 px-6">
+        <p data-i18n="footer_text">© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.</p>
+    </footer>
 
     <script>
+        let currentSelectedColor = null; 
+        let currentSelectedImg = 'Главная фото для каталога.jpg';
+        let currentProductQty = 1;
+        let currentLang = 'ua';
 
-        /*
-        ========================================================
-        INTRO ANIMATION
+        const translations = {
+            ua: {
+                nav_catalog: "Каталог",
+                nav_search: "Пошук",
+                hero_badge: "ULTIMATE HARDWARE",
+                hero_desc: "Флагманська бездротова ігрова миша з підтримкою 8K HyperPolling, сенсором PixArt PAW3395 та ультралегким корпусом.",
+                hero_btn: "Детальніше про продукт",
+                cat_sub: "Ексклюзивний реліз",
+                cat_title: "Каталог обладнання",
+                cat_stock: "У наявності",
+                card_desc: "PixArt PAW3395, 8K HyperPolling, 54г, три режими підключення.",
+                btn_add_cart: "ДОДАТИ В КОШИК",
+                prod_back: "Назад до каталогу",
+                prod_color_label: "Колір:",
+                prod_color_none: "Не вибрано",
+                prod_color_white: "Білий",
+                prod_color_black: "Чорний",
+                prod_color_pink: "Рожевий",
+                acc_specs: "Технічні характеристики",
+                acc_bundle: "Комплектація",
+                acc_shipping: "Доставка",
+                acc_warranty: "Гарантія",
+                footer_text: "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
+                specs_content: `
+                    <p>• <b>Сенсор:</b> Оптичний PixArt PAW3395 (до 26 000 DPI, 650 IPS, прискорення 50G)</p>
+                    <p>• <b>Частота опитування:</b> Підтримка до 8000 Hz (8K HyperPolling ресивер в комплекті)</p>
+                    <p>• <b>Перемикачі (Свічі):</b> Довговічні механічні перемикачі з чітким кліком</p>
+                    <p>• <b>Режими підключення:</b> Дротовий (Type-C), бездротовий 2.4 GHz та Bluetooth</p>
+                    <p>• <b>Вага:</b> Ультралегкий корпус — всього ~54 грами</p>
+                    <p>• <b>Акумулятор:</b> Енергоефективний, автономність до кількох тижнів активного використання</p>
+                    <p>• <b>Сумісність:</b> Windows, macOS, Linux, фірмове ПЗ для налаштування макросів і DPI</p>
+                `,
+                bundle_content: `
+                    <p>1. Ігрова миша MCHOSE A7 V2 PRO</p>
+                    <p>2. Високошвидкісний 8K бездротовий ресивер (донгл)</p>
+                    <p>3. Знімний кабель USB Type-C в ультрам'якому паракордовому обплетенні</p>
+                    <p>4. Комплект фірмових тефлонових глайдів (ніжок)</p>
+                    <p>5. Інструкція користувача та гарантійний талон</p>
+                `,
+                shipping_content: `<p>Доставка Новою Поштою по всій Україні протягом 1–2 днів. Можлива оплата при отриманні (післяплата) або онлайн-оплата.</p>`,
+                warranty_content: `<p>Офіційна гарантія від виробника та магазину складає 12 місяців.</p>`
+            },
+            ru: {
+                nav_catalog: "Каталог",
+                nav_search: "Поиск",
+                hero_badge: "ULTIMATE HARDWARE",
+                hero_desc: "Флагманская беспроводная игровая мышь с поддержкой 8K HyperPolling, сенсором PixArt PAW3395 и ультралегким корпусом.",
+                hero_btn: "Подробнее о продукте",
+                cat_sub: "Эксклюзивный релиз",
+                cat_title: "Каталог оборудования",
+                cat_stock: "В наличии",
+                card_desc: "PixArt PAW3395, 8K HyperPolling, 54г, три режима подключения.",
+                btn_add_cart: "ДОБАВИТЬ В КОРЗИНУ",
+                prod_back: "Назад в каталог",
+                prod_color_label: "Цвет:",
+                prod_color_none: "Не выбрано",
+                prod_color_white: "Белый",
+                prod_color_black: "Черный",
+                prod_color_pink: "Розовый",
+                acc_specs: "Технические характеристики",
+                acc_bundle: "Комплектация",
+                acc_shipping: "Доставка",
+                acc_warranty: "Гарантия",
+                footer_text: "© 2026 MILIPSTORE. All rights reserved. Precision Gaming Hardware.",
+                specs_content: `
+                    <p>• <b>Сенсор:</b> Оптический PixArt PAW3395 (до 26 000 DPI, 650 IPS, ускорение 50G)</p>
+                    <p>• <b>Частота опроса:</b> Поддержка до 8000 Hz (8K HyperPolling ресивер в комплекте)</p>
+                    <p>• <b>Переключатели (Свичи):</b> Долговечные механические переключатели с четким кликом</p>
+                    <p>• <b>Режимы подключения:</b> Проводной (Type-C), беспроводной 2.4 GHz и Bluetooth</p>
+                    <p>• <b>Вес:</b> Ультралегкий корпус — всего ~54 грамма</p>
+                    <p>• <b>Аккумулятор:</b> Энергоэффективный, автономность до нескольких недель активного использования</p>
+                    <p>• <b>Совместимость:</b> Windows, macOS, Linux, фирменное ПО для настройки макросов и DPI</p>
+                `,
+                bundle_content: `
+                    <p>1. Игровая мышь MCHOSE A7 V2 PRO</p>
+                    <p>2. Высокоскоростной 8K беспроводной ресивер (донгл)</p>
+                    <p>3. Съемный кабель USB Type-C в ультрамягкой паракордовой оплетке</p>
+                    <p>4. Комплект фирменных тефлоновых глайдов (ножек)</p>
+                    <p>5. Инструкция пользователя и гарантийный талон</p>
+                `,
+                shipping_content: `<p>Доставка Новой Почтой по всей Украине в течение 1–2 дней. Возможна оплата при получении (наложенный платеж) или онлайн-оплата.</p>`,
+                warranty_content: `<p>Официальная гарантия от производителя и магазина составляет 12 месяцев.</p>`
+            }
+        };
 
-        Сценарий:
+        window.addEventListener('DOMContentLoaded', () => {
+            // Динамический расчёт траектории бабочки точно к логотипу в шапке
+            const headerLogo = document.getElementById('headerLogoIcon');
+            const butterfly = document.getElementById('introButterfly');
+            if (headerLogo && butterfly) {
+                const headerRect = headerLogo.getBoundingClientRect();
+                const targetX = headerRect.left + headerRect.width / 2 - window.innerWidth / 2;
+                const targetY = headerRect.top + headerRect.height / 2 - window.innerHeight / 2;
+                butterfly.style.setProperty('--dest-x', targetX + 'px');
+                butterfly.style.setProperty('--dest-y', targetY + 'px');
+            }
 
-        1. Появляется MILIPSTORE.
-        2. Бабочка появляется примерно в центре.
-        3. Плавно летит вокруг надписи.
-        4. Подлетает к букве M.
-        5. Немного зависает.
-        6. Летит вверх-влево к логотипу.
-        7. Прилетает к логотипу.
-        8. Открывается сайт.
-        ========================================================
-        */
+            // Принудительный скролл на самый верх
+            window.scrollTo({ top: 0, behavior: 'instant' });
 
-        const intro = document.getElementById("intro");
-        const butterfly = document.getElementById("butterfly");
-        const introTitle = document.getElementById("introTitle");
-        const site = document.getElementById("site");
+            setTimeout(() => {
+                const overlay = document.getElementById('milip-intro-overlay');
+                if (overlay) overlay.classList.add('hidden-intro');
+            }, 3000);
 
-        const sleep = ms =>
-            new Promise(resolve => setTimeout(resolve, ms));
+            updateFavoritesUI();
+            updateCartUI();
+        });
 
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
 
-        /*
-            Получаем координаты центра элемента.
-        */
+            document.getElementById('htmlRoot').setAttribute('lang', lang);
 
-        function getCenter(element) {
+            const btnUa = document.getElementById('langBtnUa');
+            const btnRu = document.getElementById('langBtnRu');
+            if (lang === 'ua') {
+                btnUa.className = "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                btnRu.className = "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+            } else {
+                btnRu.className = "px-2.5 py-1.5 rounded-lg transition-all bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black shadow-sm";
+                btnUa.className = "px-2.5 py-1.5 rounded-lg transition-all text-gray-700 dark:text-gray-300 hover:text-[#00C2FF]";
+            }
 
-            const rect =
-                element.getBoundingClientRect();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.innerText = t[key];
+            });
 
-            return {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
+            document.getElementById('heroDesc').innerText = t.hero_desc;
+            document.getElementById('cardDesc').innerText = t.card_desc;
+            document.getElementById('specsAccordion').innerHTML = t.specs_content;
+            document.getElementById('bundleAccordion').innerHTML = t.bundle_content;
+            document.getElementById('shippingAccordion').innerHTML = t.shipping_content;
+            document.getElementById('warrantyAccordion').innerHTML = t.warranty_content;
+
+            if (!currentSelectedColor) {
+                document.getElementById('selectedColorName').innerText = t.prod_color_none;
+            } else {
+                updateSelectedColorDisplay();
+            }
         }
 
+        function updateSelectedColorDisplay() {
+            if (!currentSelectedColor) return;
+            const t = translations[currentLang];
+            let colorLocalized = currentSelectedColor;
+            if (currentSelectedColor === 'White') colorLocalized = t.prod_color_white;
+            if (currentSelectedColor === 'Black') colorLocalized = t.prod_color_black;
+            if (currentSelectedColor === 'Pink') colorLocalized = t.prod_color_pink;
+            
+            const colorElem = document.getElementById('selectedColorName');
+            if (colorElem) {
+                colorElem.innerText = colorLocalized;
+                colorElem.className = "font-extrabold text-gray-900 dark:text-white";
+            }
+        }
 
-        /*
-            Двигаем бабочку по плавной траектории.
+        function scrollToCatalog() {
+            const catalogElem = document.getElementById('catalogSection');
+            if (catalogElem) {
+                catalogElem.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
 
-            Важный момент:
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            if (viewName === 'catalog') {
+                document.getElementById('catalogView').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (viewName === 'product') {
+                document.getElementById('productView').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
 
-            Бабочка НЕ вращается.
+        function openProductPage() {
+            switchView('product');
+        }
 
-            То есть она не будет лететь боком,
-            вверх ногами или "жопой вверх".
+        function changePhotoAndColor(imgPath, colorName, btnElement) {
+            currentSelectedColor = colorName;
+            currentSelectedImg = imgPath;
+            
+            if (colorName) {
+                updateSelectedColorDisplay();
+            } else {
+                const t = translations[currentLang];
+                document.getElementById('selectedColorName').innerText = t.prod_color_none;
+                document.getElementById('selectedColorName').className = "font-extrabold text-[#00C2FF]";
+            }
+            
+            const mainImg = document.getElementById('mainProductImage');
+            if (mainImg) {
+                mainImg.style.opacity = '0.3';
+                setTimeout(() => {
+                    mainImg.src = imgPath;
+                    mainImg.style.opacity = '1';
+                }, 150);
+            }
 
-            Крылья просто машут,
-            а сама бабочка всегда остаётся
-            вертикально ориентированной.
-        */
+            document.querySelectorAll('.color-picker-btn').forEach(b => {
+                b.classList.remove('border-[#00C2FF]', 'scale-110', 'ring-2', 'ring-[#00C2FF]');
+            });
 
-        function flyTo(x, y, duration, curve = 0) {
+            if (colorName === 'White') {
+                const b = document.getElementById('colorBtnWhite');
+                if(b) b.classList.add('border-[#00C2FF]', 'scale-110', 'ring-2', 'ring-[#00C2FF]');
+            } else if (colorName === 'Black') {
+                const b = document.getElementById('colorBtnBlack');
+                if(b) b.classList.add('border-[#00C2FF]', 'scale-110', 'ring-2', 'ring-[#00C2FF]');
+            } else if (colorName === 'Pink') {
+                const b = document.getElementById('colorBtnPink');
+                if(b) b.classList.add('border-[#00C2FF]', 'scale-110', 'ring-2', 'ring-[#00C2FF]');
+            }
 
-            return new Promise(resolve => {
+            if (btnElement) {
+                document.querySelectorAll('#productThumbnails button').forEach(b => b.classList.remove('border-[#00C2FF]'));
+                btnElement.classList.add('border-[#00C2FF]');
+            }
+        }
 
-                const start =
-                    butterfly.getBoundingClientRect();
+        function updateQty(delta) {
+            currentProductQty += delta;
+            if (currentProductQty < 1) currentProductQty = 1;
+            const qtyElem = document.getElementById('productQty');
+            if (qtyElem) qtyElem.innerText = currentProductQty;
+        }
 
-                const startX =
-                    start.left + start.width / 2;
+        function getFavorites() {
+            try {
+                const favs = JSON.parse(localStorage.getItem('milip_favorites')) || [];
+                return favs.filter(item => item && item.id && item.id !== 'undefined');
+            } catch(e) {
+                return [];
+            }
+        }
 
-                const startY =
-                    start.top + start.height / 2;
+        function toggleFavorite(id, price, img, color) {
+            if (!id || id === 'undefined') return;
+            let favs = getFavorites();
+            const index = favs.findIndex(item => item.id === id);
+            
+            if (index > -1) {
+                favs.splice(index, 1);
+                showToast(currentLang === 'ua' ? 'Видалено з обраного' : 'Удалено из избранного');
+            } else {
+                favs.push({ id, price: price || 2449, img: img || 'Главная фото для каталога.jpg', color: color || 'White', qty: currentProductQty });
+                showToast(currentLang === 'ua' ? 'Додано в обране ❤️' : 'Добавлено в избранное ❤️');
+            }
+            
+            localStorage.setItem('milip_favorites', JSON.stringify(favs));
+            updateFavoritesUI();
+        }
 
-                const startTime =
-                    performance.now();
-
-
-                function animate(now) {
-
-                    const progress =
-                        Math.min(
-                            (now - startTime) / duration,
-                            1
-                        );
-
-                    /*
-                        smoothstep делает движение
-                        намного мягче обычного linear.
-                    */
-
-                    const eased =
-                        progress * progress *
-                        (3 - 2 * progress);
-
-
-                    /*
-                        Небольшая синусоидальная дуга.
-
-                        Благодаря этому бабочка
-                        не летит как по линейке.
-                    */
-
-                    const arc =
-                        Math.sin(progress * Math.PI) *
-                        curve;
-
-
-                    const currentX =
-                        startX +
-                        (x - startX) * eased;
-
-                    const currentY =
-                        startY +
-                        (y - startY) * eased +
-                        arc;
-
-
-                    butterfly.style.left =
-                        currentX + "px";
-
-                    butterfly.style.top =
-                        currentY + "px";
-
-                    butterfly.style.transform =
-                        "translate(-50%, -50%)";
-
-
-                    if (progress < 1) {
-
-                        requestAnimationFrame(animate);
-
-                    } else {
-
-                        resolve();
-
-                    }
+        function updateFavoritesUI() {
+            const favs = getFavorites();
+            const badge = document.getElementById('favoritesBadge');
+            if (badge) {
+                if (favs.length > 0) {
+                    badge.innerText = favs.length;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
                 }
+            }
 
-                requestAnimationFrame(animate);
+            document.querySelectorAll('.wishlist-btn').forEach(btn => btn.classList.remove('active'));
+            favs.forEach(item => {
+                document.querySelectorAll(`.fav-icon-${item.id.replace(/\s+/g, '-')}`).forEach(icon => {
+                    icon.closest('.wishlist-btn')?.classList.add('active');
+                    icon.classList.add('active');
+                });
             });
         }
 
-
-        /*
-            Основная последовательность.
-        */
-
-        async function startIntro() {
-
-            await sleep(650);
-
-            butterfly.classList.add("active");
-
-
-            /*
-                Начальная позиция.
-
-                Не снизу экрана.
-
-                Бабочка появляется примерно
-                в центральной части.
-            */
-
-            const screenCenterX =
-                window.innerWidth * .48;
-
-            const screenCenterY =
-                window.innerHeight * .55;
-
-
-            butterfly.style.left =
-                screenCenterX + "px";
-
-            butterfly.style.top =
-                screenCenterY + "px";
-
-
-            await sleep(150);
-
-
-            /*
-                ------------------------------------------------
-                ЭТАП 1
-
-                Плавный полёт вправо-вверх.
-                ------------------------------------------------
-            */
-
-            await flyTo(
-                window.innerWidth * .62,
-                window.innerHeight * .39,
-                520,
-                -30
-            );
-
-
-            /*
-                ------------------------------------------------
-                ЭТАП 2
-
-                Облетаем верхнюю часть MILIPSTORE.
-                ------------------------------------------------
-            */
-
-            await flyTo(
-                window.innerWidth * .69,
-                window.innerHeight * .43,
-                380,
-                -35
-            );
-
-
-            /*
-                ------------------------------------------------
-                ЭТАП 3
-
-                Возвращаемся к началу слова.
-
-                Здесь бабочка красиво подходит
-                к первой букве M.
-                ------------------------------------------------
-            */
-
-            const titleRect =
-                introTitle.getBoundingClientRect();
-
-            const firstLetter =
-                introTitle.querySelector("span");
-
-            const mRect =
-                firstLetter.getBoundingClientRect();
-
-
-            const mX =
-                mRect.left - 15;
-
-            const mY =
-                mRect.top +
-                mRect.height / 2;
-
-
-            await flyTo(
-                mX,
-                mY,
-                550,
-                25
-            );
-
-
-            /*
-                Бабочка немного зависает
-                возле M.
-            */
-
-            await sleep(260);
-
-
-            /*
-                ------------------------------------------------
-                ЭТАП 4
-
-                Самый красивый момент.
-
-                Из возле M бабочка летит
-                ВВЕРХ и ВЛЕВО.
-
-                Именно туда, где находится
-                логотип сайта.
-                ------------------------------------------------
-            */
-
-            const logo =
-                document.querySelector(".site-logo");
-
-            const logoRect =
-                logo.getBoundingClientRect();
-
-
-            const logoX =
-                logoRect.left +
-                logoRect.width * .55;
-
-            const logoY =
-                logoRect.top +
-                logoRect.height * .5;
-
-
-            /*
-                Первая часть — вверх.
-            */
-
-            await flyTo(
-                mX - 20,
-                mY - 90,
-                420,
-                -15
-            );
-
-
-            /*
-                Вторая часть — вверх-влево,
-                прямо к логотипу.
-            */
-
-            await flyTo(
-                logoX,
-                logoY,
-                650,
-                -20
-            );
-
-
-            /*
-                Бабочка прилетела к логотипу.
-
-                Маленькая пауза,
-                чтобы пользователь увидел момент.
-            */
-
-            await sleep(120);
-
-
-            /*
-                Убираем вступление.
-            */
-
-            intro.classList.add("hide");
-
-            site.classList.add("show");
-
-
-            /*
-                Полностью убираем intro после
-                окончания fade-out.
-            */
-
-            await sleep(750);
-
-            intro.style.display = "none";
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem('milip_cart')) || [];
+            } catch(e) {
+                return [];
+            }
         }
 
+        function playButterflyAnimation(event) {
+            const cartIcon = document.getElementById('cartIconButton');
+            if (!cartIcon) return;
 
-        /*
-            Запускаем после загрузки страницы.
-        */
+            const cartRect = cartIcon.getBoundingClientRect();
+            const startX = event.clientX;
+            const startY = event.clientY;
 
-        window.addEventListener(
-            "load",
-            startIntro
-        );
+            const targetX = cartRect.left + cartRect.width / 2 - startX;
+            const targetY = cartRect.top + cartRect.height / 2 - startY;
 
+            const butterfly = document.createElement('div');
+            butterfly.className = 'flying-butterfly';
+            butterfly.style.left = startX + 'px';
+            butterfly.style.top = startY + 'px';
+            butterfly.style.setProperty('--target-x', targetX + 'px');
+            butterfly.style.setProperty('--target-y', targetY + 'px');
+
+            butterfly.innerHTML = `
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#00C2FF" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 8px rgba(0,194,255,0.8));">
+                    <path d="M12 12C10 9 6 7 4 9C2 11 3 14 6 15C4 17 2 20 5 22C8 24 11 20 12 16C13 20 16 24 19 22C22 20 20 17 18 15C21 14 22 11 20 9C18 7 14 9 12 12Z"/>
+                </svg>
+            `;
+
+            document.body.appendChild(butterfly);
+
+            setTimeout(() => {
+                butterfly.remove();
+                cartIcon.classList.add('scale-125');
+                setTimeout(() => cartIcon.classList.remove('scale-125'), 200);
+            }, 2000);
+        }
+
+        function addToCart(id, price, color, img, qty = 1) {
+            if (!id || id === 'undefined') return;
+            const finalColor = color || 'White';
+
+            let cart = getCart();
+            const existing = cart.find(item => item.id === id && item.color === finalColor);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ id, price, color: finalColor, img: img || 'Главная фото для каталога.jpg', qty: qty });
+            }
+            localStorage.setItem('milip_cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast(currentLang === 'ua' ? 'Товар додано в кошик 🛒' : 'Товар добавлен в корзину 🛒');
+        }
+
+        function addToCartWithAnimation(event, id, price, color, img) {
+            playButterflyAnimation(event);
+            addToCart(id, price, color, img, 1);
+        }
+
+        function addCurrentProductToCartWithAnimation(event) {
+            if (!currentSelectedColor) {
+                showToast(currentLang === 'ua' ? '⚠️ Будь ласка, оберіть колір товару!' : '⚠️ Пожалуйста, выберите цвет товара!');
+                return;
+            }
+            playButterflyAnimation(event);
+            addToCart('MCHOSE A7 V2 PRO', 2449, currentSelectedColor, currentSelectedImg, currentProductQty);
+        }
+
+        function updateCartUI() {
+            const cart = getCart();
+            const badge = document.getElementById('cartBadge');
+            if (badge) {
+                const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+                if (totalCount > 0) {
+                    badge.innerText = totalCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+        }
+
+        function showToast(text) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = 'bg-[#07101B] text-white border border-[#11223A] px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold animate-fade-in pointer-events-auto flex items-center space-x-2';
+            toast.innerHTML = `<span>${text}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const arrow = document.getElementById(id + 'Arrow');
+            if (el) {
+                el.classList.toggle('hidden');
+                if (arrow) {
+                    arrow.style.transform = el.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+                }
+            }
+        }
+
+        function openFavoritesModal() {
+            let existingModal = document.getElementById('favoritesModal');
+            if (existingModal) existingModal.remove();
+
+            const favs = getFavorites();
+            const modal = document.createElement('div');
+            modal.id = 'favoritesModal';
+            modal.className = 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4';
+            
+            let titleText = currentLang === 'ua' ? 'Обране ❤️' : 'Избранное ❤️';
+            let emptyText = currentLang === 'ua' ? 'Список обраного порожній' : 'Список избранного пуст';
+            let btnCartText = currentLang === 'ua' ? 'Додати у кошик' : 'Добавить в корзину';
+            let btnDelText = currentLang === 'ua' ? 'Видалити' : 'Удалить';
+
+            let contentHtml = `
+                <div class="bg-[#D8DCF0] dark:bg-[#07101B] border border-[#B5BCD5] dark:border-[#11223A] w-full max-w-lg rounded-3xl p-6 shadow-2xl animate-modal relative max-h-[80vh] flex flex-col">
+                    <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
+                        <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">${titleText}</h3>
+                        <button onclick="document.getElementById('favoritesModal').remove()" class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg">✕</button>
+                    </div>
+                    <div class="overflow-y-auto py-4 space-y-3 flex-grow">
+            `;
+
+            if (favs.length === 0) {
+                contentHtml += `<p class="text-center text-gray-500 py-8 text-sm">${emptyText}</p>`;
+            } else {
+                favs.forEach(item => {
+                    let colorNameLocal = item.color || 'White';
+                    if (currentLang === 'ru') {
+                        if (colorNameLocal === 'White') colorNameLocal = 'Белый';
+                        if (colorNameLocal === 'Black') colorNameLocal = 'Черный';
+                        if (colorNameLocal === 'Pink') colorNameLocal = 'Розовый';
+                    }
+                    contentHtml += `
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
+                            <div class="flex items-center space-x-3 cursor-pointer" onclick="document.getElementById('favoritesModal').remove(); openProductPage();">
+                                <img src="${item.img}" class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1">
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-900 dark:text-white hover:text-[#00C2FF] transition-colors">${item.id}</h4>
+                                    <div class="text-[11px] text-gray-500">${currentLang === 'ua' ? 'Колір' : 'Цвет'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${colorNameLocal}</span> | ${currentLang === 'ua' ? 'Кількість' : 'Количество'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${item.qty || 1}</span></div>
+                                    <div class="text-xs font-extrabold text-[#00C2FF]">${item.price} ₴</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-end space-x-3 border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-300 dark:border-gray-800">
+                                <button onclick="addToCart('${item.id}', ${item.price}, '${item.color || 'White'}', '${item.img}', ${item.qty || 1});" class="px-3 py-2 bg-white text-black dark:bg-[#0F172A] dark:text-white text-xs font-extrabold rounded-xl shadow hover:opacity-90 transition-all">
+                                    ${btnCartText}
+                                </button>
+                                <button onclick="toggleFavorite('${item.id}'); openFavoritesModal();" class="text-xs font-extrabold text-red-500 hover:underline px-2 py-1">
+                                    ${btnDelText}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            contentHtml += `</div></div>`;
+            modal.innerHTML = contentHtml;
+            document.body.appendChild(modal);
+        }
+
+        function openCartDrawer() {
+            let existingDrawer = document.getElementById('cartDrawer');
+            if (existingDrawer) existingDrawer.remove();
+
+            const cart = getCart();
+            const drawer = document.createElement('div');
+            drawer.id = 'cartDrawer';
+            drawer.className = 'fixed inset-0 z-50 overflow-hidden';
+            
+            let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            let titleText = currentLang === 'ua' ? 'Кошик 🛒' : 'Корзина 🛒';
+            let emptyText = currentLang === 'ua' ? 'Кошик порожній 🛒' : 'Корзина пуста 🛒';
+            let totalText = currentLang === 'ua' ? 'Загалом:' : 'Итого:';
+            let btnOrderText = currentLang === 'ua' ? 'ОФОРМИТИ ЗАМОВЛЕННЯ' : 'ОФОРМИТЬ ЗАКАЗ';
+            let btnDelText = currentLang === 'ua' ? 'Видалити' : 'Удалить';
+
+            let itemsHtml = '';
+            if (cart.length === 0) {
+                itemsHtml = `<p class="text-center text-gray-500 py-12 text-sm">${emptyText}</p>`;
+            } else {
+                cart.forEach((item, index) => {
+                    let colorNameLocal = item.color;
+                    if (currentLang === 'ru') {
+                        if (colorNameLocal === 'White') colorNameLocal = 'Белый';
+                        if (colorNameLocal === 'Black') colorNameLocal = 'Черный';
+                        if (colorNameLocal === 'Pink') colorNameLocal = 'Розовый';
+                    }
+                    itemsHtml += `
+                        <div class="flex items-center justify-between bg-white/50 dark:bg-black/20 p-3 rounded-2xl border border-[#B5BCD5]/40 dark:border-[#11223A] gap-3">
+                            <img src="${item.img}" class="w-14 h-14 object-contain rounded-xl bg-white dark:bg-black p-1 flex-shrink-0">
+                            <div class="flex-grow min-w-0">
+                                <h4 class="font-bold text-xs text-gray-900 dark:text-white truncate">${item.id}</h4>
+                                <div class="text-[10px] text-gray-500">${currentLang === 'ua' ? 'Колір' : 'Цвет'}: <span class="font-semibold text-gray-800 dark:text-gray-200">${colorNameLocal}</span></div>
+                                <div class="text-xs font-extrabold text-[#00C2FF] mt-0.5">${item.price} ₴ × ${item.qty}</div>
+                            </div>
+                            <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 p-2 text-xs font-bold">${btnDelText}</button>
+                        </div>
+                    `;
+                });
+            }
+
+            drawer.innerHTML = `
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="document.getElementById('cartDrawer').remove()"></div>
+                <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+                    <div class="w-screen max-w-md bg-[#D8DCF0] dark:bg-[#07101B] border-l border-[#B5BCD5] dark:border-[#11223A] shadow-2xl flex flex-col p-6 animate-fade-in">
+                        <div class="flex items-center justify-between pb-4 border-b border-[#B5BCD5] dark:border-[#11223A]">
+                            <h3 class="font-extrabold text-lg text-gray-900 dark:text-white">${titleText}</h3>
+                            <button onclick="document.getElementById('cartDrawer').remove()" class="text-gray-500 hover:text-black dark:hover:text-white font-bold p-2 text-lg">✕</button>
+                        </div>
+                        <div class="overflow-y-auto py-4 space-y-3 flex-grow">
+                            ${itemsHtml}
+                        </div>
+                        <div class="pt-4 border-t border-[#B5BCD5] dark:border-[#11223A] space-y-4">
+                            <div class="flex items-center justify-between font-extrabold text-base">
+                                <span>${totalText}</span>
+                                <span class="text-[#00C2FF]">${totalPrice} ₴</span>
+                            </div>
+                            <button onclick="showToast('${currentLang === 'ua' ? 'Оформлення замовлення успішне!' : 'Оформление заказа успешно!'}'); localStorage.removeItem('milip_cart'); updateCartUI(); document.getElementById('cartDrawer').remove();" class="w-full h-13 bg-[#0F172A] text-white dark:bg-[#00C2FF] dark:text-black font-extrabold rounded-2xl shadow-xl flex items-center justify-center text-sm hover:opacity-90 transition-opacity">
+                                ${btnOrderText}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(drawer);
+        }
+
+        function removeFromCart(index) {
+            let cart = getCart();
+            cart.splice(index, 1);
+            localStorage.setItem('milip_cart', JSON.stringify(cart));
+            updateCartUI();
+            openCartDrawer();
+        }
+
+        function openSearchModal() { 
+            showToast(currentLang === 'ua' ? 'Пошук активний' : 'Поиск активен'); 
+        }
+        
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            document.getElementById('sunIcon').classList.toggle('hidden');
+            document.getElementById('moonIcon').classList.toggle('hidden');
+        }
     </script>
-
 </body>
 </html>
